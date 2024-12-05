@@ -1,49 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Counter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Счётчик</title>
 </head>
 <body>
-  <h1 id="counter">Загрузка...</h1>
-  <button id="incrementButton">Увеличить</button>
-
-  <script>
-    const counterElement = document.getElementById('counter');
-    const button = document.getElementById('incrementButton');
-
-    // Функция загрузки текущего значения числа
-    async function loadCounter() {
-      try {
-        const response = await fetch('https://6e7bc97c-d852-4bbd-970b-ec6f3bfabfe2.tunnel4.com/counter');
-        const data = await response.json();
-        counterElement.textContent = data.value;
-      } catch (error) {
-        console.error('Ошибка загрузки:', error);
-        counterElement.textContent = 'Ошибка загрузки числа';
-      }
-    }
-
-    // Функция увеличения числа
-    async function incrementCounter() {
-      try {
-        const response = await fetch('https://6e7bc97c-d852-4bbd-970b-ec6f3bfabfe2.tunnel4.com/increment', {
-          method: 'POST',
-        });
-        const data = await response.json();
-        counterElement.textContent = data.value;
-      } catch (error) {
-        console.error('Ошибка увеличения:', error);
-        counterElement.textContent = 'Ошибка обновления числа';
-      }
-    }
-
-    // Загрузка начального числа при открытии сайта
-    loadCounter();
-
-    // Обработчик клика по кнопке
-    button.addEventListener('click', incrementCounter);
-  </script>
+    <h1 id="counter">Загрузка...</h1>
+    <button id="incrementButton">Увеличить</button>
+    <script src="script.js"></script>
 </body>
 </html>
