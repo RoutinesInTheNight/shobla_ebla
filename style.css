@@ -50,7 +50,7 @@ body {
     height: 100%;
     position: absolute;
     left: 0;
-    z-index: 10;
+    filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
 }
 
 .balance-container {
@@ -141,7 +141,6 @@ body {
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     text-align: left;
-    margin-top: calc(100 / 1284 * 5 * 1vw);
 }
 
 .level-name {
@@ -149,9 +148,6 @@ body {
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 75 * 1vw);
     text-align: left;
-    /* margin-bottom: calc(100 / 1284 * 25 * 1vw); */
-    /* margin-top: calc(100 / 1284 * 15 * -1 * 1vw); */
-    /* padding-bottom: calc(100 / 1284 * 25 * 1vw); */
 }
 
 .level-container .right {
@@ -169,37 +165,54 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.additional-blocks {
-    margin-top: 20vw; /* Отступ для дополнительных блоков */
+.games-container {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: #202A39;
+    border-top-left-radius: 5vw;
+    border-top-right-radius: 5vw;
+    margin-top: calc(100 / 1284 * 160 * 1vw);
+    padding-top: calc(100 / 1284 * 50 * 1vw);
+    padding-bottom: calc(100 / 1284 * 200 * 1vw);
 }
 
-.block {
-    background-color: #333;
-    color: white;
-    margin: 10px;
-    padding: 15px;
-    font-size: 1.5rem;
-    border-radius: 5px;
+.game {
+    width: calc(100 / 1284 * 1184 * 1vw);
+    height: calc(100 / 1284 * 336 * 1vw);
+    background-color: #181F2A;
+    border-radius: 4vw;
+    margin: 0 auto;
 }
+
+.game {
+    width: calc(100 / 1284 * 1184 * 1vw);
+    height: calc(100 / 1284 * 336 * 1vw);
+    background-color: #181F2A;
+    border-radius: 4vw;
+    margin-bottom: calc(100 / 1284 * 50 * 1vw);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .moving-image {
     position: absolute;
@@ -207,6 +220,7 @@ body {
     height: 5vw;
     animation: move-to-center 5s linear forwards, fade-in 2.5s ease-in;
     opacity: 0;
+    z-index: -1;
 }
 
 @keyframes fade-in {
@@ -214,7 +228,7 @@ body {
         opacity: 0;
     }
     to {
-        opacity: 1;
+        opacity: 0.25;
     }
 }
 
