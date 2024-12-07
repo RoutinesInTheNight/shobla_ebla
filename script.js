@@ -32,6 +32,11 @@ if (telegram.isVersionAtLeast("8.0")) {
 // telegram.ready();
 
 
+
+function showAlert(message) {
+  telegram.showAlert(message);
+}
+
 function showConfirm(message) {
   telegram.showConfirm(message);
 }
