@@ -95,9 +95,11 @@ function hapticFeedback(type, redirectUrl) {
   } else {
     console.error('Haptic feedback is not supported in this environment.');
   }
-  setTimeout(() => {
+  if (redirectUrl && redirectUrl !== '#') {
     window.location.href = redirectUrl;
-  }, 200);
+  } else {
+    console.error('Неверный путь!');
+  }
 }
 
 
