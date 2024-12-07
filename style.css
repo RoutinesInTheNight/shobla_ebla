@@ -22,22 +22,24 @@
     -webkit-tap-highlight-color: transparent;
 } */
 
-/* html, body {
-    overscroll-behavior: none;
-} */
 
-body {
-    overscroll-behavior: none;
+
+
+html, body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     height: 100%;
     width: 100%;
-    background-color: #181F2A;
     margin: 0;
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: none;
+}
+
+body {
+    background-color: #181F2A;
 }
 
 .content {
