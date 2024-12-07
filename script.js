@@ -46,8 +46,44 @@ function showConfirm(message) {
   telegram.showConfirm(message);
 }
 
-function softHapticFeedback() {
-  telegram.HapticFeedback.impactOccurred('soft');
+
+
+function hapticFeedback(type) {
+  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.hapticFeedback) {
+    switch (type) {
+      case 'light':
+        window.Telegram.WebApp.hapticFeedback.impactOccurred('light');
+        break;
+      case 'medium':
+        window.Telegram.WebApp.hapticFeedback.impactOccurred('medium');
+        break;
+      case 'heavy':
+        window.Telegram.WebApp.hapticFeedback.impactOccurred('heavy');
+        break;
+      case 'rigid':
+        window.Telegram.WebApp.hapticFeedback.impactOccurred('rigid');
+        break;
+      case 'soft':
+        window.Telegram.WebApp.hapticFeedback.impactOccurred('soft');
+        break;
+      case 'error':
+        window.Telegram.WebApp.hapticFeedback.notificationOccurred('error');
+        break;
+      case 'success':
+        window.Telegram.WebApp.hapticFeedback.notificationOccurred('success');
+        break;
+      case 'warning':
+        window.Telegram.WebApp.hapticFeedback.notificationOccurred('warning');
+        break;
+      case 'change':
+        window.Telegram.WebApp.hapticFeedback.selectionChanged();
+        break;
+      default:
+        console.warn('Unknown haptic feedback type:', type);
+    }
+  } else {
+    console.error('Haptic feedback is not supported in this environment.');
+  }
 }
 
 
