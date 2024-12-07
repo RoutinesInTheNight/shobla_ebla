@@ -39,7 +39,7 @@ function showConfirm(message) {
 
 
 
-function showPopup() {
+function gameNotReadyPopup() {
   telegram.showPopup({
       title  : "Игра ещё не готова",
       message: "(Не ладно, нахуй)",

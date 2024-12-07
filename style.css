@@ -14,13 +14,13 @@
 
 
 
-/* * {
+* {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    pointer-events: none;
     -webkit-tap-highlight-color: transparent;
-} */
+    text-decoration: none;
+}
 
 
 
@@ -37,7 +37,6 @@ html, body {
     overflow-x: hidden;
     overscroll-behavior: none;
 }
-
 body {
     background-color: #181F2A;
 }
@@ -264,7 +263,7 @@ body {
     display: flex;
     position: fixed;
     width: 100%;
-    height: calc(100 / 1284 * 300 * 1vw);
+    height: calc(100 / 1284 * 250 * 1vw);
     background-color: #2B3648;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
@@ -275,15 +274,15 @@ body {
 
 .bottom-menu .menu {
     height: 100%;
-    width: calc(100 / 3 * 1vw);
+    width: calc(100 / 5 * 1vw);
     text-decoration: none;
     color: white;
-    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
 }
 
 .bottom-menu .menu img {
-    height: calc(100 / 1284 * 100 * 1vw);
+    height: calc(100 / 1284 * 75 * 1vw);
     margin-top: calc(100 / 1284 * 50 * 1vw);
 }
 
@@ -362,3 +361,15 @@ body {
 }
 
 
+
+
+
+
+
+/* Отключаем клики */
+.user-name,
+.user-image-container,
+.balance-container,
+.miniapp-description {
+    pointer-events: none;
+}
