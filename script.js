@@ -49,34 +49,34 @@ function showConfirm(message) {
 
 
 function hapticFeedback(type) {
-  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.hapticFeedback) {
+  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
     switch (type) {
       case 'light':
-        window.Telegram.WebApp.hapticFeedback.impactOccurred('light');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
         break;
       case 'medium':
-        window.Telegram.WebApp.hapticFeedback.impactOccurred('medium');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
         break;
       case 'heavy':
-        window.Telegram.WebApp.hapticFeedback.impactOccurred('heavy');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
         break;
       case 'rigid':
-        window.Telegram.WebApp.hapticFeedback.impactOccurred('rigid');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
         break;
       case 'soft':
-        window.Telegram.WebApp.hapticFeedback.impactOccurred('soft');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('soft');
         break;
       case 'error':
-        window.Telegram.WebApp.hapticFeedback.notificationOccurred('error');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('error');
         break;
       case 'success':
-        window.Telegram.WebApp.hapticFeedback.notificationOccurred('success');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
         break;
       case 'warning':
-        window.Telegram.WebApp.hapticFeedback.notificationOccurred('warning');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('warning');
         break;
       case 'change':
-        window.Telegram.WebApp.hapticFeedback.selectionChanged();
+        window.Telegram.WebApp.HapticFeedback.selectionChanged();
         break;
       default:
         console.warn('Unknown haptic feedback type:', type);
