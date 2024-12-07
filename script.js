@@ -47,7 +47,7 @@ function showConfirm(message) {
 }
 
 function softHapticFeedback() {
-  telegram.hapticFeedback.impactOccurred('soft');
+  telegram.HapticFeedback.impactOccurred('soft');
 }
 
 
