@@ -1,6 +1,7 @@
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();
+telegram.ready()
 
 if (telegram.isVersionAtLeast("7.7")){
   telegram.disableVerticalSwipes();
