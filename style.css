@@ -370,6 +370,7 @@ body {
 .user-name,
 .user-image-container,
 .balance-container,
-.miniapp-description {
+.miniapp-description,
+.level-container {
     pointer-events: none;
 }
