@@ -1,8 +1,8 @@
 const container = document.querySelector('.user-image-container');
 const imageFolder = 'images'; // Папка с изображениями
 const totalImages = 5; // Количество маленьких изображений
-const interval = 250; // Интервал появления изображений (в миллисекундах)
-const circleRadius = 50; // Радиус круга в vw
+const interval = 100; // Интервал появления изображений (в миллисекундах)
+const circleRadius = 45; // Радиус круга в vw
 
 // Генерация случайных координат на окружности
 function getRandomPosition(radius) {
@@ -35,7 +35,7 @@ function createMovingImage(index) {
 
   // Запускаем анимацию с задержкой, чтобы гарантировать плавное появление
   setTimeout(() => {
-      img.style.opacity = 0.25; // Начинаем анимацию появления
+      img.style.opacity = 1; // Начинаем анимацию появления
   }, 50); // Задержка в 50ms
 
   // Удаление изображения после завершения анимации
@@ -43,7 +43,7 @@ function createMovingImage(index) {
       // Задержка перед удалением
       setTimeout(() => {
           img.remove();
-      }, 2000); // 1000 миллисекунд = 1 секунда
+      }, 5000); // 1000 миллисекунд = 1 секунда
   });
 }
 

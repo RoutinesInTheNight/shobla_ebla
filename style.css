@@ -20,9 +20,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Выравнивание по верхнему краю */
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     background-color: #181F2A;
     overflow-y: auto; /* Включаем вертикальную прокрутку */
+    overflow-x: hidden;
 
     user-select: none;
     -webkit-user-select: none; /* Для Safari */
@@ -232,7 +234,7 @@ body {
     position: absolute;
     width: 5vw;
     height: 5vw;
-    animation: move-to-center 5s linear forwards, fade-in 2.5s ease-in;
+    animation: move-to-center 8s infinite, fade-in 2.5s ease-in;
     opacity: 0;
     z-index: -1;
 }
@@ -242,15 +244,19 @@ body {
         opacity: 0;
     }
     to {
-        opacity: 0.25;
+        opacity: 1;
     }
 }
 
 @keyframes move-to-center {
     from {
-        transform: translate(var(--start-x), var(--start-y));
+        transform: translate(var(--start-x), var(--start-y)) scale(1);
+        rotate: 0deg
     }
     to {
-        transform: translate(0, 0);
+        transform: translate(0, 0) scale(0);
+        rotate: 180deg
     }
 }
+
+
