@@ -14,13 +14,13 @@
 
 
 
-/* * {
+* {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     pointer-events: none;
     -webkit-tap-highlight-color: transparent;
-} */
+}
 
 html, body {
     overscroll-behavior: none; /* Отключить "отскок" */
