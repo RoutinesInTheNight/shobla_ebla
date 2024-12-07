@@ -254,9 +254,10 @@ body {
 
 
 .bottom-menu {
-    width: 100%;
+    display: flex;
     position: fixed;
-    height: calc(100 / 1284 * 280 * 1vw);
+    width: 100%;
+    height: calc(100 / 1284 * 250 * 1vw);
     background-color: #2B3648;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
@@ -264,6 +265,28 @@ body {
     box-shadow: 0 0 5vw 2.5vw rgba(0, 0, 0, 0.25);
     z-index: 1000;
 }
+
+.bottom-menu .menu {
+    height: 100%;
+    width: calc(100 / 3 * 1vw);
+    text-decoration: none;
+    color: #8894A2;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * 1vw);
+}
+
+.bottom-menu .menu img {
+    height: calc(100 / 1284 * 100 * 1vw);
+    margin-top: calc(100 / 1284 * 50 * 1vw);
+}
+
+.bottom-menu .menu p {
+    /* margin-top: calc(100 / 1284 * 50 * 1vw); */
+    margin: 0;
+}
+
+
+
 
 
 
