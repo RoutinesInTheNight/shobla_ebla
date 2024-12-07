@@ -19,7 +19,7 @@ tg.ready();
 
 
 function showAlert(message) {
-  Telegram.WebApp.showAlert(message);
+  tg.showAlert(message);
 }
 
 
