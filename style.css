@@ -35,6 +35,7 @@ body {
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: none;
 }
 
 .content {
