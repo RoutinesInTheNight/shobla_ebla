@@ -18,6 +18,10 @@ tg.ContentSafeAreaInset = {
 tg.ready();
 
 
+function showAlert(message) {
+  Telegram.WebApp.showAlert(message);
+}
+
 
 
 
