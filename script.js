@@ -18,8 +18,8 @@ tg.ContentSafeAreaInset = {
 tg.ready();
 
 
-function showAlert(message) {
-  tg.showAlert(message);
+function showConfirm(message) {
+  tg.showConfirm(message);
 }
 
 
