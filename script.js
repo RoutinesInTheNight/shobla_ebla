@@ -36,14 +36,15 @@ function showConfirm(message) {
   telegram.showConfirm(message);
 }
 
+
+
+
 function showPopup() {
   telegram.showPopup({
-      title  : 'Popup title',
-      message: 'Popup message',
+      title  : "Игра ещё не готова",
+      message: "(Не ладно, нахуй)",
       buttons: [
-          {id: 'delete', type: 'destructive', text: 'Delete all'},
-          {id: 'faq', type: 'default', text: 'Open FAQ'},
-          {type: 'cancel'},
+          {type: "default", text: "Понял, иду нахуй"},
       ]
   });
 }
