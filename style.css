@@ -234,9 +234,10 @@ body {
     position: absolute;
     width: 5vw;
     height: 5vw;
-    animation: move-to-center 8s infinite, fade-in 2.5s ease-in;
+    animation: move-to-center 8s infinite, fade-in 2.5s ease-in, rot 8s infinite;
     opacity: 0;
     z-index: -1;
+    transform: translateZ(0)
 }
 
 @keyframes fade-in {
@@ -251,10 +252,17 @@ body {
 @keyframes move-to-center {
     from {
         transform: translate(var(--start-x), var(--start-y)) scale(1);
-        rotate: 0deg
     }
     to {
         transform: translate(0, 0) scale(0);
+    }
+}
+
+@keyframes rot {
+    from {
+        rotate: 0deg
+    }
+    to {
         rotate: 180deg
     }
 }
