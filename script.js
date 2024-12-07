@@ -2,19 +2,19 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 // tg.enableClosingConfirmation()
 tg.disableVerticalSwipes();
-tg.isOrientationLocked = True;
+tg.lockOrientation();
 tg.safeAreaInset = {
   top: 0,
   bottom: 0,
   left: 0,
   right: 0
-}
+};
 tg.contentSafeAreaInset = {
   top: 0,
   bottom: 0,
   left: 0,
   right: 0
-}
+};
 tg.ready();
 
 
