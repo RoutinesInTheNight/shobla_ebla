@@ -1,25 +1,51 @@
-const tg = window.Telegram.WebApp;
-tg.expand();
-// tg.enableClosingConfirmation()
-tg.disableVerticalSwipes();
-tg.lockOrientation();
-tg.safeAreaInset = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0
+const telegram = window.Telegram.WebApp;
+
+telegram.expand();
+
+if (telegram.isVersionAtLeast("7.7")){
+  telegram.disableVerticalSwipes();
 };
-tg.ContentSafeAreaInset = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0
+
+if (telegram.isVersionAtLeast("8.0")) {
+  try {
+    telegram.requestFullscreen();
+  } catch (e) {
+  };
+  telegram.lockOrientation();
 };
-tg.ready();
+
+
+// telegram.safeAreaInset = {
+//   top: 0,
+//   bottom: 0,
+//   left: 0,
+//   right: 0
+// };
+
+// telegram.ContentSafeAreaInset = {
+//   top: 0,
+//   bottom: 0,
+//   left: 0,
+//   right: 0
+// };
+
+// telegram.ready();
 
 
 function showConfirm(message) {
-  tg.showConfirm(message);
+  telegram.showConfirm(message);
+}
+
+function showPopup() {
+  telegram.showPopup({
+      title  : 'Popup title',
+      message: 'Popup message',
+      buttons: [
+          {id: 'delete', type: 'destructive', text: 'Delete all'},
+          {id: 'faq', type: 'default', text: 'Open FAQ'},
+          {type: 'cancel'},
+      ]
+  });
 }
 
 
