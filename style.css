@@ -22,7 +22,9 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-
+html, body {
+    overscroll-behavior: none; /* Отключить "отскок" */
+  }
 
 body {
     display: flex;
@@ -35,7 +37,6 @@ body {
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    overscroll-behavior: none;
 }
 
 .content {
