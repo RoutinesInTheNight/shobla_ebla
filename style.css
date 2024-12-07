@@ -82,7 +82,7 @@ body {
 }
 
 
-.description {
+.miniapp-description {
     color: #8794a1;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
@@ -130,7 +130,7 @@ body {
 .progress {
     width: 76%;
     height: 100%;
-    background-color: white;
+    background-color: rgb(250, 225, 150);
     border-radius: calc(100 / 1284 * 15 * 1vw);
 }
 
@@ -138,7 +138,7 @@ body {
 .level-marks {
     display: flex;
     justify-content: space-between;
-    color: white;
+    color: rgb(250, 225, 150);
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 25 * 1vw);
     margin-top: calc(100 / 1284 * 5 * 1vw);
@@ -187,7 +187,11 @@ body {
     padding-bottom: calc(100 / 1284 * 500 * 1vw);
 }
 
+
+
+
 .game {
+    display: flex;
     width: calc(100 / 1284 * 1184 * 1vw);
     height: calc(100 / 1284 * 336 * 1vw);
     background-color: #181F2A;
@@ -198,9 +202,49 @@ body {
     margin-bottom: calc(100 / 1284 * 50 * 1vw);
 }
 
+.game .left {
+    width: calc(100 / 1284 * 335 * 1vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.game .left img {
+    width: calc(100 / 1284 * 235 * 1vw);
+}
 
+.game .center {
+    width: calc(100 / 1284 * 699 * 1vw);
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
 
+.game .name {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    text-align: left;
+    margin-top: calc(100 / 1284 * 75 * 1vw);
+}
+.game .description {
+    color: #8894A2;
+    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * 1vw);
+    text-align: left;
+    margin-top: calc(100 / 1284 * 25 * 1vw);
+}
+
+.game .right {
+    width: calc(100 / 1284 * 150 * 1vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game .right img {
+    height: calc(100 / 1284 * 35 * 1vw);
+}
 
 
 
