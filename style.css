@@ -14,6 +14,16 @@
 
 
 
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+
 body {
     margin: 0;
     padding: 0;
@@ -25,11 +35,6 @@ body {
     background-color: #181F2A;
     overflow-y: auto; /* Включаем вертикальную прокрутку */
     overflow-x: hidden;
-
-    user-select: none;
-    -webkit-user-select: none; /* Для Safari */
-    -ms-user-select: none; /* Для старых IE */
-    pointer-events: none;
 }
 
 .content {
@@ -98,7 +103,7 @@ body {
     width: calc(100 / 1284 * 1084 * 1vw);
     height: calc(100 / 1284 * 250 * 1vw);
     margin: 0 auto;
-    border-radius: 4vw;
+    border-radius: 5vw;
     margin-top: calc(100 / 1284 * 50 * 1vw);
     background: linear-gradient(90deg, #67C8E4, #EB4DFC);
 }
@@ -174,11 +179,11 @@ body {
 
 
 .games-container {
-    display: block;
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: calc(100 / 1284 * 25 * 1vw);
     width: 100%;
-    height: auto;
+    /* height: auto; */
     background-color: #202A39;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
@@ -192,14 +197,10 @@ body {
 
 .game {
     display: flex;
-    width: calc(100 / 1284 * 1184 * 1vw);
     height: calc(100 / 1284 * 336 * 1vw);
     background-color: #181F2A;
     border-radius: 4vw;
     margin: 0 auto;
-}
-.game {
-    margin-bottom: calc(100 / 1284 * 50 * 1vw);
 }
 
 .game .left {
@@ -257,12 +258,12 @@ body {
     display: flex;
     position: fixed;
     width: 100%;
-    height: calc(100 / 1284 * 250 * 1vw);
+    height: calc(100 / 1284 * 300 * 1vw);
     background-color: #2B3648;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
     bottom: 0;
-    box-shadow: 0 0 5vw 2.5vw rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 10vw 2.5vw rgba(0, 0, 0, 1);
     z-index: 1000;
 }
 
@@ -270,7 +271,7 @@ body {
     height: 100%;
     width: calc(100 / 3 * 1vw);
     text-decoration: none;
-    color: #8894A2;
+    color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
 }
@@ -281,10 +282,30 @@ body {
 }
 
 .bottom-menu .menu p {
-    /* margin-top: calc(100 / 1284 * 50 * 1vw); */
     margin: 0;
 }
 
+/* .selected {
+    position: absolute;
+    height: calc(100 / 1284 * 10 * 1vw);
+    width: 25%;
+    background-color: white;
+} */
+
+
+.bottom-menu .selected div {
+    height: calc(100 / 1284 * 15 * 1vw);
+    width: 75%;
+    background-color: white;
+    border-bottom-left-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+    margin: 0 auto;
+}
+
+.bottom-menu .selected img {
+    margin-top: calc(100 / 1284 * 35 * 1vw);
+    opacity: 1;
+}
 
 
 
