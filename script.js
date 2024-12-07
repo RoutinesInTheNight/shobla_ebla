@@ -1,3 +1,13 @@
+const tg = window.Telegram.WebApp;
+tg.expand();
+// tg.enableClosingConfirmation()
+tg.disableVerticalSwipes()
+tg.ready();
+
+
+
+
+
 const container = document.querySelector('.user-image-container');
 const imageFolder = 'images'; // Папка с изображениями
 const totalImages = 5; // Количество маленьких изображений

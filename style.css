@@ -25,15 +25,15 @@
 
 
 body {
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Выравнивание по верхнему краю */
+    align-items: flex-start;
     height: 100%;
     width: 100%;
     background-color: #181F2A;
-    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -65,6 +65,7 @@ body {
     filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
     -webkit-filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
 }
+
 
 .balance-container {
     display: flex;
