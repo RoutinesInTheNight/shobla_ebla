@@ -47,8 +47,19 @@ function showConfirm(message) {
 }
 
 
+function hapticFeedback(type, redirectUrl) {
+  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.hapticFeedback) {
+      window.Telegram.WebApp.hapticFeedback.impactOccurred(type); // Срабатывание тактильной обратной связи
+  }
+  // Добавляем небольшой таймаут, чтобы сначала сработал тактильный отклик
+  setTimeout(() => {
+      window.location.href = redirectUrl; // Переход на указанную страницу
+  }, 200); // Задержка в 200 мс для эффекта
+}
 
-function hapticFeedback(type) {
+
+
+function hapticFeedback(type, redirectUrl) {
   if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
     switch (type) {
       case 'light':
@@ -84,6 +95,9 @@ function hapticFeedback(type) {
   } else {
     console.error('Haptic feedback is not supported in this environment.');
   }
+  setTimeout(() => {
+    window.location.href = redirectUrl;
+  }, 200);
 }
 
 
