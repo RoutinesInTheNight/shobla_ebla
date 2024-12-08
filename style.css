@@ -332,7 +332,6 @@ body {
     z-index: -1;
     transform: translateZ(0)
 }
-
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -341,7 +340,6 @@ body {
         opacity: 1;
     }
 }
-
 @keyframes move-to-center {
     from {
         transform: translate(var(--start-x), var(--start-y)) scale(1);
@@ -350,7 +348,6 @@ body {
         transform: translate(0, 0) scale(0);
     }
 }
-
 @keyframes rot {
     from {
         rotate: 0deg
@@ -364,6 +361,17 @@ body {
 
 
 
+
+/* Появление всех элементов при загрузке страницы */
+.content > * {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+.content > *.visible {
+    transform: scale(1);
+    opacity: 1;
+}
 
 
 /* Отключаем клики */

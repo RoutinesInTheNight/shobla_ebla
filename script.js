@@ -1,3 +1,17 @@
+
+
+// Появление всех элементов при загрузке страницы
+window.addEventListener('DOMContentLoaded', () => {
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
+    setTimeout(() => {
+      child.classList.add('visible');
+    }, index * 25); // Задержка для каждого дочернего элемента
+  });
+});
+
+
+
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();
