@@ -13,13 +13,13 @@ if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
 
 
 
-var animation = lottie.loadAnimation({
-  container: document.getElementById('lottie'), // контейнер для анимации
-  renderer: 'svg', // тип рендеринга
-  loop: true, // бесконечный цикл
-  autoplay: true, // автоматическое воспроизведение
-  path: 'anim.json' // путь к файлу .tgs
-});
+// var animation = lottie.loadAnimation({
+//   container: document.getElementById('lottie'), // контейнер для анимации
+//   renderer: 'svg', // тип рендеринга
+//   loop: true, // бесконечный цикл
+//   autoplay: true, // автоматическое воспроизведение
+//   path: 'anim.json' // путь к файлу .tgs
+// });
 
 
 
