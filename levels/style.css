@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Sf Pro Display Regular';
+    src: url('fonts/SFPRODISPLAYREGULAR.OTF') format('truetype')
+}
+@font-face {
+    font-family: 'Sf Pro Display Medium';
+    src: url('fonts/SFPRODISPLAYMEDIUM.OTF') format('truetype')
+}
+@font-face {
+    font-family: 'Sf Pro Display Bold';
+    src: url('fonts/SFPRODISPLAYBOLD.OTF') format('truetype')
+}
+
+
+
+
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+}
+
+
+
+
+html, body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+body {
+    background-color: #181F2A;
+}
+
+.content {
+    width: 100%;
+    text-align: center;
+    padding-top: calc(100 / 1284 * 300 * 1vw);
+}
+
+
+
+
+/* Появление всех элементов при загрузке страницы */
+.content > * {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+.content > *.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+
