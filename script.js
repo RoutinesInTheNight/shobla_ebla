@@ -24,6 +24,24 @@ window.onload = () => {
 
 
 
+['games', 'achievements'].forEach(id => {
+  document.getElementById(id).addEventListener('click', () => {
+    selectTab(id);
+    hapticFeedback('change');
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Появление всех элементов при загрузке страницы
 window.addEventListener('DOMContentLoaded', () => {
