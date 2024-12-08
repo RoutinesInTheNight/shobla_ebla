@@ -77,7 +77,6 @@ body {
     align-items: center;
     text-align: center;
     margin-top: calc(100 / 1284 * 50 * 1vw);
-
 }
 .dogcoin {
     width: calc(100 / 1284 * 100 * 1vw);
@@ -94,9 +93,27 @@ body {
 
 .miniapp-description {
     color: #8794a1;
-    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     margin-top: calc(100 / 1284 * 25 * 1vw);
+}
+.miniapp-instructions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: calc(100 / 1284 * 10 * 1vw);
+}
+.fqqwgeg {
+    color: #4DB2FF;
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    /* margin: 0; */
+}
+.wegwgwg {
+    height: calc(100 / 1284 * 30 * 1vw);
+    margin-left: .75vw;
+    margin-top: .6vw;
 }
 
 
@@ -106,33 +123,36 @@ body {
 .level-container {
     display: flex;
     width: calc(100 / 1284 * 1084 * 1vw);
-    height: calc(100 / 1284 * 250 * 1vw);
+    height: calc(100 / 1284 * 200 * 1vw);
     margin: 0 auto;
     border-radius: 5vw;
     margin-top: calc(100 / 1284 * 50 * 1vw);
     background: linear-gradient(90deg, #67C8E4, #EB4DFC);
+    filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
+    -webkit-filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
 }
 
 .level-container .left {
-    width: calc(100 / 1284 * 378 * 1vw);
+    width: calc(100 / 1284 * 250 * 1vw);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .level-container .left img {
-    height: 80%;
+    height: 75%;
+    /* width: 80%; */
 }
 
 .level-container .center {
-    width: calc(100 / 1284 * 606 * 1vw);
+    width: calc(100 / 1284 * 709 * 1vw);
 }
 
 .progress-bar {
     position: relative;
     background-color: black;
     width: 100%;
-    height: calc(100 / 1284 * 15 * 1vw);
+    height: calc(100 / 1284 * 25 * 1vw);
     border-radius: calc(100 / 1284 * 15 * 1vw);
     margin-top: calc(100 / 1284 * 25 * 1vw);
 }
@@ -150,26 +170,21 @@ body {
     justify-content: space-between;
     color: rgb(250, 225, 150);
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 25 * 1vw);
+    font-size: calc(100 / 1284 * 37.5 * 1vw);
     margin-top: calc(100 / 1284 * 5 * 1vw);
 }
 
-.level-num {
-    color: white;
-    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
-    text-align: left;
-}
-
-.level-name {
+.level-num-name {
+    display: flex;
+    justify-content: space-between;
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 75 * 1vw);
-    text-align: left;
 }
 
+
 .level-container .right {
-    width: calc(100 / 1284 * 100 * 1vw);
+    width: calc(100 / 1284 * 125 * 1vw);
     display: flex;
     justify-content: center;
     align-items: center;
