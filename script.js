@@ -1,3 +1,20 @@
+// Проверка, что Telegram WebApp доступен
+if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+  const user = window.Telegram.WebApp.initDataUnsafe.user;
+
+  if (user) {
+      console.log(`User ID: ${user.id}`); // Вывод в консоль ID пользователя
+  } else {
+      console.log("User data not available.");
+  }
+} else {
+  console.log("Telegram WebApp not initialized.");
+}
+
+
+
+
+
 function selectTab(tabId) {
   const gamesTab = document.getElementById('games');
   const achievementsTab = document.getElementById('achievements');
