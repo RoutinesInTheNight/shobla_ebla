@@ -12,7 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();
+
 telegram.BackButton.show()
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
+
 
 if (telegram.isVersionAtLeast("7.7")){
   telegram.disableVerticalSwipes();
