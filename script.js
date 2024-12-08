@@ -1,31 +1,38 @@
-// Функция для вывода текущего URL в консоль
-function logCurrentURL() {
-  console.log("Current URL:", window.location.href);
-}
-
-// Вызываем функцию при загрузке страницы
-logCurrentURL();
-
-// Отслеживаем изменения URL (например, при навигации через историю браузера)
-window.addEventListener('popstate', logCurrentURL);
-
-// Если на сайте используются ссылки с изменением hash (#), отлавливаем их
-window.addEventListener('hashchange', logCurrentURL);
-
-// Если используются программные изменения URL (например, через history.pushState)
 (function() {
+  let previousURL = window.location.href; // Храним предыдущий URL
+
+  // Функция для логирования изменений URL
+  function logURLChange(eventType) {
+      const currentURL = window.location.href;
+      console.log(`[${eventType}] URL changed:`);
+      console.log("Previous URL:", previousURL);
+      console.log("Current URL:", currentURL);
+      previousURL = currentURL; // Обновляем предыдущий URL
+  }
+
+  // Вызываем функцию при загрузке страницы
+  logURLChange('load');
+
+  // Отслеживаем изменения истории браузера (назад/вперед)
+  window.addEventListener('popstate', () => logURLChange('popstate'));
+
+  // Отслеживаем изменения хэша (#)
+  window.addEventListener('hashchange', () => logURLChange('hashchange'));
+
+  // Перехватываем программные изменения URL через history.pushState и history.replaceState
   const originalPushState = history.pushState;
   history.pushState = function(...args) {
       originalPushState.apply(history, args);
-      logCurrentURL();
+      logURLChange('pushState');
   };
 
   const originalReplaceState = history.replaceState;
   history.replaceState = function(...args) {
       originalReplaceState.apply(history, args);
-      logCurrentURL();
+      logURLChange('replaceState');
   };
 })();
+
 
 
 
