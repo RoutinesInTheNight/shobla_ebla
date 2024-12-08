@@ -116,7 +116,7 @@ body {
     width: calc(100 / 1284 * 1084 * 1vw);
     height: calc(100 / 1284 * 182 * 1vw);
     margin: 0 auto;
-    border-radius: 5vw;
+    border-radius: 3vw;
     margin-top: calc(100 / 1284 * 50 * 1vw);
     background: linear-gradient(90deg, #67C8E4, #EB4DFC);
     filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
