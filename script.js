@@ -1,3 +1,28 @@
+function selectTab(tabId) {
+  const gamesTab = document.getElementById('games');
+  const achievementsTab = document.getElementById('achievements');
+  const gamesContainer = document.getElementById('games-container');
+  const achievementsContainer = document.getElementById('achievements-container');
+
+  if (tabId === 'games') {
+    gamesTab.classList.add('active');
+    achievementsTab.classList.remove('active');
+    gamesContainer.style.display = 'flex'; // Показываем контейнер игр
+    achievementsContainer.style.display = 'none'; // Полностью скрываем контейнер ачивок
+  } else if (tabId === 'achievements') {
+    achievementsTab.classList.add('active');
+    gamesTab.classList.remove('active');
+    achievementsContainer.style.display = 'flex'; // Показываем контейнер ачивок
+    gamesContainer.style.display = 'none'; // Полностью скрываем контейнер игр
+  }
+}
+
+// Установка начального состояния
+window.onload = () => {
+  selectTab('games');
+};
+
+
 
 
 // Появление всех элементов при загрузке страницы

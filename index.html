@@ -52,10 +52,22 @@
           </div>
         </div>
 
+        
+        <div class="games-or-achievements">
+          <div id="games" class="games" onclick="selectTab('games')">
+            <p>Игры</p>
+            <div class="rectangle"></div>
+          </div>
+          <div id="achievements" class="achievements" onclick="selectTab('achievements')">
+            <p>Ачивки</p>
+            <div class="rectangle"></div>
+          </div>
+        </div>
+        
 
-        <div class="games-container">
-
-          <a class="game" href="" onclick="">
+        <div id="games-container" class="content-container">
+          
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -70,9 +82,9 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
 
-          <a class="game" href="" onclick="">
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -87,9 +99,9 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
 
-          <a class="game" href="" onclick="">
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -104,9 +116,9 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
 
-          <a class="game" href="" onclick="">
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -121,9 +133,9 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
 
-          <a class="game" href="" onclick="">
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -138,9 +150,9 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
 
-          <a class="game" href="" onclick="">
+          <div class="game" onclick="hapticFeedback('soft', 'levels')">
             <div class="left">
               <img src="no-photo.png">
             </div>
@@ -155,13 +167,16 @@
             <div class="right">
               <img src="gray-arrow.png">
             </div>
-          </a>
+          </div>
+
+        </div>
 
 
 
 
 
 
+        <div id="achievements-container" class="content-container hidden">
           <div class="game" onclick="hapticFeedback('light')">
             <div class="left"><img src="no-photo.png"></div>
             <div class="center"><div class="name">light</div></div>
@@ -215,11 +230,11 @@
             <div class="center"><div class="name">change</div></div>
             <div class="right"><img src="gray-arrow.png"></div>
           </div>
-
-
-
-
         </div>
+
+
+
+
 
 
         <div class="bottom-menu">

@@ -183,16 +183,96 @@ body {
 
 
 
-.games-container {
+
+.games-or-achievements {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: calc(100 / 1284 * 100 * 1vw);
+}
+
+.games-or-achievements .games,
+.games-or-achievements .achievements {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    width: 25%;
+    align-items: center;
+}
+
+.games-or-achievements .games {
+    transform: translateX(100%);
+}
+  
+.games-or-achievements .achievements {
+    transform: translateX(-100%);
+}
+  
+.games-or-achievements p {
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    margin: 0;
+    transition: color 0.25s;
+}
+  
+.games-or-achievements .rectangle {
+    width: calc(100 / 1284 * 150 * 1vw);
+    height: calc(100 / 1284 * 15 * 1vw);
+    border-top-left-radius: 1vw;
+    border-top-right-radius: 1vw;
+    margin-top: calc(100 / 1284 * 40 * 1vw);
+    transition: background-color 0.25s;
+}
+
+
+.content-container {
+    display: none;
+}
+.content-container:not(.hidden) {
+    display: block;
+}
+
+#games.active .rectangle,
+#achievements.active .rectangle {
+    background-color: #258ADA;
+}
+
+#games.active p,
+#achievements.active p {
+    color: white;
+}
+  
+#games:not(.active) .rectangle,
+#achievements:not(.active) .rectangle {
+    background-color: #9EA3B0;
+}
+#games:not(.active) p,
+#achievements:not(.active) p {
+    color: #9EA3B0;
+}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+#games-container,
+#achievements-container {
     display: flex;
     flex-direction: column;
     gap: calc(100 / 1284 * 25 * 1vw);
     width: 100%;
-    /* height: auto; */
     background-color: #202A39;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
-    margin-top: calc(100 / 1284 * 160 * 1vw);
     padding-top: calc(100 / 1284 * 50 * 1vw);
     padding-bottom: calc(100 / 1284 * 500 * 1vw);
 }
