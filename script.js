@@ -16,6 +16,8 @@ const telegram = window.Telegram.WebApp;
 
 telegram.expand();
 
+telegram.BackButton.hide()
+
 if (telegram.isVersionAtLeast("7.7")){
   telegram.disableVerticalSwipes();
 };
