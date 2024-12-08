@@ -1,14 +1,5 @@
-// Проверка, что Telegram WebApp доступен
-if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
-  const user = window.Telegram.WebApp.initDataUnsafe.user;
-
-  if (user) {
-      console.log(`!!!!!!!!! User ID: ${user.id}`); // Вывод в консоль ID пользователя
-  } else {
-      console.log("!!!!!!!!! User data not available.");
-  }
-} else {
-  console.log("!!!!!!!!! Telegram WebApp not initialized.");
+function logCurrentURL() {
+  console.log("Current URL:", window.location.href);
 }
 
 
@@ -134,15 +125,7 @@ function showConfirm(message) {
 }
 
 
-function hapticFeedback(type, redirectUrl) {
-  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.hapticFeedback) {
-      window.Telegram.WebApp.hapticFeedback.impactOccurred(type); // Срабатывание тактильной обратной связи
-  }
-  // Добавляем небольшой таймаут, чтобы сначала сработал тактильный отклик
-  setTimeout(() => {
-      window.location.href = redirectUrl; // Переход на указанную страницу
-  }, 200); // Задержка в 200 мс для эффекта
-}
+
 
 
 
