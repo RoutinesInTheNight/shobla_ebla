@@ -1,6 +1,32 @@
+// Функция для вывода текущего URL в консоль
 function logCurrentURL() {
   console.log("Current URL:", window.location.href);
 }
+
+// Вызываем функцию при загрузке страницы
+logCurrentURL();
+
+// Отслеживаем изменения URL (например, при навигации через историю браузера)
+window.addEventListener('popstate', logCurrentURL);
+
+// Если на сайте используются ссылки с изменением hash (#), отлавливаем их
+window.addEventListener('hashchange', logCurrentURL);
+
+// Если используются программные изменения URL (например, через history.pushState)
+(function() {
+  const originalPushState = history.pushState;
+  history.pushState = function(...args) {
+      originalPushState.apply(history, args);
+      logCurrentURL();
+  };
+
+  const originalReplaceState = history.replaceState;
+  history.replaceState = function(...args) {
+      originalReplaceState.apply(history, args);
+      logCurrentURL();
+  };
+})();
+
 
 
 
