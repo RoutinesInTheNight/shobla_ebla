@@ -213,7 +213,7 @@ body {
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     margin: 0;
-    transition: color 0.25s;
+    transition: color 0.1s;
 }
   
 .games-or-achievements .rectangle {
@@ -222,7 +222,7 @@ body {
     border-top-left-radius: 1vw;
     border-top-right-radius: 1vw;
     margin-top: calc(100 / 1284 * 40 * 1vw);
-    transition: background-color 0.25s;
+    transition: background-color 0.1s;
 }
 
 
@@ -245,7 +245,7 @@ body {
   
 #games:not(.active) .rectangle,
 #achievements:not(.active) .rectangle {
-    background-color: #9EA3B0;
+    background-color: #1a6199;
 }
 #games:not(.active) p,
 #achievements:not(.active) p {
