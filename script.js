@@ -45,13 +45,25 @@ window.onload = () => {
 
 // Появление всех элементов при загрузке страницы
 window.addEventListener('DOMContentLoaded', () => {
-  const children = document.querySelectorAll('.content > *');
-  children.forEach((child, index) => {
+  // Показываем заставку 0.5 сек
+  setTimeout(() => {
+    // Убираем прелоадер с анимацией исчезновения
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('hidden');
+
+    // Делаем задержку, чтобы плавный переход завершился
     setTimeout(() => {
-      child.classList.add('visible');
-    }, index * 25); // Задержка для каждого дочернего элемента
-  });
+      const children = document.querySelectorAll('.content > *');
+      children.forEach((child, index) => {
+        setTimeout(() => {
+          child.classList.add('visible');
+        }, index * 25); // Задержка для каждого дочернего элемента
+      });
+    }, 0); // Совпадает с длительностью transition в CSS
+  }, 0); // Длительность показа заставки
 });
+// 500   0
+
 
 
 

@@ -104,17 +104,8 @@ body {
     text-align: center;
     margin-top: calc(100 / 1284 * 10 * 1vw);
 }
-.fqqwgeg {
-    color: #4DB2FF;
-    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
-    /* margin: 0; */
-}
-.wegwgwg {
-    height: calc(100 / 1284 * 30 * 1vw);
-    margin-left: .75vw;
-    margin-top: .6vw;
-}
+
+
 
 
 
@@ -123,7 +114,7 @@ body {
 .level-container {
     display: flex;
     width: calc(100 / 1284 * 1084 * 1vw);
-    height: calc(100 / 1284 * 200 * 1vw);
+    height: calc(100 / 1284 * 182 * 1vw);
     margin: 0 auto;
     border-radius: 5vw;
     margin-top: calc(100 / 1284 * 50 * 1vw);
@@ -140,7 +131,7 @@ body {
 }
 
 .level-container .left img {
-    height: 75%;
+    height: calc(100 / 1284 * 132 * 1vw);
     /* width: 80%; */
 }
 
@@ -170,7 +161,7 @@ body {
     justify-content: space-between;
     color: rgb(250, 225, 150);
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 37.5 * 1vw);
+    font-size: calc(100 / 1284 * 40 * 1vw);
     margin-top: calc(100 / 1284 * 5 * 1vw);
 }
 
@@ -179,7 +170,7 @@ body {
     justify-content: space-between;
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 75 * 1vw);
+    font-size: calc(100 / 1284 * 50 * 1vw);
 }
 
 
@@ -227,6 +218,7 @@ body {
 .games-or-achievements p {
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
+    color: white;
     margin: 0;
     transition: color 0.1s;
 }
@@ -234,6 +226,7 @@ body {
 .games-or-achievements .rectangle {
     width: calc(100 / 1284 * 150 * 1vw);
     height: calc(100 / 1284 * 15 * 1vw);
+    background-color: #258ADA;
     border-top-left-radius: 1vw;
     border-top-right-radius: 1vw;
     margin-top: calc(100 / 1284 * 40 * 1vw);
@@ -248,24 +241,16 @@ body {
     display: block;
 }
 
-#games.active .rectangle,
-#achievements.active .rectangle {
-    background-color: #258ADA;
-}
-
-#games.active p,
-#achievements.active p {
-    color: white;
+#games.active,
+#achievements.active {
+    opacity: 1;
 }
   
-#games:not(.active) .rectangle,
-#achievements:not(.active) .rectangle {
-    background-color: #1a6199;
+#games:not(.active),
+#achievements:not(.active) {
+    opacity: 0.5;
 }
-#games:not(.active) p,
-#achievements:not(.active) p {
-    color: #9EA3B0;
-}
+
   
 
 
@@ -282,25 +267,47 @@ body {
 #games-container,
 #achievements-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: calc(100 / 1284 * 25 * 1vw);
-    width: 100%;
+    padding:
+        calc(100 / 1284 * 50 * 1vw)
+        calc(100 / 1284 * 50 * 1vw)
+        calc(100 / 1284 * 200 * 1vw)
+        calc(100 / 1284 * 50 * 1vw);
+    justify-content: flex-start;
     background-color: #202A39;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
-    padding-top: calc(100 / 1284 * 50 * 1vw);
-    padding-bottom: calc(100 / 1284 * 500 * 1vw);
+    margin-bottom: calc(100 / 1284 * 200 * 1vw);
+}
+#achievements-container {
+    gap: calc(100 / 1284 * 50 * 1vw);
+}
+
+
+#achievements-container .achievement {
+    flex: 1 1 calc(50%);
+    max-width: calc(50% - calc(100 / 1284 * 25 * 1vw));
+    background-color: #181F2A;
+    border-radius: 4vw;
+    box-sizing: border-box;
+    aspect-ratio: 1 / 1;
 }
 
 
 
 
-.game {
+
+
+
+
+
+
+#games-container .game {
     display: flex;
     height: calc(100 / 1284 * 336 * 1vw);
     background-color: #181F2A;
     border-radius: 4vw;
-    margin: 0 auto;
 }
 
 .game .left {
@@ -453,6 +460,32 @@ body {
 }
 
 
+
+
+
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader img {
+    width: 50vw;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
 
 
