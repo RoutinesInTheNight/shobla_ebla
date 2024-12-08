@@ -1,12 +1,43 @@
-// Появление всех элементов при загрузке страницы
-window.addEventListener('DOMContentLoaded', () => {
-  const children = document.querySelectorAll('.content > *');
-  children.forEach((child, index) => {
-    setTimeout(() => {
-      child.classList.add('visible');
-    }, index * 25); // Задержка для каждого дочернего элемента
-  });
+// Проверка, что Telegram WebApp доступен
+if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+  const user = window.Telegram.WebApp.initDataUnsafe.user;
+
+  if (user) {
+      console.log(`!!!!!!!!! User ID: ${user.id}`); // Вывод в консоль ID пользователя
+  } else {
+      console.log("!!!!!!!!! User data not available.");
+  }
+} else {
+  console.log("!!!!!!!!! Telegram WebApp not initialized.");
+}
+
+
+
+var animation = lottie.loadAnimation({
+  container: document.getElementById('lottie'), // контейнер для анимации
+  renderer: 'svg', // тип рендеринга
+  loop: true, // бесконечный цикл
+  autoplay: true, // автоматическое воспроизведение
+  path: 'anim.json' // путь к файлу .tgs
 });
+
+
+
+
+
+
+
+
+
+// Появление всех элементов при загрузке страницы
+// window.addEventListener('DOMContentLoaded', () => {
+//   const children = document.querySelectorAll('.content > *');
+//   children.forEach((child, index) => {
+//     setTimeout(() => {
+//       child.classList.add('visible');
+//     }, index * 25); // Задержка для каждого дочернего элемента
+//   });
+// });
 
 
 const telegram = window.Telegram.WebApp;

@@ -23,7 +23,11 @@
 }
 
 
-
+#lottie {
+    width: 20vw;
+    height: 20vw;
+    z-index: 1000;
+}
 
 html, body {
     display: flex;
@@ -51,7 +55,7 @@ body {
 
 
 /* Появление всех элементов при загрузке страницы */
-.content > * {
+/* .content > * {
     transform: scale(0.9);
     opacity: 0;
     transition: transform 0.25s ease-out, opacity 0.25s ease-out;
@@ -59,5 +63,5 @@ body {
 .content > *.visible {
     transform: scale(1);
     opacity: 1;
-}
+} */
 

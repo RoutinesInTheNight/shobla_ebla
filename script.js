@@ -3,12 +3,12 @@ if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
   const user = window.Telegram.WebApp.initDataUnsafe.user;
 
   if (user) {
-      console.log(`User ID: ${user.id}`); // Вывод в консоль ID пользователя
+      console.log(`!!!!!!!!! User ID: ${user.id}`); // Вывод в консоль ID пользователя
   } else {
-      console.log("User data not available.");
+      console.log("!!!!!!!!! User data not available.");
   }
 } else {
-  console.log("Telegram WebApp not initialized.");
+  console.log("!!!!!!!!! Telegram WebApp not initialized.");
 }
 
 
