@@ -42,56 +42,14 @@ window.onload = () => {
 
 
 
-
 // Появление всех элементов при загрузке страницы
 window.addEventListener('DOMContentLoaded', () => {
-  const preloader = document.getElementById('preloader');
-  const progress = document.getElementById('progress');
-
-  // Функция для генерации случайных промежутков времени
-  const getRandomIntervals = (totalDuration, steps) => {
-    const intervals = [];
-    let sum = 0;
-    for (let i = 0; i < steps - 1; i++) {
-      const remaining = totalDuration - sum;
-      const interval = Math.random() * (remaining / (steps - i));
-      intervals.push(interval);
-      sum += interval;
-    }
-    intervals.push(totalDuration - sum);
-    return intervals;
-  };
-
-  // Генерируем случайные промежутки для анимации
-  const totalDuration = 1500; // 1 секунда
-  const steps = 5;
-  const intervals = getRandomIntervals(totalDuration, steps);
-
-  // Анимируем полосу загрузки
-  let accumulatedTime = 0;
-  intervals.forEach((interval, index) => {
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
     setTimeout(() => {
-      const progressPercentage = ((index + 1) / steps) * 100;
-      progress.style.transitionDuration = `${interval}ms`;
-      progress.style.width = `${progressPercentage}%`;
-    }, accumulatedTime);
-    accumulatedTime += interval;
+      child.classList.add('visible');
+    }, index * 25); // Задержка для каждого дочернего элемента
   });
-
-  // Убираем прелоадер после завершения анимации
-  setTimeout(() => {
-    preloader.classList.add('hidden');
-
-    // Показываем контент после скрытия прелоадера
-    setTimeout(() => {
-      const children = document.querySelectorAll('.content > *');
-      children.forEach((child, index) => {
-        setTimeout(() => {
-          child.classList.add('visible');
-        }, index * 25);
-      });
-    }, 500); // Совпадает с длительностью transition в CSS
-  }, totalDuration);
 });
 
 

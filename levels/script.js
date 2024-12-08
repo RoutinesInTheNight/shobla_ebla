@@ -1,58 +1,12 @@
-(function() {
-  let previousURL = window.location.href; // Храним предыдущий URL
-
-  // Функция для логирования изменений URL
-  function logURLChange(eventType) {
-      const currentURL = window.location.href;
-      console.log(`[${eventType}] URL changed:`);
-      console.log("Previous URL:", previousURL);
-      console.log("Current URL:", currentURL);
-      previousURL = currentURL; // Обновляем предыдущий URL
-  }
-
-  // Вызываем функцию при загрузке страницы
-  logURLChange('load');
-
-  // Отслеживаем изменения истории браузера (назад/вперед)
-  window.addEventListener('popstate', () => logURLChange('popstate'));
-
-  // Отслеживаем изменения хэша (#)
-  window.addEventListener('hashchange', () => logURLChange('hashchange'));
-
-  // Перехватываем программные изменения URL через history.pushState и history.replaceState
-  const originalPushState = history.pushState;
-  history.pushState = function(...args) {
-      originalPushState.apply(history, args);
-      logURLChange('pushState');
-  };
-
-  const originalReplaceState = history.replaceState;
-  history.replaceState = function(...args) {
-      originalReplaceState.apply(history, args);
-      logURLChange('replaceState');
-  };
-})();
-
-
-
-
-
-
-
-
-
-
-
-
 // Появление всех элементов при загрузке страницы
-// window.addEventListener('DOMContentLoaded', () => {
-//   const children = document.querySelectorAll('.content > *');
-//   children.forEach((child, index) => {
-//     setTimeout(() => {
-//       child.classList.add('visible');
-//     }, index * 25); // Задержка для каждого дочернего элемента
-//   });
-// });
+window.addEventListener('DOMContentLoaded', () => {
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
+    setTimeout(() => {
+      child.classList.add('visible');
+    }, index * 25); // Задержка для каждого дочернего элемента
+  });
+});
 
 
 const telegram = window.Telegram.WebApp;
@@ -60,7 +14,7 @@ const telegram = window.Telegram.WebApp;
 telegram.expand();
 
 telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../main'));
 
 
 if (telegram.isVersionAtLeast("7.7")){
