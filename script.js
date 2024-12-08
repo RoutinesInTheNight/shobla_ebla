@@ -58,6 +58,7 @@ window.addEventListener('DOMContentLoaded', () => {
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();
+telegram.ready()
 
 telegram.BackButton.hide()
 
