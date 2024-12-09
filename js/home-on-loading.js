@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
           child.classList.add('visible');
         }, index * 25);
       });
-    }, 250); // Совпадает с длительностью transition в CSS
+    }, 100); // Совпадает с длительностью transition в CSS
   }, totalDuration);
 });
 
