@@ -219,7 +219,7 @@ function gameNotReadyPopup() {
 
 
 const container = document.querySelector('.user-image-container');
-const imageFolder = '../images'; // Папка с изображениями
+const imageFolder = 'images'; // Папка с изображениями
 const totalImages = 5; // Количество маленьких изображений
 const interval = 100; // Интервал появления изображений (в миллисекундах)
 const circleRadius = 45; // Радиус круга в vw
