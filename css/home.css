@@ -46,6 +46,8 @@ body {
     position: absolute;
     width: 100%;
     height: auto;
+    top: 0;
+    left: 0;
     z-index: -2;
 }
 
@@ -78,6 +80,11 @@ body {
     left: 0;
     filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
     -webkit-filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
+    transition: transform 0.1s ease-in-out;
+    pointer-events: auto;
+}
+.user-image.shrink {
+    transform: scale(0.95);
 }
 
 
@@ -391,6 +398,7 @@ body {
     color: white;
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
+    opacity: 0.5;
 }
 
 .bottom-menu .menu img {
@@ -421,6 +429,8 @@ body {
 
 .bottom-menu .selected img {
     margin-top: calc(100 / 1284 * 35 * 1vw);
+}
+.bottom-menu .selected {
     opacity: 1;
 }
 
@@ -437,12 +447,14 @@ body {
 
 .moving-image {
     position: absolute;
-    width: 10vw;
-    height: 10vw;
+    width: 15vw;
+    height: 15vw;
+    left: 50%;
+    top: 50%;
     animation: move-to-center 5s infinite, fade-in 2.5s ease-in, rot 5s infinite;
     opacity: 0;
     z-index: -1;
-    transform: translateZ(0)
+    transform: translateZ(0);
 }
 @keyframes fade-in {
     from {
@@ -454,10 +466,10 @@ body {
 }
 @keyframes move-to-center {
     from {
-        transform: translate(var(--start-x), var(--start-y)) scale(1);
+        transform: translate(var(--start-x), var(--start-y)) scale(1) rotate(0);
     }
     to {
-        transform: translate(0, 0) scale(0);
+        transform: translate(-50%, 50%) scale(0) rotate(var(--rotate-end));
     }
 }
 @keyframes rot {
@@ -526,6 +538,11 @@ body {
     transform: scale(1);
     opacity: 1;
 }
+
+
+
+
+
 
 
 /* Отключаем клики */
