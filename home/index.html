@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+      <title>Банда «Псы»</title>
+      <link rel="stylesheet" href="../css/home.css">
+      <script src="https://telegram.org/js/telegram-web-app.js?v=8.0"></script>
+  </head>
+  <body>
+
+
+    <div class="content" id="content">
+
+        <div class="user-name">
+          Константин
+        </div>
+
+        <div class="user-image-container">
+            <img src="../images/avatar.png" class="user-image">
+        </div>
+
+
+        <div class="balance-container">
+          <img src="../images/coin.png" class="dogcoin">
+          <p class="balance">214 146</p>
+        </div>
+
+        <div class="miniapp-description">
+          Играй и увеличивай пенсию
+        </div>
+
+
+        <div class="level-container" onclick="hapticFeedback('soft', 'leagues')">
+          <div class="left">
+            <img src="../images/level_cup.png">
+          </div>
+          <div class="center">
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
+            <div class="level-marks">
+              <span class="left-mark">100K</span>
+              <span class="right-mark">250K</span>
+            </div>
+            <div class="level-num-name">
+              <span>lvl 3:</span>
+              <span>Инцел</span>
+            </div>
+          
+          </div>
+          <div class="right">
+            <img src="../images/right-arrow.png">
+          </div>
+        </div>
+
+        
+        <div class="games-or-achievements">
+          <div id="games" class="games">
+            <p>Игры</p>
+            <div class="rectangle"></div>
+          </div>
+          <div id="achievements" class="achievements">
+            <p>Ачивки</p>
+            <div class="rectangle"></div>
+          </div>
+        </div>
+        
+
+
+
+
+        <div id="games-container" class="content-container">
+          
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Шобла Комбат
+              </div>
+              <div class="description">
+                Прокачивай карты и собирай прибыль каждые 3 часа
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Слоты пса
+              </div>
+              <div class="description">
+                Собирай 3 одинаковые фигуры в ряд и преумножай пенсию
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Рулетка пса
+              </div>
+              <div class="description">
+                Ставь на красное или чёрное и угадывай числа от 0 до 36
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Слоты пса (Deluxe)
+              </div>
+              <div class="description">
+                Собирай до 5 одинаковых фигур в ряд и преумножай пенсию
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Кости пса
+              </div>
+              <div class="description">
+                Описание будет позже
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+          <div class="game" onclick="hapticFeedback('soft', 'leagues')">
+            <div class="left">
+              <img src="../images/no-photo.png">
+            </div>
+            <div class="center">
+              <div class="name">
+                Симулятор дропа
+              </div>
+              <div class="description">
+                Описание будет позже
+              </div>
+            </div>
+            <div class="right">
+              <img src="../images/gray-arrow.png">
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+
+
+        <div id="achievements-container" class="content-container hidden">
+          <div class="achievement" onclick="hapticFeedback('light')">
+            <div class="center"><div class="name">light</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('medium')">
+            <div class="center"><div class="name">medium</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('heavy')">
+            <div class="center"><div class="name">heavy</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('rigid')">
+            <div class="center"><div class="name">rigid</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('soft')">
+            <div class="center"><div class="name">soft</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('error')">
+            <div class="center"><div class="name">error</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('success')">
+            <div class="center"><div class="name">success</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('warning')">
+            <div class="center"><div class="name">warning</div></div>
+          </div>
+
+          <div class="achievement" onclick="hapticFeedback('change')">
+            <div class="center"><div class="name">change</div></div>
+          </div>
+        </div>
+
+
+
+
+
+
+        <div class="bottom-menu">
+          
+          <div class="menu" onclick="hapticFeedback('error')">
+            <img src="../images/history.png">
+            <p>...</p>
+          </div>
+
+          <div class="menu" onclick="hapticFeedback('error')">
+            <img src="../images/history.png">
+            <p>...</p>
+          </div>
+          
+          <div class="menu selected" onclick="hapticFeedback('warning')">
+            <div></div>
+            <img src="../images/home-white.png">
+            <p>Главная</p>
+          </div>
+
+          <div class="menu" onclick="hapticFeedback('error')">
+            <img src="../images/rank.png">
+            <p>Рейтинг</p>
+          </div>
+
+          <div class="menu" onclick="hapticFeedback('error')">
+            <img src="../images/account.png">
+            <p>Профиль</p>
+          </div>
+
+        </div>
+        
+
+
+    </div>
+    <script src="../js/home.js"></script>
+</body>
+</html>
