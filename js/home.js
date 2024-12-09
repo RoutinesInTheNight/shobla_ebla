@@ -155,7 +155,19 @@ function hapticFeedback(type, redirectUrl) {
     console.error('Haptic feedback is not supported in this environment.');
   }
   if (redirectUrl && redirectUrl !== '#') {
-    window.location.href = redirectUrl;
+    // Начинаем скрывать элементы, перед тем как перейти на другой URL
+    const children = document.querySelectorAll('.content > *');
+    children.forEach((child, index) => {
+      setTimeout(() => {
+        child.classList.remove('visible');
+        child.classList.add('hidden');
+      }, index * 25); // Задержка для каждого дочернего элемента, чтобы они исчезали по очереди
+    });
+
+    // После того, как элементы исчезнут, переход на новый URL
+    setTimeout(() => {
+      window.location.href = redirectUrl;
+    }, children.length * 25); // Ждем, пока все элементы исчезнут (умножаем на задержку)
   } else {
     console.error('Неверный путь!');
   }
