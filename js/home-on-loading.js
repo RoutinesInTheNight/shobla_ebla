@@ -4,6 +4,19 @@ function selectTab(tabId) {
   const gamesContainer = document.getElementById('games-container');
   const achievementsContainer = document.getElementById('achievements-container');
 
+//   if (tabId === 'games') {
+//     gamesTab.classList.add('active');
+//     achievementsTab.classList.remove('active');
+//     gamesContainer.style.display = 'flex'; // Показываем контейнер игр
+//     achievementsContainer.style.display = 'none'; // Полностью скрываем контейнер ачивок
+//   } else if (tabId === 'achievements') {
+//     achievementsTab.classList.add('active');
+//     gamesTab.classList.remove('active');
+//     achievementsContainer.style.display = 'flex'; // Показываем контейнер ачивок
+//     gamesContainer.style.display = 'none'; // Полностью скрываем контейнер игр
+//   }
+// }
+
   if (tabId === 'games') {
     gamesTab.classList.add('active');
     achievementsTab.classList.remove('active');
@@ -16,6 +29,7 @@ function selectTab(tabId) {
     gamesContainer.style.display = 'none'; // Полностью скрываем контейнер игр
   }
 }
+
 
 // Установка начального состояния
 window.onload = () => {
@@ -81,6 +95,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Убираем прелоадер после завершения анимации
   setTimeout(() => {
     preloader.classList.add('hidden');
+
+    hapticFeedback('success');
 
     // Показываем контент после скрытия прелоадера
     setTimeout(() => {
