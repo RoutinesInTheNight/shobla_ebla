@@ -6,14 +6,29 @@
     <title>Банда «Псы»</title>
     <link rel="stylesheet" href="../../css/leagues.css">
     <script src="https://telegram.org/js/telegram-web-app.js?v=8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 
 
   </head>
   <body>
-    <div id="lottie"></div>
+    <div class="col-lg-8" id="animation container"></div>
+    <script>
+      var animation = bodymovin.loadAnimation({
+        container: document.getElementById('animation container'),
+        path: 'fff.json',
+        render: 'svg',
+        loop: true,
+        autoplay: true,
+        name: 'demo anumation'
+      });
+      
+    </script>
+
+
+
+
     <div class="content" id="content">
     </div>
     <script src="../../js/leagues.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
   </body>
 </html>
