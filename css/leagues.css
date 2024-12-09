@@ -1,14 +1,14 @@
 @font-face {
     font-family: 'Sf Pro Display Regular';
-    src: url('fonts/SFPRODISPLAYREGULAR.OTF') format('truetype')
+    src: url('../fonts/SFPRODISPLAYREGULAR.OTF') format('truetype')
 }
 @font-face {
     font-family: 'Sf Pro Display Medium';
-    src: url('fonts/SFPRODISPLAYMEDIUM.OTF') format('truetype')
+    src: url('../fonts/SFPRODISPLAYMEDIUM.OTF') format('truetype')
 }
 @font-face {
     font-family: 'Sf Pro Display Bold';
-    src: url('fonts/SFPRODISPLAYBOLD.OTF') format('truetype')
+    src: url('../fonts/SFPRODISPLAYBOLD.OTF') format('truetype')
 }
 
 
@@ -20,13 +20,6 @@
     -ms-user-select: none;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
-}
-
-
-#lottie {
-    width: 20vw;
-    height: 20vw;
-    z-index: 1000;
 }
 
 html, body {
@@ -45,10 +38,32 @@ body {
     background-color: #181F2A;
 }
 
+
+.top-backgroung-img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: -2;
+}
+
+
 .content {
     width: 100%;
     text-align: center;
     padding-top: calc(100 / 1284 * 300 * 1vw);
+}
+
+
+
+#animated-cup {
+    height: calc(100 / 1284 * 330 * 1vw);
+}
+
+.page-name {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 100 * 1vw);
+    margin: 0;
 }
 
 

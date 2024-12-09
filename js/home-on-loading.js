@@ -253,8 +253,8 @@ function gameNotReadyPopup() {
 const container = document.querySelector('.user-image-container');
 const imageFolder = 'images'; // Папка с изображениями
 const totalImages = 5; // Количество маленьких изображений
-const interval = 100; // Интервал появления изображений (в миллисекундах)
-const circleRadius = 45; // Радиус круга в vw
+const interval = 250; // Интервал появления изображений (в миллисекундах)
+const circleRadius = 75; // Радиус круга в vw
 
 // Генерация случайных координат на окружности
 function getRandomPosition(radius) {
@@ -295,7 +295,7 @@ function createMovingImage(index) {
       // Задержка перед удалением
       setTimeout(() => {
           img.remove();
-      }, 5000); // 1000 миллисекунд = 1 секунда
+      }, 15000); // 1000 миллисекунд = 1 секунда
   });
 }
 

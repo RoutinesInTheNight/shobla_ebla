@@ -9,6 +9,18 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+// Добавление анимированного кубка
+var animation = bodymovin.loadAnimation({
+  container: document.getElementById('animated-cup'),
+  path: 'fff.json',
+  render: 'svg',
+  loop: true,
+  autoplay: true,
+  name: 'demo anumation'
+});
+
+
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();

@@ -41,6 +41,16 @@ body {
     background-color: #181F2A;
 }
 
+
+.top-backgroung-img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: -2;
+}
+
+
+
 .content {
     width: 100%;
     text-align: center;
@@ -427,9 +437,9 @@ body {
 
 .moving-image {
     position: absolute;
-    width: 5vw;
-    height: 5vw;
-    animation: move-to-center 8s infinite, fade-in 2.5s ease-in, rot 8s infinite;
+    width: 10vw;
+    height: 10vw;
+    animation: move-to-center 5s infinite, fade-in 2.5s ease-in, rot 5s infinite;
     opacity: 0;
     z-index: -1;
     transform: translateZ(0)
@@ -455,7 +465,7 @@ body {
         rotate: 0deg
     }
     to {
-        rotate: 180deg
+        rotate: 90deg
     }
 }
 
