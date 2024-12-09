@@ -122,6 +122,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
 const telegram = window.Telegram.WebApp;
 
 telegram.expand();
@@ -170,7 +172,6 @@ function showConfirm(message) {
 function showConfirm(message) {
   telegram.showConfirm(message);
 }
-
 
 
 
@@ -235,25 +236,24 @@ function hapticFeedback(type, redirectUrl) {
 
 
 
-
-
-function gameNotReadyPopup() {
-  telegram.showPopup({
-      title  : "Игра ещё не готова",
-      message: "(Не ладно, нахуй)",
-      buttons: [
-          {type: "default", text: "Понял, иду нахуй"},
-      ]
-  });
+// Анимация нажатия на аватарку
+const image = document.querySelector('.user-image');
+function animateImage() {
+  hapticFeedback('light');
+  image.classList.add('shrink');
+  setTimeout(() => {
+    image.classList.remove('shrink');
+  }, 100);
 }
+image.addEventListener('click', animateImage);
 
 
 
 
 const container = document.querySelector('.user-image-container');
-const imageFolder = 'images'; // Папка с изображениями
-const totalImages = 5; // Количество маленьких изображений
-const interval = 250; // Интервал появления изображений (в миллисекундах)
+const imageFolder = 'img-circular-animation'; // Папка с изображениями
+const totalImages = 15; // Количество маленьких изображений
+const interval = 100; // Интервал появления изображений (в миллисекундах)
 const circleRadius = 75; // Радиус круга в vw
 
 // Генерация случайных координат на окружности
@@ -276,14 +276,15 @@ function createMovingImage(index) {
   // Получаем случайное положение на границе круга
   const { x, y } = getRandomPosition(circleRadius);
 
+  // Генерируем рандомный конечный угол поворота
+  const randomRotation = Math.floor(Math.random() * 360);
+
   // Устанавливаем начальные координаты как переменные CSS
   img.style.setProperty('--start-x', `${x}vw`);
   img.style.setProperty('--start-y', `${y}vw`);
-  img.style.left = '50%';
-  img.style.top = '50%';
+  img.style.setProperty('--rotate-end', `${randomRotation}deg`);
 
-  // Добавляем изображение в контейнер
-  container.appendChild(img);
+  container.appendChild(img); // Добавляем изображение в контейнер
 
   // Запускаем анимацию с задержкой, чтобы гарантировать плавное появление
   setTimeout(() => {
@@ -295,9 +296,10 @@ function createMovingImage(index) {
       // Задержка перед удалением
       setTimeout(() => {
           img.remove();
-      }, 15000); // 1000 миллисекунд = 1 секунда
+      }, 1000); // 1000 миллисекунд = 1 секунда
   });
 }
+
 
 
 // Генерация нескольких изображений
@@ -312,3 +314,7 @@ function generateImages() {
 
 // Циклическое создание изображений
 setInterval(generateImages, interval);
+
+
+
+
