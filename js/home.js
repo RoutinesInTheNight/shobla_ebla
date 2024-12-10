@@ -1,6 +1,6 @@
 const referrer = document.referrer;
 if (referrer) {
-  console.log('Прошлый сайт: ${referer}');
+  console.log(`Прошлый сайт: ${referrer}`);
 } else {
   console.log('Без сайта');
 }
