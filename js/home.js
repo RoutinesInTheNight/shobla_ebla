@@ -1,8 +1,12 @@
+
+
 const referrer = document.referrer;
+const referrerElement = document.getElementById('previous-site');
+
 if (referrer) {
-  console.log(`Прошлый сайт: ${referrer}`);
+  referrerElement.textContent = `Вы пришли с: ${referrer}`;
 } else {
-  console.log('Без сайта');
+  referrerElement.textContent = 'Источник неизвестен.';
 }
 
 
