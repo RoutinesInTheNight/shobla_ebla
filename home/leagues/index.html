@@ -19,9 +19,21 @@
       <div id="animated-cup"></div>
 
       <p class="page-name">Лиги пса</p>
+      <span id="previous-site" style="color: white;"></span>
 
     </div>
 
     <script src="../../js/leagues.js"></script>
+    <script>
+      const referrer = document.referrer;
+const referrerElement = document.getElementById('previous-site');
+
+if (referrer) {
+  referrerElement.textContent = `Вы пришли с: ${referrer}`;
+} else {
+  referrerElement.textContent = 'Источник неизвестен.';
+}
+
+    </script>
   </body>
 </html>
