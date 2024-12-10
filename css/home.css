@@ -62,7 +62,7 @@ body {
     height: auto;
     top: 0;
     left: 0;
-    z-index: -2;
+    /* z-index: -2; */
 }
 
 
@@ -300,7 +300,7 @@ body {
     border-radius: 4vw;
     box-sizing: border-box;
     /* aspect-ratio: 1 / 1; */
-    padding: 5vw;
+    padding: calc(100 / 1284 * 50 * 1vw)
 }
 #games-container .game img {
     width: 100%;
@@ -311,7 +311,7 @@ body {
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     /* text-align: left; */
-    margin: calc(100 / 1284 * 50 * 1vw) 0 0 0;
+    margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
     /* margin-top: calc(100 / 1284 * 75 * 1vw); */
 }
 .game .description {
