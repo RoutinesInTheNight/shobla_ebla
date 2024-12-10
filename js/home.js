@@ -176,7 +176,7 @@ function hapticFeedback(type, redirectUrl = undefined, element = undefined) {
 
 const container = document.querySelector('.user-image-container');
 const rootPath = window.location.origin;
-const imageFolder = `${rootPath}/img-circular-animation`;
+const imageFolder = `${rootPath}/shobla_ebla/img-circular-animation`;
 const totalImages = 15; // Количество маленьких изображений
 const interval = 100; // Интервал появления изображений (в миллисекундах)
 const circleRadius = 75; // Радиус круга в vw
