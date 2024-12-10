@@ -57,7 +57,58 @@ window.onload = () => {
 
 
 
+// Появление всех элементов при загрузке страницы
+window.addEventListener('DOMContentLoaded', () => {
+  const preloader = document.getElementById('preloader');
+  const progress = document.getElementById('progress');
 
+  // Функция для генерации случайных промежутков времени
+  const getRandomIntervals = (totalDuration, steps) => {
+    const intervals = [];
+    let sum = 0;
+    for (let i = 0; i < steps - 1; i++) {
+      const remaining = totalDuration - sum;
+      const interval = Math.random() * (remaining / (steps - i));
+      intervals.push(interval);
+      sum += interval;
+    }
+    intervals.push(totalDuration - sum);
+    return intervals;
+  };
+
+  // Генерируем случайные промежутки для анимации
+  const totalDuration = 1500; // 1 секунда
+  const steps = 5;
+  const intervals = getRandomIntervals(totalDuration, steps);
+
+  // Анимируем полосу загрузки
+  let accumulatedTime = 0;
+  intervals.forEach((interval, index) => {
+    setTimeout(() => {
+      const progressPercentage = ((index + 1) / steps) * 100;
+      progress.style.transitionDuration = `${interval}ms`;
+      progress.style.width = `${progressPercentage}%`;
+    }, accumulatedTime);
+    accumulatedTime += interval;
+  });
+
+  // Убираем прелоадер после завершения анимации
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+
+    hapticFeedback('success');
+
+    // Показываем контент после скрытия прелоадера
+    setTimeout(() => {
+      const children = document.querySelectorAll('.content > *');
+      children.forEach((child, index) => {
+        setTimeout(() => {
+          child.classList.add('visible');
+        }, index * 25);
+      });
+    }, 100); // Совпадает с длительностью transition в CSS
+  }, totalDuration);
+});
 
 
 
@@ -74,15 +125,10 @@ window.onload = () => {
 
 
 const telegram = window.Telegram.WebApp;
-const USER_ID = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.id : null;
-const IS_PREMIUM = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.is_premium || false : false;
-const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
-if (telegram.isVersionAtLeast("6.1")){
-  telegram.BackButton.hide();
-};
+telegram.BackButton.hide()
 
 if (telegram.isVersionAtLeast("7.7")){
   telegram.disableVerticalSwipes();
@@ -97,45 +143,69 @@ if (telegram.isVersionAtLeast("8.0")) {
 };
 
 
-// console.log('initDataUnsafe.user', telegram.initDataUnsafe.user);
-// console.log('User ID:', USER_ID);
-// console.log('Premium:', IS_PREMIUM);
-// console.log('Device Type:', DEVICE_TYPE);
+// telegram.safeAreaInset = {
+//   top: 0,
+//   bottom: 0,
+//   left: 0,
+//   right: 0
+// };
+
+// telegram.ContentSafeAreaInset = {
+//   top: 0,
+//   bottom: 0,
+//   left: 0,
+//   right: 0
+// };
+
+// telegram.ready();
+
+
+
+function showAlert(message) {
+  telegram.showAlert(message);
+}
+
+function showConfirm(message) {
+  telegram.showConfirm(message);
+}
+
+function showConfirm(message) {
+  telegram.showConfirm(message);
+}
 
 
 
 
 
-
-function hapticFeedback(type, redirectUrl = undefined, element = undefined) {
-  if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
+function hapticFeedback(type, redirectUrl) {
+  if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
     switch (type) {
       case 'light':
-        telegram.HapticFeedback.impactOccurred('light');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
         break;
       case 'medium':
-        telegram.HapticFeedback.impactOccurred('medium');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
         break;
       case 'heavy':
-        telegram.HapticFeedback.impactOccurred('heavy');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
         break;
       case 'rigid':
-        telegram.HapticFeedback.impactOccurred('rigid');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('rigid');
         break;
       case 'soft':
-        telegram.HapticFeedback.impactOccurred('soft');
+        window.Telegram.WebApp.HapticFeedback.impactOccurred('soft');
         break;
       case 'error':
-        telegram.HapticFeedback.notificationOccurred('error');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('error');
         break;
       case 'success':
-        telegram.HapticFeedback.notificationOccurred('success');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
         break;
       case 'warning':
-        telegram.HapticFeedback.notificationOccurred('warning');
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('warning');
         break;
       case 'change':
-        telegram.HapticFeedback.selectionChanged();
+        window.Telegram.WebApp.HapticFeedback.selectionChanged();
         break;
       default:
         console.warn('Unknown haptic feedback type:', type);
@@ -143,40 +213,45 @@ function hapticFeedback(type, redirectUrl = undefined, element = undefined) {
   } else {
     console.error('Haptic feedback is not supported in this environment.');
   }
-
-  if (element) {
-    if (element.classList.contains('visible')) {
-      element.classList.remove('visible');
-    } else {
-      element.classList.add('zoom-out');
-    }
-  }
-
   if (redirectUrl && redirectUrl !== '#') {
+    // Начинаем скрывать элементы, перед тем как перейти на другой URL
     const children = document.querySelectorAll('.content > *');
     children.forEach((child, index) => {
       setTimeout(() => {
         child.classList.remove('visible');
         child.classList.add('hidden');
-      }, index * 25);
+      }, index * 25); // Задержка для каждого дочернего элемента, чтобы они исчезали по очереди
     });
 
+    // После того, как элементы исчезнут, переход на новый URL
     setTimeout(() => {
       window.location.href = redirectUrl;
-    }, children.length * 25);
+    }, children.length * 25); // Ждем, пока все элементы исчезнут (умножаем на задержку)
+  } else {
+    console.error('Неверный путь!');
   }
-  
 }
 
 
 
 
 
+// Анимация нажатия на аватарку
+const image = document.querySelector('.user-image');
+function animateImage() {
+  hapticFeedback('light');
+  image.classList.add('shrink');
+  setTimeout(() => {
+    image.classList.remove('shrink');
+  }, 100);
+}
+image.addEventListener('click', animateImage);
+
+
 
 
 const container = document.querySelector('.user-image-container');
-const rootPath = window.location.origin;
-const imageFolder = `${rootPath}/img-circular-animation`;
+const imageFolder = 'img-circular-animation'; // Папка с изображениями
 const totalImages = 15; // Количество маленьких изображений
 const interval = 100; // Интервал появления изображений (в миллисекундах)
 const circleRadius = 75; // Радиус круга в vw
