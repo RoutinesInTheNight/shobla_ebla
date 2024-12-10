@@ -1,3 +1,14 @@
+const referrer = document.referrer;
+if (referrer) {
+  console.log('Прошлый сайт: ${referer}');
+} else {
+  console.log('Без сайта');
+}
+
+
+
+
+
 function selectTab(tabId) {
   const gamesTab = document.getElementById('games');
   const achievementsTab = document.getElementById('achievements');
