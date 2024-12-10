@@ -50,6 +50,8 @@ if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.git
 } else {
   // Просто появление контента
   window.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('hidden'); // Убираем preloader
     const children = document.querySelectorAll('.content > *');
     children.forEach((child, index) => {
       setTimeout(() => {
