@@ -299,7 +299,7 @@ body {
     background-color: #181F2A;
     border-radius: 4vw;
     box-sizing: border-box;
-    aspect-ratio: 1 / 1;
+    /* aspect-ratio: 1 / 1; */
     padding: 5vw;
 }
 #games-container .game img {
