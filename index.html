@@ -36,13 +36,12 @@
     </div>
 
     <p class="miniapp-description">
-      Играй и увеличивай пенсию<br>
-      <span id="previous-site"></span>
+      Играй и увеличивай пенсию
     </p>
     
 
 
-    <div class="league-container" onclick="hapticFeedback('soft', 'home/leagues', this)">
+    <div class="league-container" onclick="hapticFeedback('soft', 'leagues', this)">
       <div class="left">
         <img src="images/home-cup.png">
       </div>
@@ -287,55 +286,6 @@
   </div>
 
   <script src="js/home.js"></script>
-  <script>
-    // Заставка и появление контента
-    window.addEventListener('DOMContentLoaded', () => {
-      const preloader = document.getElementById('preloader');
-      const progress = document.getElementById('progress');
-
-      const getRandomIntervals = (totalDuration, steps) => {
-        const intervals = [];
-        let sum = 0;
-        for (let i = 0; i < steps - 1; i++) {
-          const remaining = totalDuration - sum;
-          const interval = Math.random() * (remaining / (steps - i));
-          intervals.push(interval);
-          sum += interval;
-        }
-        intervals.push(totalDuration - sum);
-        return intervals;
-      };
-
-      const totalDuration = 1500; // Длительность заставки
-      const steps = 5;
-      const intervals = getRandomIntervals(totalDuration, steps);
-
-      let accumulatedTime = 0;
-      intervals.forEach((interval, index) => {
-        setTimeout(() => {
-          const progressPercentage = ((index + 1) / steps) * 100;
-          progress.style.transitionDuration = `${interval}ms`;
-          progress.style.width = `${progressPercentage}%`;
-        }, accumulatedTime);
-        accumulatedTime += interval;
-      });
-
-      // Убираем прелоадер и показываем контент
-      setTimeout(() => {
-        preloader.classList.add('hidden');
-        hapticFeedback('success');
-        setTimeout(() => {
-          const children = document.querySelectorAll('.content > *');
-          children.forEach((child, index) => {
-            setTimeout(() => {
-              child.classList.add('visible');
-            }, index * 25);
-          });
-        }, 100);
-      }, totalDuration);
-    });
-
-  </script>
 
 </body>
 </html>
