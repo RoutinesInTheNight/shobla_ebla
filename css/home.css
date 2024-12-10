@@ -279,23 +279,14 @@ body {
     border-top-right-radius: 5vw;
     margin-bottom: calc(100 / 1284 * 200 * 1vw);
 }
-#achievements-container {
+
+
+
+
+
+#games-container {
     gap: calc(100 / 1284 * 50 * 1vw);
 }
-
-
-#achievements-container .achievement {
-    flex: 1 1 calc(50%);
-    max-width: calc(50% - calc(100 / 1284 * 25 * 1vw));
-    background-color: #181F2A;
-    border-radius: 4vw;
-    box-sizing: border-box;
-    aspect-ratio: 1 / 1;
-}
-
-
-
-
 
 
 
@@ -303,53 +294,87 @@ body {
 
 
 #games-container .game {
-    display: flex;
-    height: calc(100 / 1284 * 336 * 1vw);
+    flex: 1 1 calc(50%);
+    max-width: calc(50% - calc(100 / 1284 * 25 * 1vw));
     background-color: #181F2A;
     border-radius: 4vw;
+    box-sizing: border-box;
+    aspect-ratio: 1 / 1;
+    padding: 5vw;
 }
-
-.game .left {
-    width: calc(100 / 1284 * 335 * 1vw);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#games-container .game img {
+    width: 100%;
+    border-radius: 2vw;
 }
-
-.game .left img {
-    width: calc(100 / 1284 * 235 * 1vw);
-}
-
-.game .center {
-    width: calc(100 / 1284 * 699 * 1vw);
-    display: block;
-    justify-content: center;
-    align-items: center;
-}
-
 .game .name {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
-    text-align: left;
-    margin-top: calc(100 / 1284 * 75 * 1vw);
+    /* text-align: left; */
+    margin: calc(100 / 1284 * 50 * 1vw) 0 0 0;
+    /* margin-top: calc(100 / 1284 * 75 * 1vw); */
 }
 .game .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
     text-align: left;
+    margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
+}
+
+
+
+
+#achievements-container .section {
+    color: white;
+    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    text-align: left;
+    margin: calc(100 / 1284 * 25 * 1vw) 0 0 calc(100 / 1284 * 50 * 1vw);
+}
+#achievements-container .achievement {
+    display: flex;
+    background-color: #181F2A;
+    border-radius: 4vw;
+}
+#achievements-container .completed {
+    opacity: 0.5;
+}
+
+
+
+.achievement .left {
+    width: calc(100 / 1284 * 919 * 1vw);
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: calc(100 / 1284 * 57.5 * 1vw);
+    /* margin-top: calc(100 / 1284 * 50 * 1vw); */
+}
+
+.achievement .name {
+    color: #8894A2;
+    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    text-align: left;
+    /* margin-top: calc(100 / 1284 * 75 * 1vw); */
+}
+.achievement .description {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * 1vw);
+    text-align: left;
     margin-top: calc(100 / 1284 * 25 * 1vw);
 }
 
-.game .right {
+.achievement .right {
     width: calc(100 / 1284 * 150 * 1vw);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.game .right img {
+.achievement .right img {
     height: calc(100 / 1284 * 35 * 1vw);
 }
 
