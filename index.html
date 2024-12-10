@@ -83,37 +83,43 @@
     <div id="games-container" class="content-container">
 
       <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
-        <p class="name">Шобла Комбат</p>
-        <p class="description">Прокачивай карты и собирай прибыль каждые 3 часа</p>
+        <img src="images/no-photo2.png">
+        <p class="name">Ставки пса</p>
+        <p class="description">Выбирай лучший кэф и ставь всю пенсию на исход</p>
       </div>
 
       <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
-        <p class="name">Слоты пса</p>
-        <p class="description">Собирай 3 одинаковые фигуры в ряд и преумножай пенсию</p>
-      </div>
-
-      <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
+        <img src="images/roulette.png">
         <p class="name">Рулетка пса</p>
-        <p class="description">Ставь на красное или чёрное и угадывай числа от 0 до 36</p>
+        <p class="description">Твоя пенсия зависит лишь от красного или чёрного</p>
       </div>
 
       <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
+        <img src="images/slots.png">
+        <p class="name">Слоты пса</p>
+        <p class="description">Круги барабан и сорви Джекпот с тремя слотами</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
+        <img src="images/slots-deluxe.png">
         <p class="name">Слоты пса Deluxe</p>
-        <p class="description">Собирай до 5 одинаковых фигур в ряд и преумножай пенсию</p>
+        <p class="description">Больше слотов, больше Джектопов и больше пенсия</p>
       </div>
 
       <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
+        <img src="images/dice.png">
         <p class="name">Кости пса</p>
         <p class="description">Описание будет позже</p>
       </div>
 
       <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
-        <img src="images/no-photo2.jpg">
+        <img src="images/no-photo2.png">
+        <p class="name">Шобла Комбат</p>
+        <p class="description">Прокачивай карты и собирай прибыль каждые 3 часа</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft', 'leagues', this)">
+        <img src="images/no-photo2.png">
         <p class="name">Симулятор дропа</p>
         <p class="description">Описание будет позже</p>
       </div>
@@ -128,124 +134,113 @@
     <div id="achievements-container" class="content-container hidden">
 
       <div class="achievement" onclick="hapticFeedback('light')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию light
-          </div>
-          <div class="description">
-            Получи 10 000
+        <div class="info">
+          <p class="description">Сорви пломбу у Костика дома</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 10 000</p>
           </div>
         </div>
-        <div class="right">
-          <img src="images/gray-arrow.png">
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement" onclick="hapticFeedback('light')">
+        <div class="info">
+          <p class="description">Выгони раковину у Костика дома</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 25 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement completed" onclick="hapticFeedback('medium')">
+        <div class="info">
+          <p class="description">Взгрей Костика фирменной жижкой</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
         </div>
       </div>
 
       <div class="achievement completed" onclick="hapticFeedback('medium')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию medium
-          </div>
+        <div class="info">
+          <p class="description">Взгрей Шоблыча чекушкой</p>
         </div>
-        <div class="right">
-          <img src="images/gray-check.png">
+        <div class="status">
+          <img src="images/green-check.png">
         </div>
       </div>
+
+      <div class="achievement completed" onclick="hapticFeedback('medium')">
+        <div class="info">
+          <p class="description">Взгрей Шоблыча чекушкой со слабительным</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
 
       <p class="section">Шобла Комбат</p>
 
-      <div class="achievement" onclick="hapticFeedback('heavy')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию heavy
-          </div>
-          <div class="description">
-            Получи 10 000
+      <div class="achievement" onclick="hapticFeedback('light')">
+        <div class="info">
+          <p class="description">Сделай это это это</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 250 000</p>
           </div>
         </div>
-        <div class="right">
-          <img src="images/gray-arrow.png">
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement" onclick="hapticFeedback('light')">
+        <div class="info">
+          <p class="description">Сделай то то то</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 5 000 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement completed" onclick="hapticFeedback('medium')">
+        <div class="info">
+          <p class="description">Сделай таси-баси</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
         </div>
       </div>
 
-      <div class="achievement completed" onclick="hapticFeedback('rigid')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию rigid
+
+      <p class="section">Домашние задания Тайлера Дердена</p>
+
+      <div class="achievement" onclick="hapticFeedback('light')">
+        <div class="info">
+          <p class="description">Забеги к Костику домой и пердани Шоблычу в лицо</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 1 000 000 000 000 000 000 000</p>
           </div>
         </div>
-        <div class="right">
-          <img src="images/gray-check.png">
-        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
       </div>
 
-      <div class="achievement" onclick="hapticFeedback('soft')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию soft
-          </div>
-          <div class="description">
-            Получи 10 000
-          </div>
+      <div class="achievement completed" onclick="hapticFeedback('medium')">
+        <div class="info">
+          <p class="description">Подкинь домой к Костику кота</p>
         </div>
-        <div class="right">
-          <img src="images/gray-arrow.png">
-        </div>
-      </div>
-
-      <p class="section">Другое</p>
-
-      <div class="achievement completed" onclick="hapticFeedback('error')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию error
-          </div>
-        </div>
-        <div class="right">
-          <img src="images/gray-check.png">
-        </div>
-      </div>
-
-      <div class="achievement completed" onclick="hapticFeedback('success')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию success
-          </div>
-        </div>
-        <div class="right">
-          <img src="images/gray-check.png">
+        <div class="status">
+          <img src="images/green-check.png">
         </div>
       </div>
 
 
 
-      <div class="achievement" onclick="hapticFeedback('warning')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию warning
-          </div>
-          <div class="description">
-            Получи 10 000
-          </div>
-        </div>
-        <div class="right">
-          <img src="images/gray-arrow.png">
-        </div>
-      </div>
-
-      <div class="achievement" onclick="hapticFeedback('change')">
-        <div class="left">
-          <div class="name">
-            Нажми и почувствуй вибрацию change
-          </div>
-          <div class="description">
-            Получи 10 000
-          </div>
-        </div>
-        <div class="right">
-          <img src="images/gray-arrow.png">
-        </div>
-      </div>
 
     </div>
 

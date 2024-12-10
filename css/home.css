@@ -204,6 +204,7 @@ body {
     position: relative;
     width: 25%;
     align-items: center;
+    cursor: pointer;
 }
 
 .games-or-achievements .games {
@@ -274,7 +275,7 @@ body {
         calc(100 / 1284 * 200 * 1vw)
         calc(100 / 1284 * 50 * 1vw);
     justify-content: flex-start;
-    background-color: #202A39;
+    background-color: #202A38;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
     margin-bottom: calc(100 / 1284 * 200 * 1vw);
@@ -318,7 +319,7 @@ body {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
-    text-align: left;
+    /* text-align: left; */
     margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
 }
 
@@ -330,52 +331,63 @@ body {
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     text-align: left;
-    margin: calc(100 / 1284 * 25 * 1vw) 0 0 calc(100 / 1284 * 50 * 1vw);
+    margin: calc(100 / 1284 * 50 * 1vw) 0 0 calc(100 / 1284 * 50 * 1vw);
 }
 #achievements-container .achievement {
     display: flex;
     background-color: #181F2A;
     border-radius: 4vw;
 }
+
+
 #achievements-container .completed {
-    opacity: 0.5;
+    opacity: 0.6;
+}
+#achievements-container .completed .reward {
+    display: none;
 }
 
 
-
-.achievement .left {
-    width: calc(100 / 1284 * 919 * 1vw);
+.achievement .info {
+    width: calc(100 / 1284 * 976.5 * 1vw);
     display: block;
     justify-content: center;
-    align-items: center;
-    margin: calc(100 / 1284 * 57.5 * 1vw);
-    /* margin-top: calc(100 / 1284 * 50 * 1vw); */
+    margin: calc(100 / 1284 * 57.5 * 1vw) 0 calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw);
 }
 
-.achievement .name {
+.achievement .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
+    margin: 0;
     text-align: left;
-    /* margin-top: calc(100 / 1284 * 75 * 1vw); */
 }
-.achievement .description {
+
+.achievement .reward {
+    display: flex;
+    width: 100%;
+    margin-top: calc(100 / 1284 * 25 * 1vw);
+}
+.achievement .reward img {
+    width: calc(100 / 1284 * 47.5 * 1vw);
+    margin-right: 1vw;
+}
+.achievement .reward p {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
-    text-align: left;
-    margin-top: calc(100 / 1284 * 25 * 1vw);
+    margin: 0;
 }
 
-.achievement .right {
+.achievement .status {
     width: calc(100 / 1284 * 150 * 1vw);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.achievement .right img {
-    height: calc(100 / 1284 * 35 * 1vw);
+.achievement .status img {
+    width: calc(100 / 1284 * 50 * 1vw);
 }
 
 
