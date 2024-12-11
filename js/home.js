@@ -329,7 +329,7 @@ function showTopAchievement(description, statusImageSrc) {
 
   // Задержка перед выездом
   setTimeout(() => {
-      banner.style.top = 'calc(100 / 1284 * 50 * 1vw)'; // Баннер выезжает на место
+      banner.style.top = 'calc(100 / 1284 * 300 * 1vw)'; // Баннер выезжает на место
   }, 10);
 
   // Убрать баннер через 5 секунд
