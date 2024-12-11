@@ -1,6 +1,5 @@
+// ЗАСТВКА И ПОЯВЛЕНИЕ КОНТЕНТА
 const referrer = document.referrer;
-
-// Заставка и появление контента
 if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.github.io/shobla_ebla/') {
   window.addEventListener('DOMContentLoaded', () => {
     const preloader = document.getElementById('preloader');
@@ -40,9 +39,11 @@ if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.git
       setTimeout(() => {
         const children = document.querySelectorAll('.content > *');
         children.forEach((child, index) => {
-          setTimeout(() => {
-            child.classList.add('visible');
-          }, index * 25);
+          if (!child.classList.contains('top-achievement-banner')) {
+            setTimeout(() => {
+              child.classList.add('visible');
+            }, index * 25);
+          }
         });
       }, 100);
     }, totalDuration);
@@ -64,47 +65,27 @@ if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.git
 
 
 
-
+// ПЕРЕКЛЮЧАТЕЛЬ ИГР И АЧИВОК
 function selectTab(tabId) {
   const gamesTab = document.getElementById('games');
   const achievementsTab = document.getElementById('achievements');
   const gamesContainer = document.getElementById('games-container');
   const achievementsContainer = document.getElementById('achievements-container');
-
-//   if (tabId === 'games') {
-//     gamesTab.classList.add('active');
-//     achievementsTab.classList.remove('active');
-//     gamesContainer.style.display = 'flex'; // Показываем контейнер игр
-//     achievementsContainer.style.display = 'none'; // Полностью скрываем контейнер ачивок
-//   } else if (tabId === 'achievements') {
-//     achievementsTab.classList.add('active');
-//     gamesTab.classList.remove('active');
-//     achievementsContainer.style.display = 'flex'; // Показываем контейнер ачивок
-//     gamesContainer.style.display = 'none'; // Полностью скрываем контейнер игр
-//   }
-// }
-
   if (tabId === 'games') {
     gamesTab.classList.add('active');
     achievementsTab.classList.remove('active');
-    gamesContainer.style.display = 'flex'; // Показываем контейнер игр
-    achievementsContainer.style.display = 'none'; // Полностью скрываем контейнер ачивок
+    gamesContainer.style.display = 'flex';
+    achievementsContainer.style.display = 'none';
   } else if (tabId === 'achievements') {
     achievementsTab.classList.add('active');
     gamesTab.classList.remove('active');
-    achievementsContainer.style.display = 'flex'; // Показываем контейнер ачивок
-    gamesContainer.style.display = 'none'; // Полностью скрываем контейнер игр
+    achievementsContainer.style.display = 'flex';
+    gamesContainer.style.display = 'none';
   }
 }
-
-
-// Установка начального состояния
 window.onload = () => {
   selectTab('games');
 };
-
-
-
 ['games', 'achievements'].forEach(id => {
   document.getElementById(id).addEventListener('click', () => {
     selectTab(id);
@@ -174,7 +155,7 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 
 
-function hapticFeedback(type, redirectUrl = undefined, element = undefined) {
+function hapticFeedback(type, redirectUrl) {
   if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
     switch (type) {
       case 'light':
@@ -209,14 +190,6 @@ function hapticFeedback(type, redirectUrl = undefined, element = undefined) {
     }
   } else {
     console.error('Haptic feedback is not supported in this environment.');
-  }
-
-  if (element) {
-    if (element.classList.contains('visible')) {
-      element.classList.remove('visible');
-    } else {
-      element.classList.add('zoom-out');
-    }
   }
 
   if (redirectUrl && redirectUrl !== '#') {
@@ -309,5 +282,81 @@ function generateImages() {
 setInterval(generateImages, interval);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function showTopAchievement(description, statusImageSrc) {
+
+  hapticFeedback('light')
+
+  // Создаем элемент баннера
+  const banner = document.createElement('div');
+  banner.className = 'top-achievement-banner';
+  banner.style.position = 'fixed';
+  banner.style.top = '-25vw'; // Начальная позиция - за верхней границей
+  banner.style.transition = 'top 0.5s ease'; // Анимация выезда
+  banner.onclick = () => removeBanner(banner); // Удаление при клике
+
+  // Внутренний контент баннера
+  banner.innerHTML = `
+      <div class="status"><img src="${statusImageSrc}"></div>
+      <div class="info">
+          <p class="description">${description}</p>
+          <div class="reward">
+              <img src="images/coin.png">
+              <p>+ 10 000</p>
+          </div>
+      </div>
+  `;
+
+  // Добавляем баннер в начало body
+  document.body.appendChild(banner);
+
+  // Задержка перед выездом
+  setTimeout(() => {
+      banner.style.top = 'calc(100 / 1284 * 50 * 1vw)'; // Баннер выезжает на место
+  }, 10);
+
+  // Убрать баннер через 5 секунд
+  setTimeout(() => {
+      removeBanner(banner);
+  }, 5500);
+}
+
+function removeBanner(banner) {
+  // Анимация уезда баннера
+  banner.style.top = '-25vw';
+  banner.style.transition = 'top 0.5s ease';
+
+  // Удаление баннера из DOM через 0.5 секунды
+  setTimeout(() => {
+      banner.remove();
+  }, 500);
+}
+
+// Пример использования
+document.querySelectorAll('.achievement').forEach(achievement => {
+  achievement.onclick = () => {
+      const description = achievement.querySelector('.description').textContent;
+      // const reward = achievement.querySelector('.reward p').textContent;
+      const statusImageSrc = achievement.querySelector('.status img').src;
+      showTopAchievement(description, statusImageSrc);
+  };
+});
 
 

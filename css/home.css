@@ -22,7 +22,7 @@
 
 /* Откл клики */
 #preloader,
-.top-backgroung-img,
+.top-background-img,
 .user-name,
 .user-image-container,
 .balance-container,
@@ -50,19 +50,19 @@ body {
 
 
 .content {
+    position: relative;
     width: 100%;
     text-align: center;
     padding-top: calc(100 / 1284 * 300 * 1vw);
 }
 
 
-.top-backgroung-img {
+.top-background-img {
     position: absolute;
     width: 100%;
     height: auto;
     top: 0;
     left: 0;
-    /* z-index: -2; */
 }
 
 
@@ -348,50 +348,55 @@ body {
 }
 
 
-.achievement .info {
+
+
+#achievements-container .achievement .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
     width: calc(100 / 1284 * 976.5 * 1vw);
-    display: block;
-    justify-content: center;
     margin: calc(100 / 1284 * 57.5 * 1vw) 0 calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw);
 }
 
-.achievement .description {
+#achievements-container .achievement .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * 1vw);
     margin: 0;
-    text-align: left;
 }
 
-.achievement .reward {
+#achievements-container .achievement .reward {
     display: flex;
-    width: 100%;
-    margin-top: calc(100 / 1284 * 25 * 1vw);
+    align-items: center;
+    margin-top: calc(100 / 1284 * 15 * 1vw);
 }
-.achievement .reward img {
-    width: calc(100 / 1284 * 47.5 * 1vw);
+
+#achievements-container .achievement .reward img {
+    width: calc(100 / 1284 * 40 * 1vw);
+    height: auto;
     margin-right: 1vw;
+    object-fit: contain;
 }
-.achievement .reward p {
+
+#achievements-container .achievement .reward p {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
     margin: 0;
 }
 
-.achievement .status {
+
+#achievements-container .achievement .status {
     width: calc(100 / 1284 * 150 * 1vw);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.achievement .status img {
+#achievements-container .achievement .status img {
     width: calc(100 / 1284 * 50 * 1vw);
 }
-
-
-
 
 
 
@@ -400,8 +405,10 @@ body {
 .bottom-menu {
     display: flex;
     position: fixed;
-    width: 100%;
     height: calc(100 / 1284 * 250 * 1vw);
+    width: 97%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
     background-color: #2B3648;
     border-top-left-radius: 5vw;
     border-top-right-radius: 5vw;
@@ -409,45 +416,33 @@ body {
     box-shadow: 0 0 10vw 2.5vw rgba(0, 0, 0, 1);
     z-index: 1000;
 }
-
 .bottom-menu .menu {
     height: 100%;
     width: calc(100 / 5 * 1vw);
     text-decoration: none;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.bottom-menu .menu img {
+    height: calc(100 / 1284 * 75 * 1vw);
+    margin-top: calc(100 / 1284 * 40 * 1vw);
+}
+.bottom-menu .menu p {
     color: white;
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 40 * 1vw);
-    opacity: 0.5;
-}
-
-.bottom-menu .menu img {
-    height: calc(100 / 1284 * 75 * 1vw);
-    margin-top: calc(100 / 1284 * 50 * 1vw);
-}
-
-.bottom-menu .menu p {
     margin: 0;
 }
-
-/* .selected {
-    position: absolute;
-    height: calc(100 / 1284 * 10 * 1vw);
-    width: 25%;
-    background-color: white;
-} */
-
-
-.bottom-menu .selected div {
+.bottom-menu .selected .rectangle {
+    width: calc(100 / 1284 * 150 * 1vw);
     height: calc(100 / 1284 * 15 * 1vw);
-    width: 75%;
     background-color: white;
-    border-bottom-left-radius: 2vw;
-    border-bottom-right-radius: 2vw;
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
     margin: 0 auto;
 }
-
 .bottom-menu .selected img {
-    margin-top: calc(100 / 1284 * 35 * 1vw);
+    margin-top: calc(100 / 1284 * 25 * 1vw);
 }
 .bottom-menu .selected {
     opacity: 1;
@@ -513,7 +508,7 @@ body {
     height: 100vh;
     background-color: black;
     display: flex;
-    flex-direction: column; /* Устанавливаем элементы в столбец */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -557,18 +552,78 @@ body {
     transform: scale(1);
     opacity: 1;
 }
-.visible-on-click {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* БАННЕР ПОСЛЕ НАЖАТИЯ НА АЧИВКУ */
+.top-achievement-banner {
+    position: fixed;
+    display: flex;
+    width: calc(100 / 1284 * 1184 * 1vw);
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    border-radius: 4vw;
+    text-align: center;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out, opacity 1s ease-in-out;
+    cursor: pointer;
     opacity: 1;
 }
-
-
-
-
-
-/* Уменьшение элемента при клике для перехода */
-.zoom-out {
-    transform: scale(0.95);
-    transition: transform 0.1s ease-in-out;
+#top-achievement-banner.show {
+    top: calc(100 / 1284 * 50 * 1vw);
+    opacity: 1;
 }
-
-
+.top-achievement-banner .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: calc(100 / 1284 * 976.5 * 1vw);
+    margin: calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw) 0;
+}
+.top-achievement-banner .description {
+    color: #8894A2;
+    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * 1vw);
+    margin: 0;
+}
+.top-achievement-banner .reward {
+    display: flex;
+    align-items: center;
+    margin-top: calc(100 / 1284 * 15 * 1vw);
+}
+.top-achievement-banner .reward img {
+    width: calc(100 / 1284 * 40 * 1vw);
+    height: auto;
+    margin-right: 1vw;
+    object-fit: contain;
+}
+.top-achievement-banner .reward p {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * 1vw);
+    margin: 0;
+}
+.top-achievement-banner .status {
+    width: calc(100 / 1284 * 150 * 1vw);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top-achievement-banner .status img {
+    width: calc(100 / 1284 * 50 * 1vw);
+}
