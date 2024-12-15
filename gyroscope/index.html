@@ -3,116 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gyroscope Test</title>
+    <title>Safe Area Insets</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
             padding: 20px;
-            background-color: brown;
+            background-color: #f4f4f9;
         }
-        .value {
-            font-size: 1.5em;
-            margin: 10px 0;
+        h1 {
+            text-align: center;
         }
-        #status {
-            margin-top: 20px;
-            color: green;
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .ok {
-            color: green;
+        .info {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333333;
         }
-        .err {
-            color: red;
+        .info span {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Gyroscope Test</h1>
-    <div id="gyro-values">
-        <div class="value">X: <span id="x">0</span></div>
-        <div class="value">Y: <span id="y">0</span></div>
-        <div class="value">Z: <span id="z">0</span></div>
+    <h1>Safe Area Insets</h1>
+    <div class="container">
+        <div class="info">
+            <p><span>SafeAreaInset:</span></p>
+            <p>Top: <span id="safe-top">-</span> px</p>
+            <p>Bottom: <span id="safe-bottom">-</span> px</p>
+            <p>Left: <span id="safe-left">-</span> px</p>
+            <p>Right: <span id="safe-right">-</span> px</p>
+
+            <p><span>ContentSafeAreaInset:</span></p>
+            <p>Top: <span id="content-top">-</span> px</p>
+            <p>Bottom: <span id="content-bottom">-</span> px</p>
+            <p>Left: <span id="content-left">-</span> px</p>
+            <p>Right: <span id="content-right">-</span> px</p>
+        </div>
     </div>
-    <button id="gyroscope_btn">Start Gyroscope</button>
-    <span id="gyroscope_status" class=""></span>
-    <div id="status">Status: Ready</div>
 
     <script>
-        function gyroscopeInit() {
-            const statusElement = document.getElementById('status');
-            const gyroscopeButton = document.getElementById('gyroscope_btn');
-            const statusSpan = document.getElementById('gyroscope_status');
-            const xElement = document.getElementById('x');
-            const yElement = document.getElementById('y');
-            const zElement = document.getElementById('z');
+        // Function to update the inset values on the page
+        function updateInsets() {
+            const safeInsets = Telegram.WebApp.safeAreaInset;
+            const contentInsets = Telegram.WebApp.contentSafeAreaInset;
 
-            const gyroscope = Telegram.WebApp.Gyroscope;
+            document.getElementById('safe-top').textContent = safeInsets.top;
+            document.getElementById('safe-bottom').textContent = safeInsets.bottom;
+            document.getElementById('safe-left').textContent = safeInsets.left;
+            document.getElementById('safe-right').textContent = safeInsets.right;
 
-            Telegram.WebApp.onEvent('gyroscopeStarted', function () {
-                statusSpan.textContent = '';
-                statusSpan.className = '';
-                updateGyroscopeLink();
-            });
-
-            Telegram.WebApp.onEvent('gyroscopeStopped', function () {
-                statusSpan.textContent = '';
-                statusSpan.className = '';
-                updateGyroscopeLink();
-            });
-
-            Telegram.WebApp.onEvent('gyroscopeChanged', function () {
-                xElement.textContent = gyroscope.x.toFixed(3);
-                yElement.textContent = gyroscope.y.toFixed(3);
-                zElement.textContent = gyroscope.z.toFixed(3);
-                statusSpan.textContent = '(x: ' + gyroscope.x.toFixed(3) + '; y: ' + gyroscope.y.toFixed(3) + '; z: ' + gyroscope.z.toFixed(3) + ')';
-                statusSpan.className = 'ok';
-            });
-
-            Telegram.WebApp.onEvent('gyroscopeFailed', function (params) {
-                statusSpan.textContent = '(ERR: ' + params.error + ')';
-                statusSpan.className = 'err';
-            });
-
-            gyroscopeButton.addEventListener('click', function () {
-                toggleGyroscope(gyroscope);
-            });
-
-            function toggleGyroscope(gyro) {
-                if (gyro.isStarted) {
-                    gyro.stop((success) => {
-                        if (success) {
-                            statusElement.textContent = "Status: Gyroscope stopped.";
-                        } else {
-                            statusElement.textContent = "Status: Failed to stop gyroscope.";
-                            statusElement.style.color = "red";
-                        }
-                    });
-                } else {
-                    gyro.start({ refresh_rate: 100 }, (success) => {
-                        if (success) {
-                            statusElement.textContent = "Status: Gyroscope started.";
-                        } else {
-                            statusElement.textContent = "Status: Failed to start gyroscope.";
-                            statusElement.style.color = "red";
-                        }
-                    });
-                }
-                updateGyroscopeLink();
-            }
-
-            function updateGyroscopeLink() {
-                if (gyroscope.isStarted) {
-                    gyroscopeButton.innerHTML = 'Stop Gyroscope';
-                } else {
-                    gyroscopeButton.innerHTML = 'Start Gyroscope';
-                }
-            }
+            document.getElementById('content-top').textContent = contentInsets.top;
+            document.getElementById('content-bottom').textContent = contentInsets.bottom;
+            document.getElementById('content-left').textContent = contentInsets.left;
+            document.getElementById('content-right').textContent = contentInsets.right;
         }
 
-        // Initialize the gyroscope
-        gyroscopeInit();
+        // Ensure Telegram WebApp is ready before updating insets
+        Telegram.WebApp.ready();
+        updateInsets();
     </script>
 </body>
 </html>
