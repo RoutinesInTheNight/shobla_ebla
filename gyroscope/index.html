@@ -37,40 +37,33 @@
     <h1>Safe Area Insets</h1>
     <div class="container">
         <div class="info">
-            <p><span>SafeAreaInset:</span></p>
-            <p>Top: <span id="safe-top">-</span> px</p>
-            <p>Bottom: <span id="safe-bottom">-</span> px</p>
-            <p>Left: <span id="safe-left">-</span> px</p>
-            <p>Right: <span id="safe-right">-</span> px</p>
-
-            <p><span>ContentSafeAreaInset:</span></p>
-            <p>Top: <span id="content-top">-</span> px</p>
-            <p>Bottom: <span id="content-bottom">-</span> px</p>
-            <p>Left: <span id="content-left">-</span> px</p>
-            <p>Right: <span id="content-right">-</span> px</p>
+            <p>viewportHeight: <span id="viewportHeight">-</span> px</p>
+            <p>viewportStableHeight: <span id="viewportStableHeight">-</span> px</p>
+            <p>screenWidth: <span id="screenWidth">-</span> px</p>
+            <p>screenHeight: <span id="screenHeight">-</span> px</p>
         </div>
     </div>
 
     <script>
         // Function to update the inset values on the page
         function updateInsets() {
-            const safeInsets = Telegram.WebApp.safeAreaInset;
-            const contentInsets = Telegram.WebApp.contentSafeAreaInset;
+            const viewportHeight = Telegram.WebApp.viewportHeight;
+            const viewportStableHeight = Telegram.WebApp.viewportStableHeight;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
 
-            document.getElementById('safe-top').textContent = safeInsets.top;
-            document.getElementById('safe-bottom').textContent = safeInsets.bottom;
-            document.getElementById('safe-left').textContent = safeInsets.left;
-            document.getElementById('safe-right').textContent = safeInsets.right;
-
-            document.getElementById('content-top').textContent = contentInsets.top;
-            document.getElementById('content-bottom').textContent = contentInsets.bottom;
-            document.getElementById('content-left').textContent = contentInsets.left;
-            document.getElementById('content-right').textContent = contentInsets.right;
+            document.getElementById('viewportHeight').textContent = viewportHeight;
+            document.getElementById('viewportStableHeight').textContent = viewportStableHeight;
+            document.getElementById('screenWidth').textContent = screenWidth;
+            document.getElementById('screenHeight').textContent = screenHeight;
         }
 
         // Ensure Telegram WebApp is ready before updating insets
         Telegram.WebApp.ready();
         updateInsets();
+
+        // Update screen size on window resize
+        window.addEventListener('resize', updateInsets);
     </script>
 </body>
 </html>
