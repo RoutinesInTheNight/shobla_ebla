@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyroscope Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .value {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        #status {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gyroscope Test</h1>
+    <div id="gyro-values">
+        <div class="value">X: <span id="x">0</span></div>
+        <div class="value">Y: <span id="y">0</span></div>
+        <div class="value">Z: <span id="z">0</span></div>
+    </div>
+    <button id="start-btn">Start Tracking</button>
+    <button id="stop-btn" disabled>Stop Tracking</button>
+    <div id="status">Status: Ready</div>
+
+    <script>
+        const xElement = document.getElementById('x');
+        const yElement = document.getElementById('y');
+        const zElement = document.getElementById('z');
+        const startButton = document.getElementById('start-btn');
+        const stopButton = document.getElementById('stop-btn');
+        const statusElement = document.getElementById('status');
+
+        let gyroscope = window.Telegram.WebApp.gyroscope;
+
+        if (!gyroscope) {
+            statusElement.textContent = "Status: Gyroscope API not supported.";
+            statusElement.style.color = "red";
+            startButton.disabled = true;
+            stopButton.disabled = true;
+        } else {
+            startButton.addEventListener('click', () => {
+                gyroscope.start({ refresh_rate: 100 }, (success) => {
+                    if (success) {
+                        statusElement.textContent = "Status: Tracking started.";
+                        statusElement.style.color = "green";
+                        startButton.disabled = true;
+                        stopButton.disabled = false;
+
+                        gyroscope.on('update', () => {
+                            xElement.textContent = gyroscope.x.toFixed(3);
+                            yElement.textContent = gyroscope.y.toFixed(3);
+                            zElement.textContent = gyroscope.z.toFixed(3);
+                        });
+                    } else {
+                        statusElement.textContent = "Status: Failed to start tracking.";
+                        statusElement.style.color = "red";
+                    }
+                });
+            });
+
+            stopButton.addEventListener('click', () => {
+                gyroscope.stop((success) => {
+                    if (success) {
+                        statusElement.textContent = "Status: Tracking stopped.";
+                        statusElement.style.color = "green";
+                        startButton.disabled = false;
+                        stopButton.disabled = true;
+                    } else {
+                        statusElement.textContent = "Status: Failed to stop tracking.";
+                        statusElement.style.color = "red";
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
