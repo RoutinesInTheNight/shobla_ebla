@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            background-color: brown;
         }
         .value {
             font-size: 1.5em;
@@ -18,6 +19,12 @@
         #status {
             margin-top: 20px;
             color: green;
+        }
+        .ok {
+            color: green;
+        }
+        .err {
+            color: red;
         }
     </style>
 </head>
@@ -28,60 +35,84 @@
         <div class="value">Y: <span id="y">0</span></div>
         <div class="value">Z: <span id="z">0</span></div>
     </div>
-    <button id="start-btn">Start Tracking</button>
-    <button id="stop-btn" disabled>Stop Tracking</button>
+    <button id="gyroscope_btn">Start Gyroscope</button>
+    <span id="gyroscope_status" class=""></span>
     <div id="status">Status: Ready</div>
 
     <script>
-        const xElement = document.getElementById('x');
-        const yElement = document.getElementById('y');
-        const zElement = document.getElementById('z');
-        const startButton = document.getElementById('start-btn');
-        const stopButton = document.getElementById('stop-btn');
-        const statusElement = document.getElementById('status');
+        function gyroscopeInit() {
+            const statusElement = document.getElementById('status');
+            const gyroscopeButton = document.getElementById('gyroscope_btn');
+            const statusSpan = document.getElementById('gyroscope_status');
+            const xElement = document.getElementById('x');
+            const yElement = document.getElementById('y');
+            const zElement = document.getElementById('z');
 
-        let gyroscope = window.Telegram.WebApp.gyroscope;
+            const gyroscope = Telegram.WebApp.Gyroscope;
 
-        if (!gyroscope) {
-            statusElement.textContent = "Status: Gyroscope API not supported.";
-            statusElement.style.color = "red";
-            startButton.disabled = true;
-            stopButton.disabled = true;
-        } else {
-            startButton.addEventListener('click', () => {
-                gyroscope.start({ refresh_rate: 100 }, (success) => {
-                    if (success) {
-                        statusElement.textContent = "Status: Tracking started.";
-                        statusElement.style.color = "green";
-                        startButton.disabled = true;
-                        stopButton.disabled = false;
-
-                        gyroscope.on('update', () => {
-                            xElement.textContent = gyroscope.x.toFixed(3);
-                            yElement.textContent = gyroscope.y.toFixed(3);
-                            zElement.textContent = gyroscope.z.toFixed(3);
-                        });
-                    } else {
-                        statusElement.textContent = "Status: Failed to start tracking.";
-                        statusElement.style.color = "red";
-                    }
-                });
+            Telegram.WebApp.onEvent('gyroscopeStarted', function () {
+                statusSpan.textContent = '';
+                statusSpan.className = '';
+                updateGyroscopeLink();
             });
 
-            stopButton.addEventListener('click', () => {
-                gyroscope.stop((success) => {
-                    if (success) {
-                        statusElement.textContent = "Status: Tracking stopped.";
-                        statusElement.style.color = "green";
-                        startButton.disabled = false;
-                        stopButton.disabled = true;
-                    } else {
-                        statusElement.textContent = "Status: Failed to stop tracking.";
-                        statusElement.style.color = "red";
-                    }
-                });
+            Telegram.WebApp.onEvent('gyroscopeStopped', function () {
+                statusSpan.textContent = '';
+                statusSpan.className = '';
+                updateGyroscopeLink();
             });
+
+            Telegram.WebApp.onEvent('gyroscopeChanged', function () {
+                xElement.textContent = gyroscope.x.toFixed(3);
+                yElement.textContent = gyroscope.y.toFixed(3);
+                zElement.textContent = gyroscope.z.toFixed(3);
+                statusSpan.textContent = '(x: ' + gyroscope.x.toFixed(3) + '; y: ' + gyroscope.y.toFixed(3) + '; z: ' + gyroscope.z.toFixed(3) + ')';
+                statusSpan.className = 'ok';
+            });
+
+            Telegram.WebApp.onEvent('gyroscopeFailed', function (params) {
+                statusSpan.textContent = '(ERR: ' + params.error + ')';
+                statusSpan.className = 'err';
+            });
+
+            gyroscopeButton.addEventListener('click', function () {
+                toggleGyroscope(gyroscope);
+            });
+
+            function toggleGyroscope(gyro) {
+                if (gyro.isStarted) {
+                    gyro.stop((success) => {
+                        if (success) {
+                            statusElement.textContent = "Status: Gyroscope stopped.";
+                        } else {
+                            statusElement.textContent = "Status: Failed to stop gyroscope.";
+                            statusElement.style.color = "red";
+                        }
+                    });
+                } else {
+                    gyro.start({ refresh_rate: 100 }, (success) => {
+                        if (success) {
+                            statusElement.textContent = "Status: Gyroscope started.";
+                        } else {
+                            statusElement.textContent = "Status: Failed to start gyroscope.";
+                            statusElement.style.color = "red";
+                        }
+                    });
+                }
+                updateGyroscopeLink();
+            }
+
+            function updateGyroscopeLink() {
+                if (gyroscope.isStarted) {
+                    gyroscopeButton.innerHTML = 'Stop Gyroscope';
+                } else {
+                    gyroscopeButton.innerHTML = 'Start Gyroscope';
+                }
+            }
         }
+
+        // Initialize the gyroscope
+        gyroscopeInit();
     </script>
 </body>
 </html>
