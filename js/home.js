@@ -395,4 +395,19 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 
 
 
+// Добавление минимальнго паддинга в bottom-menu, если его нет
+document.addEventListener('DOMContentLoaded', () => {
+  const bottomMenu = document.querySelector('.bottom-menu');
+  const menu = bottomMenu.querySelector('.menu');
+  if (menu && bottomMenu) {
+      const menuHeight = menu.offsetHeight;
+      const minPadding = menuHeight / (166.5 / 40);
+      const styles = getComputedStyle(bottomMenu);
+      const currentPaddingBottom = parseFloat(styles.paddingBottom) || 0;
+      if (currentPaddingBottom < minPadding) {
+          bottomMenu.style.paddingBottom = `${minPadding}px`;
+      }
+  }
+});
+
 
