@@ -56,7 +56,7 @@ body {
     position: relative;
     width: 100%;
     text-align: center;
-    padding-top: calc(100 / 1284 * 300 * var(--dynamic-vw));
+    padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, calc(100 / 1284 * 150 * var(--dynamic-vw))));
 }
 
 
@@ -412,7 +412,12 @@ body {
 .bottom-menu {
     display: flex;
     position: fixed;
-    height: calc(100 / 1284 * 250 * var(--dynamic-vw));
+
+    /* height: calc(100 / 1284 * 250 * var(--dynamic-vw)); */
+    height: calc(calc(100 / 1284 * 162.5 * var(--dynamic-vw)) + var(--tg-safe-area-inset-bottom, calc(100 / 1284 * 37.5 * var(--dynamic-vw))));
+
+
+
     width: calc(97 * var(--dynamic-vw));
     padding-left: calc(1.5 * var(--dynamic-vw));
     padding-right: calc(1.5 * var(--dynamic-vw));
