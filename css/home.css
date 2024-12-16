@@ -46,7 +46,6 @@ html, body {
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: none;
-    touch-action: none;
 }
 body {
     background-color: #181F2A;
