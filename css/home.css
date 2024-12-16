@@ -46,6 +46,7 @@ html, body {
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: none;
+    touch-action: none;
 }
 body {
     background-color: #181F2A;
@@ -419,8 +420,7 @@ body {
     width: calc(97 * var(--dynamic-vw));
     padding-left: calc(1.5 * var(--dynamic-vw));
     padding-right: calc(1.5 * var(--dynamic-vw));
-    /* background-color: #2B3648; */
-    background-color: #828282;
+    background-color: #2B3648;
     border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     bottom: 0;
@@ -429,6 +429,7 @@ body {
     z-index: 1000;
     overflow: hidden;
     overscroll-behavior: none;
+    touch-action: none;
     margin: 0;
 }
 .bottom-menu .menu {
