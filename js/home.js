@@ -445,7 +445,7 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 // });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+telegram.onEvent('safeAreaChanged', () => {
   const bottomMenu = document.querySelector('.bottom-menu');
   const testDiv = document.getElementById('test-1');
 
