@@ -31,6 +31,9 @@
     pointer-events: none;
 }
 
+:root {
+    --dynamic-vw: 1vw;
+}
 
 html, body {
     display: flex;
@@ -53,7 +56,7 @@ body {
     position: relative;
     width: 100%;
     text-align: center;
-    padding-top: calc(100 / 1284 * 300 * 1vw);
+    padding-top: calc(100 / 1284 * 300 * var(--dynamic-vw));
 }
 
 
@@ -69,13 +72,13 @@ body {
 .user-name {
     color: #8794a1;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
-    margin: 0 0 calc(100 / 1284 * 50 * 1vw) 0;
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin: 0 0 calc(100 / 1284 * 50 * var(--dynamic-vw)) 0;
 }
 .user-image-container {
     position: relative;
-    width: calc(100 / 1284 * 330 * 1vw);
-    height: calc(100 / 1284 * 330 * 1vw);
+    width: calc(100 / 1284 * 330 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 330 * var(--dynamic-vw));
     margin: 0 auto;
 }
 .user-image {
@@ -83,9 +86,9 @@ body {
     height: 100%;
     position: absolute;
     left: 0;
-    border-radius: 5vw;
+    border-radius: calc(5 * var(--dynamic-vw));
     filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
-    -webkit-filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
+    -webkit-filter: drop-shadow(0 0 calc(2.5 * var(--dynamic-vw)) rgba(255, 255, 255, 0.25));
 }
 
 
@@ -94,16 +97,16 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: calc(100 / 1284 * 50 * 1vw);
+    margin-top: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 .dogcoin {
-    width: calc(100 / 1284 * 100 * 1vw);
-    margin-right: 1vw;
+    width: calc(100 / 1284 * 100 * var(--dynamic-vw));
+    margin-right: var(--dynamic-vw);
 }
 .balance {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 100 * 1vw);
+    font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
     margin: 0;
 }
 
@@ -111,72 +114,72 @@ body {
 .miniapp-description {
     color: #8794a1;
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
-    margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 0 0;
 }
 
 
 .league-container {
     display: flex;
-    width: calc(100 / 1284 * 1084 * 1vw);
-    height: calc(100 / 1284 * 182 * 1vw);
+    width: calc(100 / 1284 * 1084 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 182 * var(--dynamic-vw));
     margin: 0 auto;
-    border-radius: 3vw;
-    margin-top: calc(100 / 1284 * 50 * 1vw);
+    border-radius: calc(3 * var(--dynamic-vw));
+    margin-top: calc(100 / 1284 * 50 * var(--dynamic-vw));
     background: linear-gradient(90deg, #67C8E4, #EB4DFC);
-    filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
-    -webkit-filter: drop-shadow(0 0 2.5vw rgba(255, 255, 255, 0.25));
+    filter: drop-shadow(0 0 calc(2.5 * var(--dynamic-vw)) rgba(255, 255, 255, 0.25));
+    -webkit-filter: drop-shadow(0 0 calc(2.5 * var(--dynamic-vw)) rgba(255, 255, 255, 0.25));
     cursor: pointer;
 }
 .league-container .left {
-    width: calc(100 / 1284 * 250 * 1vw);
+    width: calc(100 / 1284 * 250 * var(--dynamic-vw));
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .league-container .left img {
-    height: calc(100 / 1284 * 132 * 1vw);
+    height: calc(100 / 1284 * 132 * var(--dynamic-vw));
 }
 .league-container .center {
-    width: calc(100 / 1284 * 709 * 1vw);
+    width: calc(100 / 1284 * 709 * var(--dynamic-vw));
 }
 .progress-bar {
     position: relative;
     background-color: black;
     width: 100%;
-    height: calc(100 / 1284 * 25 * 1vw);
-    border-radius: calc(100 / 1284 * 15 * 1vw);
-    margin-top: calc(100 / 1284 * 25 * 1vw);
+    height: calc(100 / 1284 * 25 * var(--dynamic-vw));
+    border-radius: calc(100 / 1284 * 15 * var(--dynamic-vw));
+    margin-top: calc(100 / 1284 * 25 * var(--dynamic-vw));
 }
 .progress {
     width: 76%;
     height: 100%;
     background-color: rgb(250, 225, 150);
-    border-radius: calc(100 / 1284 * 15 * 1vw);
+    border-radius: calc(100 / 1284 * 15 * var(--dynamic-vw));
 }
 .league-marks {
     display: flex;
     justify-content: space-between;
     color: rgb(250, 225, 150);
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * 1vw);
-    margin-top: calc(100 / 1284 * 5 * 1vw);
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
+    margin-top: calc(100 / 1284 * 5 * var(--dynamic-vw));
 }
 .user-league-info {
     display: flex;
     justify-content: space-between;
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 .league-container .right {
-    width: calc(100 / 1284 * 125 * 1vw);
+    width: calc(100 / 1284 * 125 * var(--dynamic-vw));
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .league-container .right img {
-    height: calc(100 / 1284 * 35 * 1vw);
+    height: calc(100 / 1284 * 35 * var(--dynamic-vw));
 }
 .league-marks p,
 .user-league-info p {
@@ -193,7 +196,7 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: calc(100 / 1284 * 100 * 1vw);
+    margin-top: calc(100 / 1284 * 100 * var(--dynamic-vw));
 }
 
 .games-or-achievements .games,
@@ -217,19 +220,19 @@ body {
   
 .games-or-achievements p {
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     color: white;
     margin: 0;
     transition: color 0.1s;
 }
   
 .games-or-achievements .rectangle {
-    width: calc(100 / 1284 * 150 * 1vw);
-    height: calc(100 / 1284 * 15 * 1vw);
+    width: calc(100 / 1284 * 150 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 15 * var(--dynamic-vw));
     background-color: #258ADA;
-    border-top-left-radius: 1vw;
-    border-top-right-radius: 1vw;
-    margin-top: calc(100 / 1284 * 40 * 1vw);
+    border-top-left-radius: var(--dynamic-vw);
+    border-top-right-radius: var(--dynamic-vw);
+    margin-top: calc(100 / 1284 * 40 * var(--dynamic-vw));
     transition: background-color 0.1s;
 }
 
@@ -268,17 +271,17 @@ body {
 #achievements-container {
     display: flex;
     flex-wrap: wrap;
-    gap: calc(100 / 1284 * 25 * 1vw);
+    gap: calc(100 / 1284 * 25 * var(--dynamic-vw));
     padding:
-        calc(100 / 1284 * 50 * 1vw)
-        calc(100 / 1284 * 50 * 1vw)
-        calc(100 / 1284 * 200 * 1vw)
-        calc(100 / 1284 * 50 * 1vw);
+        calc(100 / 1284 * 50 * var(--dynamic-vw))
+        calc(100 / 1284 * 50 * var(--dynamic-vw))
+        calc(100 / 1284 * 200 * var(--dynamic-vw))
+        calc(100 / 1284 * 50 * var(--dynamic-vw));
     justify-content: flex-start;
     background-color: #202A38;
-    border-top-left-radius: 5vw;
-    border-top-right-radius: 5vw;
-    margin-bottom: calc(100 / 1284 * 200 * 1vw);
+    border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin-bottom: calc(100 / 1284 * 200 * var(--dynamic-vw));
 }
 
 
@@ -286,7 +289,7 @@ body {
 
 
 #games-container {
-    gap: calc(100 / 1284 * 50 * 1vw);
+    gap: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 
 
@@ -296,31 +299,31 @@ body {
 
 #games-container .game {
     flex: 1 1 calc(50%);
-    max-width: calc(50% - calc(100 / 1284 * 25 * 1vw));
+    max-width: calc(50% - calc(100 / 1284 * 25 * var(--dynamic-vw)));
     background-color: #181F2A;
-    border-radius: 4vw;
+    border-radius: calc(4 * var(--dynamic-vw));
     box-sizing: border-box;
-    /* aspect-ratio: 1 / 1; */
-    padding: calc(100 / 1284 * 50 * 1vw)
+    padding: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    cursor: pointer;
 }
 #games-container .game img {
     width: 100%;
-    border-radius: 2vw;
+    border-radius: calc(2 * var(--dynamic-vw));
 }
 .game .name {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     /* text-align: left; */
-    margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
+    margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 0 0;
     /* margin-top: calc(100 / 1284 * 75 * 1vw); */
 }
 .game .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * 1vw);
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
     /* text-align: left; */
-    margin: calc(100 / 1284 * 25 * 1vw) 0 0 0;
+    margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 0 0;
 }
 
 
@@ -329,14 +332,14 @@ body {
 #achievements-container .section {
     color: white;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     text-align: left;
-    margin: calc(100 / 1284 * 50 * 1vw) 0 0 calc(100 / 1284 * 50 * 1vw);
+    margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 #achievements-container .achievement {
     display: flex;
     background-color: #181F2A;
-    border-radius: 4vw;
+    border-radius: calc(4 * var(--dynamic-vw));
 }
 
 
@@ -355,47 +358,51 @@ body {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    width: calc(100 / 1284 * 976.5 * 1vw);
-    margin: calc(100 / 1284 * 57.5 * 1vw) 0 calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw);
+    width: calc(100 / 1284 * 976.5 * var(--dynamic-vw));
+    margin:
+        calc(100 / 1284 * 57.5 * var(--dynamic-vw))
+        0
+        calc(100 / 1284 * 57.5 * var(--dynamic-vw))
+        calc(100 / 1284 * 57.5 * var(--dynamic-vw));
 }
 
 #achievements-container .achievement .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: 0;
 }
 
 #achievements-container .achievement .reward {
     display: flex;
     align-items: center;
-    margin-top: calc(100 / 1284 * 15 * 1vw);
+    margin-top: calc(100 / 1284 * 15 * var(--dynamic-vw));
 }
 
 #achievements-container .achievement .reward img {
-    width: calc(100 / 1284 * 40 * 1vw);
+    width: calc(100 / 1284 * 40 * var(--dynamic-vw));
     height: auto;
-    margin-right: 1vw;
+    margin-right: var(--dynamic-vw);
     object-fit: contain;
 }
 
 #achievements-container .achievement .reward p {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * 1vw);
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
     margin: 0;
 }
 
 
 #achievements-container .achievement .status {
-    width: calc(100 / 1284 * 150 * 1vw);
+    width: calc(100 / 1284 * 150 * var(--dynamic-vw));
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #achievements-container .achievement .status img {
-    width: calc(100 / 1284 * 50 * 1vw);
+    width: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 
 
@@ -405,44 +412,45 @@ body {
 .bottom-menu {
     display: flex;
     position: fixed;
-    height: calc(100 / 1284 * 250 * 1vw);
-    width: 97%;
-    padding-left: 1.5%;
-    padding-right: 1.5%;
+    height: calc(100 / 1284 * 250 * var(--dynamic-vw));
+    width: calc(97 * var(--dynamic-vw));
+    padding-left: calc(1.5 * var(--dynamic-vw));
+    padding-right: calc(1.5 * var(--dynamic-vw));
     background-color: #2B3648;
-    border-top-left-radius: 5vw;
-    border-top-right-radius: 5vw;
+    border-top-left-radius: calc(5 * var(--dynamic-vw));
+    border-top-right-radius: calc(5 * var(--dynamic-vw));
     bottom: 0;
-    box-shadow: 0 0 10vw 2.5vw rgba(0, 0, 0, 1);
+    box-shadow: 0 0 calc(10 * var(--dynamic-vw)) calc(2.5 * var(--dynamic-vw)) rgba(0, 0, 0, 1);
+    clip-path: inset(calc(-15 * var(--dynamic-vw)) 0 0 0); /* Обрезка тени, кроме top */
     z-index: 1000;
 }
 .bottom-menu .menu {
     height: 100%;
-    width: calc(100 / 5 * 1vw);
+    width: 100%;
     text-decoration: none;
     opacity: 0.5;
     cursor: pointer;
 }
 .bottom-menu .menu img {
-    height: calc(100 / 1284 * 75 * 1vw);
-    margin-top: calc(100 / 1284 * 40 * 1vw);
+    height: calc(100 / 1284 * 75 * var(--dynamic-vw));
+    margin-top: calc(100 / 1284 * 40 * var(--dynamic-vw));
 }
 .bottom-menu .menu p {
     color: white;
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * 1vw);
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
     margin: 0;
 }
 .bottom-menu .selected .rectangle {
-    width: calc(100 / 1284 * 150 * 1vw);
-    height: calc(100 / 1284 * 15 * 1vw);
+    width: calc(100 / 1284 * 150 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 15 * var(--dynamic-vw));
     background-color: white;
-    border-bottom-left-radius: 1vw;
-    border-bottom-right-radius: 1vw;
+    border-bottom-left-radius: var(--dynamic-vw);
+    border-bottom-right-radius: var(--dynamic-vw);
     margin: 0 auto;
 }
 .bottom-menu .selected img {
-    margin-top: calc(100 / 1284 * 25 * 1vw);
+    margin-top: calc(100 / 1284 * 25 * var(--dynamic-vw));
 }
 .bottom-menu .selected {
     opacity: 1;
@@ -461,8 +469,8 @@ body {
 
 .moving-image {
     position: absolute;
-    width: 15vw;
-    height: 15vw;
+    width: calc(15 * var(--dynamic-vw));
+    height: calc(15 * var(--dynamic-vw));
     left: 50%;
     top: 50%;
     animation: move-to-center 5s infinite, fade-in 2.5s ease-in, rot 5s infinite;
@@ -516,15 +524,15 @@ body {
 }
 
 #preloader img {
-    width: 50vw;
+    width: calc(50 * var(--dynamic-vw));
 }
 
 .preloader-progress-bar {
-    width: calc(50 * 0.8733 * 1vw);
-    height: 1.5vw;
+    width: calc(50 * 0.8733 * var(--dynamic-vw));
+    height: calc(1.5 * var(--dynamic-vw));
     background-color: #222;
     overflow: hidden;
-    border-radius: 1vw;
+    border-radius: var(--dynamic-vw);
 }
   
 #progress {
@@ -570,13 +578,13 @@ body {
 .top-achievement-banner {
     position: fixed;
     display: flex;
-    width: calc(100 / 1284 * 1184 * 1vw);
+    width: calc(100 / 1284 * 1184 * var(--dynamic-vw));
     height: auto;
     left: 50%;
     transform: translateX(-50%);
     background-color: black;
     color: white;
-    border-radius: 4vw;
+    border-radius: calc(4 * var(--dynamic-vw));
     text-align: center;
     z-index: 1000;
     transition: top 0.5s ease-in-out, opacity 1s ease-in-out;
@@ -584,7 +592,7 @@ body {
     opacity: 1;
 }
 #top-achievement-banner.show {
-    top: calc(100 / 1284 * 50 * 1vw);
+    top: calc(100 / 1284 * 50 * var(--dynamic-vw));
     opacity: 1;
 }
 .top-achievement-banner .info {
@@ -592,38 +600,85 @@ body {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    width: calc(100 / 1284 * 976.5 * 1vw);
-    margin: calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw) calc(100 / 1284 * 57.5 * 1vw) 0;
+    width: calc(100 / 1284 * 976.5 * var(--dynamic-vw));
+    margin:
+    calc(100 / 1284 * 57.5 * var(--dynamic-vw))
+    calc(100 / 1284 * 57.5 * var(--dynamic-vw))
+    calc(100 / 1284 * 57.5 * var(--dynamic-vw))
+    0;
 }
 .top-achievement-banner .description {
     color: #8894A2;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 50 * 1vw);
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: 0;
 }
 .top-achievement-banner .reward {
     display: flex;
     align-items: center;
-    margin-top: calc(100 / 1284 * 15 * 1vw);
+    margin-top: calc(100 / 1284 * 15 * var(--dynamic-vw));
 }
 .top-achievement-banner .reward img {
-    width: calc(100 / 1284 * 40 * 1vw);
+    width: calc(100 / 1284 * 40 * var(--dynamic-vw));
     height: auto;
-    margin-right: 1vw;
+    margin-right: var(--dynamic-vw);
     object-fit: contain;
 }
 .top-achievement-banner .reward p {
     color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * 1vw);
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
     margin: 0;
 }
 .top-achievement-banner .status {
-    width: calc(100 / 1284 * 150 * 1vw);
+    width: calc(100 / 1284 * 150 * var(--dynamic-vw));
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .top-achievement-banner .status img {
-    width: calc(100 / 1284 * 50 * 1vw);
+    width: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
+
+
+
+
+
+
+@media (min-width: 500px) {
+    :root {
+        --dynamic-vw: calc(50px); /* Переопределяем vw на ширине от 500px */
+    }
+    body {
+        width: 500px;
+    }
+}
+
+@media (max-width: 1600px) {
+    :root {
+        --dynamic-vw: calc(1280px / 100); /* Переопределяем vw на ширине от 500px */
+    }
+    body {
+        width: 1280px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

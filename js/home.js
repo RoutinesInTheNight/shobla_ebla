@@ -1,4 +1,43 @@
-// ЗАСТВКА И ПОЯВЛЕНИЕ КОНТЕНТА
+const loadedResources = new Set();
+const totalResources = new Set();
+
+// Создаем наблюдателя за загружаемыми ресурсами
+const observer = new PerformanceObserver((list) => {
+    const entries = list.getEntries();
+    entries.forEach((entry) => {
+        if (entry.initiatorType !== 'other') {
+            totalResources.add(entry.name);
+            loadedResources.add(entry.name);
+            console.log(`Resource loaded: ${entry.name}`);
+        }
+    });
+});
+
+// Начинаем отслеживание ресурсов
+observer.observe({ entryTypes: ['resource'] });
+
+// Ожидаем загрузки всех ресурсов
+async function waitForAllResources() {
+    while (loadedResources.size < totalResources.size) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    console.log('All resources are loaded!');
+    observer.disconnect(); // Останавливаем наблюдателя
+}
+
+// Пример вызова
+waitForAllResources().then(() => {
+    if (window.Telegram.WebApp) {
+        telegram.ready();
+        console.log('Telegram WebApp is ready');
+    }
+});
+
+
+
+
+
+// ЗАСТАВКА И ПОЯВЛЕНИЕ КОНТЕНТА
 const referrer = document.referrer;
 if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.github.io/shobla_ebla/') {
   window.addEventListener('DOMContentLoaded', () => {
@@ -358,5 +397,31 @@ document.querySelectorAll('.achievement').forEach(achievement => {
       showTopAchievement(description, statusImageSrc);
   };
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
