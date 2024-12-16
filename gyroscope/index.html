@@ -61,11 +61,17 @@
           padding-top: var(--tg-content-safe-area-inset-top, 200px);
           background-color: rgb(255, 0, 0);
         }
+        .c {
+          width: 100%;
+          padding-top: calc(100vh - var(--tg-safe-area-inset-top, 200px) - var(--tg-content-safe-area-inset-top, 200px) - var(--tg-safe-area-inset-bottom));
+          background-color: rgb(121, 121, 121);
+        }
     </style>
 </head>
 <body>
   <div class="a"></div>
   <div class="b"></div>
+  <div class="c"></div>
 
 
 </body>
