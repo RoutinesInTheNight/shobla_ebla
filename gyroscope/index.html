@@ -3,67 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safe Area Insets</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <title>Dynamic VW Demo</title>
     <style>
+        :root {
+            --dynamic-vw: 1vw;
+        }
+
+        @media (min-width: 500px) {
+            :root {
+                --dynamic-vw: calc(500px / 100);
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f9;
+            padding: 0;
+            /* display: flex; */
+            /* flex-direction: column; */
+            /* align-items: center; */
+            /* justify-content: center; */
+            height: 100vh;
+            background-color: #f4f4f4;
         }
+
         h1 {
             text-align: center;
+            margin-top: var(--tg-content-safe-area-inset-top);
         }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        .box {
+            width: calc(50 * var(--dynamic-vw)); /* 50 virtual vw */
+            height: 100px;
+            background-color: lightblue;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(5 * var(--dynamic-vw));
+            border: 2px solid #0077cc;
+            border-radius: 10px;
         }
-        .info {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333333;
-        }
-        .info span {
+
+        .box span {
+            color: #003366;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Safe Area Insets</h1>
-    <div class="container">
-        <div class="info">
-            <p>viewportHeight: <span id="viewportHeight">-</span> px</p>
-            <p>viewportStableHeight: <span id="viewportStableHeight">-</span> px</p>
-            <p>screenWidth: <span id="screenWidth">-</span> px</p>
-            <p>screenHeight: <span id="screenHeight">-</span> px</p>
-        </div>
+    <h1>Dynamic VW Demonstration</h1>
+    <p>Resize the browser window to see the effect. If the width is 500px or larger, the box width and font size will act as if 500px equals 100vw.</p>
+
+    <div class="box">
+        <span>Dynamic Box</span>
     </div>
-
-    <script>
-        // Function to update the inset values on the page
-        function updateInsets() {
-            const viewportHeight = Telegram.WebApp.viewportHeight;
-            const viewportStableHeight = Telegram.WebApp.viewportStableHeight;
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-
-            document.getElementById('viewportHeight').textContent = viewportHeight;
-            document.getElementById('viewportStableHeight').textContent = viewportStableHeight;
-            document.getElementById('screenWidth').textContent = screenWidth;
-            document.getElementById('screenHeight').textContent = screenHeight;
-        }
-
-        // Ensure Telegram WebApp is ready before updating insets
-        Telegram.WebApp.ready();
-        updateInsets();
-
-        // Update screen size on window resize
-        window.addEventListener('resize', updateInsets);
-    </script>
 </body>
 </html>
