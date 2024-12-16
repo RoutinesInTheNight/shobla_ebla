@@ -398,16 +398,26 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 // Добавление минимальнго паддинга в bottom-menu, если его нет
 document.addEventListener('DOMContentLoaded', () => {
   const bottomMenu = document.querySelector('.bottom-menu');
-  const menu = bottomMenu.querySelector('.menu');
+  const menu = bottomMenu?.querySelector('.menu');
+
   if (menu && bottomMenu) {
-      const menuHeight = menu.offsetHeight;
-      const minPadding = menuHeight / (166.5 / 40);
-      const styles = getComputedStyle(bottomMenu);
-      const currentPaddingBottom = parseFloat(styles.paddingBottom) || 0;
-      if (currentPaddingBottom < minPadding) {
-          bottomMenu.style.paddingBottom = `${minPadding}px`;
-      }
+    const menuHeight = menu.offsetHeight;
+    const minPadding = menuHeight / (166.5 / 40);
+
+    const styles = getComputedStyle(bottomMenu);
+    let currentPaddingBottom = parseFloat(styles.paddingBottom);
+
+    if (!currentPaddingBottom) {
+      const safeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-safe-area-inset-bottom')) || 0;
+      const contentSafeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-content-safe-area-inset-bottom')) || 0;
+      currentPaddingBottom = safeAreaInsetBottom + contentSafeAreaInsetBottom;
+    }
+
+    if (currentPaddingBottom < minPadding) {
+      bottomMenu.style.paddingBottom = `${minPadding}px`;
+    }
   }
 });
+
 
 
