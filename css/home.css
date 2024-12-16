@@ -279,13 +279,13 @@ body {
     padding:
         calc(100 / 1284 * 50 * var(--dynamic-vw))
         calc(100 / 1284 * 50 * var(--dynamic-vw))
-        calc(100 / 1284 * 200 * var(--dynamic-vw))
+        calc(100 / 1284 * 350 * var(--dynamic-vw))
         calc(100 / 1284 * 50 * var(--dynamic-vw));
     justify-content: flex-start;
     background-color: #202A38;
     border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
-    margin-bottom: calc(100 / 1284 * 200 * var(--dynamic-vw));
+    /* margin-bottom: calc(100 / 1284 * 200 * var(--dynamic-vw)); */
 }
 
 
