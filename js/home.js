@@ -1,42 +1,3 @@
-const loadedResources = new Set();
-const totalResources = new Set();
-
-// Создаем наблюдателя за загружаемыми ресурсами
-const observer = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    entries.forEach((entry) => {
-        if (entry.initiatorType !== 'other') {
-            totalResources.add(entry.name);
-            loadedResources.add(entry.name);
-            console.log(`Resource loaded: ${entry.name}`);
-        }
-    });
-});
-
-// Начинаем отслеживание ресурсов
-observer.observe({ entryTypes: ['resource'] });
-
-// Ожидаем загрузки всех ресурсов
-async function waitForAllResources() {
-    while (loadedResources.size < totalResources.size) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-    }
-    console.log('All resources are loaded!');
-    observer.disconnect(); // Останавливаем наблюдателя
-}
-
-// Пример вызова
-waitForAllResources().then(() => {
-    if (window.Telegram.WebApp) {
-        telegram.ready();
-        console.log('Telegram WebApp is ready');
-    }
-});
-
-
-
-
-
 // ЗАСТАВКА И ПОЯВЛЕНИЕ КОНТЕНТА
 const referrer = document.referrer;
 if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.github.io/shobla_ebla/') {
@@ -100,6 +61,15 @@ if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.git
     });
   });
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -255,8 +225,8 @@ function hapticFeedback(type, redirectUrl) {
 
 const container = document.querySelector('.user-image-container');
 const rootPath = window.location.origin;
-const imageFolder = `${rootPath}/shobla_ebla/img-circular-animation`;
-// const imageFolder = `img-circular-animation`;
+// const imageFolder = `${rootPath}/shobla_ebla/img-circular-animation`;
+const imageFolder = `img-circular-animation`;
 const totalImages = 15; // Количество маленьких изображений
 const interval = 100; // Интервал появления изображений (в миллисекундах)
 const circleRadius = 75; // Радиус круга в vw
@@ -319,6 +289,7 @@ function generateImages() {
 
 // Циклическое создание изображений
 setInterval(generateImages, interval);
+
 
 
 
