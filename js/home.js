@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const styles = getComputedStyle(bottomMenu);
     let currentPaddingBottom = parseFloat(styles.paddingBottom);
 
-    if (!currentPaddingBottom) {
+    if (currentPaddingBottom < minPadding) {
       const safeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-safe-area-inset-bottom')) || 0;
       const contentSafeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-content-safe-area-inset-bottom')) || 0;
       currentPaddingBottom = safeAreaInsetBottom + contentSafeAreaInsetBottom;
