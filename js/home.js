@@ -449,19 +449,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const bottomMenu = document.querySelector('.bottom-menu');
   const testDiv = document.getElementById('test-1');
 
+
   if (bottomMenu && testDiv) {
     const styles = getComputedStyle(bottomMenu);
     let currentPaddingBottom = parseFloat(styles.paddingBottom);
 
     // Если paddingBottom равен NaN или 0, вычисляем через CSS-переменные
     if (!currentPaddingBottom) {
-      const safeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-safe-area-inset-bottom')) || 0;
-      const contentSafeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-content-safe-area-inset-bottom')) || 0;
-      currentPaddingBottom = safeAreaInsetBottom + contentSafeAreaInsetBottom;
+      const safeAreaInsetBottom = styles.getPropertyValue('--tg-safe-area-inset-bottom') || '0.px';
+      const contentSafeAreaInsetBottom = styles.getPropertyValue('--tg-content-safe-area-inset-bottom') || '0.px';
+
+      safeAreaInsetBottom1 = safeAreaInsetBottom
+      safeAreaInsetBottom2 = contentSafeAreaInsetBottom
     }
 
     // Помещаем значение в div
-    testDiv.textContent = `Padding-bottom: ${currentPaddingBottom}px`;
+    testDiv.textContent = `${safeAreaInsetBottom1} ----- ${safeAreaInsetBottom2}`;
   }
 });
 
