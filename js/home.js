@@ -454,19 +454,30 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 
 // });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const safeAreaInset = telegram.safeAreaInset;
-  const testDiv = document.getElementById('test-1');
-  testDiv.textContent = JSON.stringify(safeAreaInset, null, 2); // Преобразование объекта в строку
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   const safeAreaInset = telegram.safeAreaChanged();
+//   const testDiv = document.getElementById('test-1');
+//   testDiv.textContent = JSON.stringify(safeAreaInset, null, 2); // Преобразование объекта в строку
+// });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
+//   const contentSafeAreaInset = telegram.contentSafeAreaInset;
+//   const testDiv = document.getElementById('test-2');
+//   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
+// });
+
+
+
+
+
+
+function her() {
   const contentSafeAreaInset = telegram.contentSafeAreaInset;
   const testDiv = document.getElementById('test-2');
   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
-});
-
+};
+telegram.onEvent('contentSafeAreaChanged', her);
 
 
 
