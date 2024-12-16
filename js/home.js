@@ -462,9 +462,15 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 
 
 // document.addEventListener('DOMContentLoaded', () => {
+
+
+//   telegram.onEvent('contentSafeAreaChanged', her);
+
+  
 //   const contentSafeAreaInset = telegram.contentSafeAreaInset;
 //   const testDiv = document.getElementById('test-2');
 //   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
+
 // });
 
 
@@ -472,12 +478,61 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 
 
 
-function her() {
-  const contentSafeAreaInset = telegram.contentSafeAreaInset;
-  const testDiv = document.getElementById('test-2');
-  testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
-};
-telegram.onEvent('contentSafeAreaChanged', her);
+// function her() {
+//   const contentSafeAreaInset = telegram.contentSafeAreaInset;
+//   const testDiv = document.getElementById('test-2');
+//   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
+// };
+// telegram.onEvent('contentSafeAreaChanged', her);
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  const bottomMenu = document.querySelector('.bottom-menu');
+  const menuImage = document.querySelector('.bottom-menu .menu img');
+  let safeAreaBottom = 0;
+  let contentSafeAreaBottom = 0;
+
+  // Изначально устанавливаем нижний padding в 0
+  bottomMenu.style.paddingBottom = '0px';
+
+  // Функция обновления паддинга у bottomMenu
+  function updatePadding() {
+    // Получаем значение нижнего паддинга
+    const totalPadding = safeAreaBottom + contentSafeAreaBottom;
+    bottomMenu.style.paddingBottom = `${totalPadding}px`;
+
+    // Проверяем margin-top у изображения
+    if (menuImage) {
+      const menuImageMarginTop = parseFloat(getComputedStyle(menuImage).marginTop) || 0;
+
+      // Если текущий padding меньше margin-top изображения, применяем margin-top
+      const currentPadding = parseFloat(getComputedStyle(bottomMenu).paddingBottom) || 0;
+      if (currentPadding < menuImageMarginTop) {
+        bottomMenu.style.paddingBottom = `${menuImageMarginTop}px`;
+      }
+    }
+  }
+
+  // Обработчик события contentSafeAreaChanged
+  function onContentSafeAreaChanged() {
+    const contentSafeArea = telegram.contentSafeAreaInset || {};
+    contentSafeAreaBottom = contentSafeArea.bottom || 0;
+    updatePadding();
+  }
+
+  // Обработчик события safeAreaChanged
+  function onSafeAreaChanged() {
+    const safeArea = telegram.safeAreaInset || {};
+    safeAreaBottom = safeArea.bottom || 0;
+    updatePadding();
+  }
+
+  // Добавляем обработчики событий
+  telegram.onEvent('contentSafeAreaChanged', onContentSafeAreaChanged);
+  telegram.onEvent('safeAreaChanged', onSafeAreaChanged);
+
+  // Вызываем функции сразу при загрузке
+  onContentSafeAreaChanged();
+  onSafeAreaChanged();
+});
