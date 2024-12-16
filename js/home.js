@@ -445,28 +445,28 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 // });
 
 
-telegram.onEvent('safeAreaChanged', () => {
-  const bottomMenu = document.querySelector('.bottom-menu');
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   const safeAreaInset = telegram.safeAreaInset;
+//   const testDiv = document.getElementById('test-1');
+//   testDiv.textContent = `${safeAreaInset}`;
+//   console.log('Safe Area Bottom:', safeAreaInset);
+
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const safeAreaInset = telegram.safeAreaInset;
   const testDiv = document.getElementById('test-1');
-
-
-  if (bottomMenu && testDiv) {
-    const styles = getComputedStyle(bottomMenu);
-    let currentPaddingBottom = parseFloat(styles.paddingBottom);
-
-    // Если paddingBottom равен NaN или 0, вычисляем через CSS-переменные
-    if (!currentPaddingBottom) {
-      const safeAreaInsetBottom = styles.getPropertyValue('--tg-safe-area-inset-bottom') || '0.px';
-      const contentSafeAreaInsetBottom = styles.getPropertyValue('--tg-content-safe-area-inset-bottom') || '0.px';
-
-      safeAreaInsetBottom1 = safeAreaInsetBottom
-      safeAreaInsetBottom2 = contentSafeAreaInsetBottom
-    }
-
-    // Помещаем значение в div
-    testDiv.textContent = `${safeAreaInsetBottom1} ----- ${safeAreaInsetBottom2}`;
-  }
+  testDiv.textContent = JSON.stringify(safeAreaInset, null, 2); // Преобразование объекта в строку
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const contentSafeAreaInset = telegram.contentSafeAreaInset;
+  const testDiv = document.getElementById('test-2');
+  testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
+});
+
 
 
 
