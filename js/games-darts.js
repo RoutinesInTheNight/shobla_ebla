@@ -15,6 +15,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 const telegram = window.Telegram.WebApp;
+const USER_ID = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.id : null;
+const IS_PREMIUM = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.is_premium || false : false;
+const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
