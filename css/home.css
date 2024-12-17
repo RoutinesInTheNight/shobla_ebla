@@ -40,7 +40,7 @@ html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     overflow-x: hidden;
     overscroll-behavior: none;
 }
@@ -71,10 +71,12 @@ body {
 
 
 .user-name {
+    position: relative;
     color: #8794a1;
     font-family: 'Sf Pro Display Medium', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: 0 0 calc(100 / 1284 * 50 * var(--dynamic-vw)) 0;
+    z-index: 1;
 }
 .user-image-container {
     position: relative;
@@ -418,14 +420,13 @@ body {
     width: calc(97 * var(--dynamic-vw));
     padding-left: calc(1.5 * var(--dynamic-vw));
     padding-right: calc(1.5 * var(--dynamic-vw));
-    /* background-color: #2B3648; */
-    background-color: #a44646;
+    background-color: #2B3648;
+    /* background-color: #a44646; */
     border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     bottom: 0;
     box-shadow: 0 0 calc(10 * var(--dynamic-vw)) calc(2.5 * var(--dynamic-vw)) rgba(0, 0, 0, 1);
-    /* clip-path: inset(calc(-15 * var(--dynamic-vw)) 0 0 0); */
-    /* Обрезка тени, кроме top */
+    clip-path: inset(calc(-15 * var(--dynamic-vw)) 0 0 0); /* Обрезка тени, кроме top */
     touch-action: none;
     z-index: 1000;
 }
