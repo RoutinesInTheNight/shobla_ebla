@@ -22,7 +22,7 @@ const DEVICE_TYPE = telegram.platform;
 telegram.expand();
 
 telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../../'));
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
 
 if (telegram.isVersionAtLeast("6.1")){
   telegram.BackButton.hide();
