@@ -16,6 +16,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const telegram = window.Telegram.WebApp;
 
+telegram.BackButton.show()
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../../'));
+
 telegram.expand();
 
 if (telegram.isVersionAtLeast("6.1")){
@@ -33,9 +36,6 @@ if (telegram.isVersionAtLeast("8.0")) {
   };
   telegram.lockOrientation();
 };
-
-telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
 
 
 
