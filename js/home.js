@@ -220,74 +220,46 @@ function hapticFeedback(type, redirectUrl) {
 
 
 
-
-
-
+// Карусель маленьких изображений
 const container = document.querySelector('.user-image-container');
 const rootPath = window.location.origin;
-// const imageFolder = `${rootPath}/shobla_ebla/img-circular-animation`;
 const imageFolder = `img-circular-animation`;
-const totalImages = 15; // Количество маленьких изображений
-const interval = 100; // Интервал появления изображений (в миллисекундах)
-const circleRadius = 75; // Радиус круга в vw
-
-// Генерация случайных координат на окружности
+const totalImages = 15;
+const interval = 100;
+const circleRadius = document.body.clientWidth * 0.75;
 function getRandomPosition(radius) {
-    const angle = Math.random() * Math.PI * 2; // Случайный угол в радианах
+    const angle = Math.random() * Math.PI * 2;
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
     return { x, y };
 }
-
-// Создание анимации для одного изображения
 function createMovingImage(index) {
   const img = document.createElement('img');
   img.src = `${imageFolder}/${index}.png`;
   img.classList.add('moving-image');
-
-  // Сначала устанавливаем opacity: 0
   img.style.opacity = 0;
-
-  // Получаем случайное положение на границе круга
   const { x, y } = getRandomPosition(circleRadius);
-
-  // Генерируем рандомный конечный угол поворота
   const randomRotation = Math.floor(Math.random() * 360);
-
-  // Устанавливаем начальные координаты как переменные CSS
-  img.style.setProperty('--start-x', `${x}vw`);
-  img.style.setProperty('--start-y', `${y}vw`);
+  img.style.setProperty('--start-x', `${x}px`);
+  img.style.setProperty('--start-y', `${y}px`);
   img.style.setProperty('--rotate-end', `${randomRotation}deg`);
-
-  container.appendChild(img); // Добавляем изображение в контейнер
-
-  // Запускаем анимацию с задержкой, чтобы гарантировать плавное появление
+  container.appendChild(img);
   setTimeout(() => {
-      img.style.opacity = 1; // Начинаем анимацию появления
-  }, 50); // Задержка в 50ms
-
-  // Удаление изображения после завершения анимации
+      img.style.opacity = 1;
+  }, 50);
   img.addEventListener('animationend', () => {
-      // Задержка перед удалением
       setTimeout(() => {
           img.remove();
-      }, 1000); // 1000 миллисекунд = 1 секунда
+      }, 1000);
   });
 }
-
-
-
-// Генерация нескольких изображений
 function generateImages() {
-    // const count = Math.floor(Math.random() * totalImages) + 1; // Случайное количество изображений (от 1 до 5)
     const count = 1
     for (let i = 0; i < count; i++) {
         const randomIndex = Math.floor(Math.random() * totalImages) + 1;
         createMovingImage(randomIndex);
     }
 }
-
-// Циклическое создание изображений
 setInterval(generateImages, interval);
 
 
@@ -317,10 +289,10 @@ function showTopAchievement(description, statusImageSrc) {
   // Создаем элемент баннера
   const banner = document.createElement('div');
   banner.className = 'top-achievement-banner';
-  banner.style.position = 'fixed';
   banner.style.top = '-25vw'; // Начальная позиция - за верхней границей
-  banner.style.transition = 'top 0.5s ease'; // Анимация выезда
   banner.onclick = () => removeBanner(banner); // Удаление при клике
+
+
 
   // Внутренний контент баннера
   banner.innerHTML = `
@@ -338,9 +310,19 @@ function showTopAchievement(description, statusImageSrc) {
   document.body.appendChild(banner);
 
   // Задержка перед выездом
+  // setTimeout(() => {
+  //     banner.style.top = 'calc(100 / 1284 * 300 * 1vw)'; // Баннер выезжает на место
+  // }, 10);
   setTimeout(() => {
-      banner.style.top = 'calc(100 / 1284 * 300 * 1vw)'; // Баннер выезжает на место
+    const content = document.querySelector('.content');
+    
+    // Извлекаем текущее значение padding-top из элемента .content
+    const contentPaddingTop = window.getComputedStyle(content).paddingTop;
+  
+    // Применяем это значение для баннера
+    banner.style.top = contentPaddingTop;
   }, 10);
+  
 
   // Убрать баннер через 5 секунд
   setTimeout(() => {
@@ -351,7 +333,6 @@ function showTopAchievement(description, statusImageSrc) {
 function removeBanner(banner) {
   // Анимация уезда баннера
   banner.style.top = '-25vw';
-  banner.style.transition = 'top 0.5s ease';
 
   // Удаление баннера из DOM через 0.5 секунды
   setTimeout(() => {
@@ -390,149 +371,36 @@ document.querySelectorAll('.achievement').forEach(achievement => {
 
 
 
-
-
-
-
-
-// Добавление минимальнго паддинга в bottom-menu, если его нет
-// document.addEventListener('DOMContentLoaded', () => {
-//   const bottomMenu = document.querySelector('.bottom-menu');
-//   const menu = bottomMenu?.querySelector('.menu');
-
-//   if (menu && bottomMenu) {
-//     const menuHeight = menu.offsetHeight;
-//     const minPadding = menuHeight / (166.5 / 40);
-
-//     const styles = getComputedStyle(bottomMenu);
-//     let currentPaddingBottom = parseFloat(styles.paddingBottom);
-
-//     if (currentPaddingBottom < minPadding) {
-//       const safeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-safe-area-inset-bottom')) || 0;
-//       const contentSafeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-content-safe-area-inset-bottom')) || 0;
-//       currentPaddingBottom = safeAreaInsetBottom + contentSafeAreaInsetBottom;
-//     }
-
-//     if (currentPaddingBottom < minPadding) {
-//       bottomMenu.style.paddingBottom = `${minPadding}px`;
-//     }
-//   }
-// });
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const bottomMenu = document.querySelector('.bottom-menu');
-//   const menu = bottomMenu?.querySelector('.menu');
-//   const img = menu?.querySelector('.icon');
-
-//   if (menu && bottomMenu && img) {
-//     // const menuHeight = menu.offsetHeight;
-//     // const minPadding = menuHeight / (166.5 / 40);
-
-//     const stylesImg = getComputedStyle(img);
-//     let minPadding = parseFloat(stylesImg.marginTop);
-
-//     if (currentPaddingBottom < minPadding) {
-//       const safeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-safe-area-inset-bottom')) || 0;
-//       const contentSafeAreaInsetBottom = parseFloat(styles.getPropertyValue('--tg-content-safe-area-inset-bottom')) || 0;
-//       currentPaddingBottom = safeAreaInsetBottom + contentSafeAreaInsetBottom;
-//     }
-
-//     if (currentPaddingBottom < minPadding) {
-//       bottomMenu.style.paddingBottom = `${minPadding}px`;
-//     }
-//   }
-// });
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const safeAreaInset = telegram.safeAreaInset;
-//   const testDiv = document.getElementById('test-1');
-//   testDiv.textContent = `${safeAreaInset}`;
-//   console.log('Safe Area Bottom:', safeAreaInset);
-
-// });
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const safeAreaInset = telegram.safeAreaChanged();
-//   const testDiv = document.getElementById('test-1');
-//   testDiv.textContent = JSON.stringify(safeAreaInset, null, 2); // Преобразование объекта в строку
-// });
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-
-
-//   telegram.onEvent('contentSafeAreaChanged', her);
-
-  
-//   const contentSafeAreaInset = telegram.contentSafeAreaInset;
-//   const testDiv = document.getElementById('test-2');
-//   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
-
-// });
-
-
-
-
-
-
-// function her() {
-//   const contentSafeAreaInset = telegram.contentSafeAreaInset;
-//   const testDiv = document.getElementById('test-2');
-//   testDiv.textContent = JSON.stringify(contentSafeAreaInset, null, 2); // Преобразование объекта в строку
-// };
-// telegram.onEvent('contentSafeAreaChanged', her);
-
-
-
+// Нижний паддинг в нижнем меню с учётом безопасной зоны
 document.addEventListener('DOMContentLoaded', () => {
   const bottomMenu = document.querySelector('.bottom-menu');
   const menuImage = document.querySelector('.bottom-menu .menu img');
   let safeAreaBottom = 0;
   let contentSafeAreaBottom = 0;
-
-  // Изначально устанавливаем нижний padding в 0
   bottomMenu.style.paddingBottom = '0px';
-
-  // Функция обновления паддинга у bottomMenu
   function updatePadding() {
-    // Получаем значение нижнего паддинга
     const totalPadding = safeAreaBottom + contentSafeAreaBottom;
     bottomMenu.style.paddingBottom = `${totalPadding}px`;
-
-    // Проверяем margin-top у изображения
     if (menuImage) {
       const menuImageMarginTop = parseFloat(getComputedStyle(menuImage).marginTop) || 0;
-
-      // Если текущий padding меньше margin-top изображения, применяем margin-top
       const currentPadding = parseFloat(getComputedStyle(bottomMenu).paddingBottom) || 0;
       if (currentPadding < menuImageMarginTop) {
         bottomMenu.style.paddingBottom = `${menuImageMarginTop}px`;
       }
     }
   }
-
-  // Обработчик события contentSafeAreaChanged
   function onContentSafeAreaChanged() {
     const contentSafeArea = telegram.contentSafeAreaInset || {};
     contentSafeAreaBottom = contentSafeArea.bottom || 0;
     updatePadding();
   }
-
-  // Обработчик события safeAreaChanged
   function onSafeAreaChanged() {
     const safeArea = telegram.safeAreaInset || {};
     safeAreaBottom = safeArea.bottom || 0;
     updatePadding();
   }
-
-  // Добавляем обработчики событий
   telegram.onEvent('contentSafeAreaChanged', onContentSafeAreaChanged);
   telegram.onEvent('safeAreaChanged', onSafeAreaChanged);
-
-  // Вызываем функции сразу при загрузке
   onContentSafeAreaChanged();
   onSafeAreaChanged();
 });
