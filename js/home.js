@@ -214,7 +214,6 @@ function hapticFeedback(type, redirectUrl) {
       window.location.href = redirectUrl;
     }, children.length * 25);
   }
-  
 }
 
 

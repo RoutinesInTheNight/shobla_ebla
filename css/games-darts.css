@@ -1,0 +1,292 @@
+@font-face {
+    font-family: 'Sf Pro Display Regular';
+    src: url('../fonts/SFPRODISPLAYREGULAR.OTF') format('truetype')
+}
+@font-face {
+    font-family: 'Sf Pro Display Medium';
+    src: url('../fonts/SFPRODISPLAYMEDIUM.OTF') format('truetype')
+}
+@font-face {
+    font-family: 'Sf Pro Display Bold';
+    src: url('../fonts/SFPRODISPLAYBOLD.OTF') format('truetype')
+}
+
+/* Откл выделения */
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+}
+
+/* Откл клики */
+#preloader,
+.top-background-img,
+.user-name,
+.user-image-container,
+.balance-container,
+.miniapp-description,
+.league-container img {
+    pointer-events: none;
+}
+
+
+html, body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+body {
+    background-color: #2a1818;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, calc(100 / 1284 * 200 * var(--dynamic-vw))));
+}
+
+
+.top-background-img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+.balance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--dynamic-vw);
+}
+.balance-container img {
+    width: calc(100 / 1284 * 100 * var(--dynamic-vw));
+}
+.balance-container p {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
+    margin: 0;
+}
+
+
+.rules-open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--dynamic-vw);
+    margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 0;
+}
+.rules-open p {
+    color: #ffffff;
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin: 0;
+}
+.rules-open img {
+    height: calc(100 / 1284 * 35 * var(--dynamic-vw));
+}
+
+
+
+
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 100vh;
+    background-color: #382020;
+    margin-top: calc((100 / 1284 * 352.5 * var(--dynamic-vw)) - calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, calc(100 / 1284 * 200 * var(--dynamic-vw)))));
+    border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+}
+
+.game-container .info {
+    display: flex;
+    width: calc(100 / 1284 * 1184 * var(--dynamic-vw));
+    gap: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 0;
+}
+
+
+
+.game-container .info .left,
+.game-container .info .right {
+    width: 100%;
+    background-color: #4c3636;
+    border-radius: calc(100 / 1284 * 40 * var(--dynamic-vw));
+}
+
+.game-container .info .name {
+    color: white;
+    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
+    margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 calc(100 / 1284 * 12.5 * var(--dynamic-vw)) 0;
+}
+.game-container .info .coins {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--dynamic-vw);
+    margin-bottom: calc(100 / 1284 * 25 * var(--dynamic-vw));
+}
+.game-container .info .coins p {
+    color: white;
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    margin: 0;
+}
+.game-container .info .coins img {
+    height: calc(100 / 1284 * 50 * var(--dynamic-vw));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bottom-menu {
+    display: flex;
+    position: fixed;
+    width: calc(70 * var(--dynamic-vw));
+    padding-left: calc(15 * var(--dynamic-vw));
+    padding-right: calc(15 * var(--dynamic-vw));
+    background-color: #482b2b;
+    border-top-left-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    border-top-right-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    bottom: 0;
+    box-shadow: 0 0 calc(10 * var(--dynamic-vw)) calc(2.5 * var(--dynamic-vw)) rgba(0, 0, 0, 0.5);
+    clip-path: inset(calc(-15 * var(--dynamic-vw)) 0 0 0); /* Обрезка тени, кроме top */
+    touch-action: none;
+    z-index: 1000;
+}
+.bottom-menu .menu {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.bottom-menu .menu img {
+    height: calc(100 / 1284 * 75 * var(--dynamic-vw));
+    margin-top: calc(100 / 1284 * 40 * var(--dynamic-vw));
+}
+.bottom-menu .menu p {
+    color: white;
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
+    margin: 0;
+}
+.bottom-menu .selected .rectangle {
+    width: calc(100 / 1284 * 150 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 15 * var(--dynamic-vw));
+    background-color: white;
+    border-bottom-left-radius: var(--dynamic-vw);
+    border-bottom-right-radius: var(--dynamic-vw);
+    margin: 0 auto;
+}
+.bottom-menu .selected img {
+    margin-top: calc(100 / 1284 * 25 * var(--dynamic-vw));
+}
+.bottom-menu .selected {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Появление всех элементов при загрузке страницы */
+.content > * {
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+.content > *.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+ /* При ширине экрана от 500px соотношение сторон сайта всегда будет 2:1 */
+ :root {
+    --dynamic-vw: 1vw;
+}
+@media (min-width: 500px) {
+    :root {
+        --body-width: calc(100vh * 0.5);
+        --dynamic-vw: calc(var(--body-width) / 100);
+    }
+    body {
+        width: var(--body-width);
+    }
+}
+
+
+
+/* Убираем скроллбар */
+html {
+    scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
