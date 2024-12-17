@@ -35,7 +35,7 @@ if (telegram.isVersionAtLeast("8.0")) {
 };
 
 telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../../'));
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
 
 
 
