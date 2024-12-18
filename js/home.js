@@ -30,9 +30,6 @@ window.addEventListener('load', () => {
 
 
 
-
-
-
 // ПЕРЕКЛЮЧАТЕЛЬ ИГР И АЧИВОК
 function selectTab(tabId) {
   const gamesTab = document.getElementById('games');
@@ -112,6 +109,22 @@ if (telegram.isVersionAtLeast("8.0")) {
   telegram.lockOrientation();
 };
 
+
+function getBalance() {
+  telegram.CloudStorage.getItem('balance', function(err, value) {
+      if (err) {
+          console.error('Ошибка при получении ключа "balance":', err);
+          return;
+      }
+
+      if (value === null) {
+          console.log('Ключ "balance" не найден.');
+      } else {
+          console.log('Значение ключа "balance":', value);
+      }
+  });
+}
+getBalance();
 
 // console.log('initDataUnsafe.user', telegram.initDataUnsafe.user);
 // console.log('User ID:', USER_ID);
