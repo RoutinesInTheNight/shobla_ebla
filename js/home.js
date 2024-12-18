@@ -110,17 +110,20 @@ if (telegram.isVersionAtLeast("8.0")) {
 };
 
 
+
 function getBalance() {
-  telegram.CloudStorage.getItem('balance', function(err, value) {
+  const key = 'balance';
+  
+  telegram.CloudStorage.getItems([key], function(err, res) {
       if (err) {
           console.error('Ошибка при получении ключа "balance":', err);
           return;
       }
 
-      if (value === null) {
+      if (res[key] === undefined) {
           console.log('Ключ "balance" не найден.');
       } else {
-          console.log('Значение ключа "balance":', value);
+          console.log('Значение ключа "balance":', res[key]);
       }
   });
 }
