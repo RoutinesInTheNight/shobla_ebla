@@ -126,7 +126,7 @@ function getItem(key) {
 
 function setItem() {
   
-  telegram.CloudStorage.setItem("access", True, function(err, res) {
+  telegram.CloudStorage.setItem("access", true, function(err, res) {
       if (err) {
           console.error('Ошибка при access:', err);
       } else {
