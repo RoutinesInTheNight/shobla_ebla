@@ -118,7 +118,7 @@ function getBalance() {
       if (err) {
           console.error('Ошибка при получении ключа "balance":', err);
       } else {
-          console.log('Значение ключа "balance":', res);
+          console.log(`Значение ключа "balance": "${res}"`);
       }
   });
 }
@@ -192,8 +192,6 @@ function hapticFeedback(type, redirectUrl) {
       default:
         console.warn('Unknown haptic feedback type:', type);
     }
-  } else {
-    console.error('Haptic feedback is not supported in this environment.');
   }
 
   if (redirectUrl && redirectUrl !== '#') {
