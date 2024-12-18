@@ -134,7 +134,7 @@ function setItem() {
       }
   });
 }
-setItem();
+// setItem();
 
 getItem('balance');
 getItem('test');
