@@ -9,6 +9,19 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Перемещение к нужному блоку с игрой после возвращения на главную
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const elementId = urlParams.get('centerElementId');
+  if (elementId) {
+    const elementToCenter = document.getElementById(elementId);
+    if (elementToCenter) {
+      setTimeout(() => {
+        elementToCenter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }
+});
 
 
 
@@ -83,11 +96,11 @@ const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
-if (telegram.isVersionAtLeast("6.1")){
+if (telegram.isVersionAtLeast("6.1")) {
   telegram.BackButton.hide();
 };
 
-if (telegram.isVersionAtLeast("7.7")){
+if (telegram.isVersionAtLeast("7.7")) {
   telegram.disableVerticalSwipes();
 };
 
@@ -173,10 +186,10 @@ const totalImages = 15;
 const interval = 100;
 const circleRadius = document.body.clientWidth * 0.75;
 function getRandomPosition(radius) {
-    const angle = Math.random() * Math.PI * 2;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
-    return { x, y };
+  const angle = Math.random() * Math.PI * 2;
+  const x = Math.cos(angle) * radius;
+  const y = Math.sin(angle) * radius;
+  return { x, y };
 }
 function createMovingImage(index) {
   const img = document.createElement('img');
@@ -190,20 +203,20 @@ function createMovingImage(index) {
   img.style.setProperty('--rotate-end', `${randomRotation}deg`);
   container.appendChild(img);
   setTimeout(() => {
-      img.style.opacity = 1;
+    img.style.opacity = 1;
   }, 50);
   img.addEventListener('animationend', () => {
-      setTimeout(() => {
-          img.remove();
-      }, 1000);
+    setTimeout(() => {
+      img.remove();
+    }, 1000);
   });
 }
 function generateImages() {
-    const count = 1
-    for (let i = 0; i < count; i++) {
-        const randomIndex = Math.floor(Math.random() * totalImages) + 1;
-        createMovingImage(randomIndex);
-    }
+  const count = 1
+  for (let i = 0; i < count; i++) {
+    const randomIndex = Math.floor(Math.random() * totalImages) + 1;
+    createMovingImage(randomIndex);
+  }
 }
 // setInterval(generateImages, interval);
 
@@ -260,18 +273,18 @@ function showTopAchievement(description, statusImageSrc) {
   // }, 10);
   setTimeout(() => {
     const content = document.querySelector('.content');
-    
+
     // Извлекаем текущее значение padding-top из элемента .content
     const contentPaddingTop = window.getComputedStyle(content).paddingTop;
-  
+
     // Применяем это значение для баннера
     banner.style.top = contentPaddingTop;
   }, 10);
-  
+
 
   // Убрать баннер через 5 секунд
   setTimeout(() => {
-      removeBanner(banner);
+    removeBanner(banner);
   }, 5500);
 }
 
@@ -281,17 +294,17 @@ function removeBanner(banner) {
 
   // Удаление баннера из DOM через 0.5 секунды
   setTimeout(() => {
-      banner.remove();
+    banner.remove();
   }, 500);
 }
 
 // Пример использования
 document.querySelectorAll('.achievement').forEach(achievement => {
   achievement.onclick = () => {
-      const description = achievement.querySelector('.description').textContent;
-      // const reward = achievement.querySelector('.reward p').textContent;
-      const statusImageSrc = achievement.querySelector('.status img').src;
-      showTopAchievement(description, statusImageSrc);
+    const description = achievement.querySelector('.description').textContent;
+    // const reward = achievement.querySelector('.reward p').textContent;
+    const statusImageSrc = achievement.querySelector('.status img').src;
+    showTopAchievement(description, statusImageSrc);
   };
 });
 
