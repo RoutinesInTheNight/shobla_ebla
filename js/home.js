@@ -111,34 +111,33 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 
 
-function getBalance() {
-  const key = 'balance';
+function getItem(key) {
   
   telegram.CloudStorage.getItem(key, function(err, res) {
       if (err) {
-          console.error('Ошибка при получении ключа "balance":', err);
+          console.error(`Ошибка при получении ключа "${key}": "${err}"`);
       } else {
-          console.log(`Значение ключа "balance": "${res}"`);
+          console.log(`Значение ключа "${key}": "${res}"`);
       }
   });
 }
-getBalance();
+
 
 
 function setItem() {
-  const key = 'balance';
   
-  telegram.CloudStorage.setItem("test", "223", function(err, res) {
+  telegram.CloudStorage.setItem("test2", "223", function(err, res) {
       if (err) {
           console.error('Ошибка при test:', err);
       } else {
-          console.log(`Ключ добавлен test: "${res}"`);
+          console.log(`Ключ добавлен test:2 "${res}"`);
       }
   });
 }
 setItem();
 
-
+getItem('balance');
+getItem('test');
 
 
 
