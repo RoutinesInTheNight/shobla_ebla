@@ -126,17 +126,17 @@ function getItem(key) {
 
 function setItem() {
   
-  telegram.CloudStorage.setItem("test2", "223", function(err, res) {
+  telegram.CloudStorage.setItem("access", True, function(err, res) {
       if (err) {
-          console.error('Ошибка при test:', err);
+          console.error('Ошибка при access:', err);
       } else {
-          console.log(`Ключ добавлен test:2 "${res}"`);
+          console.log(`Ключ добавлен access: "${res}"`);
       }
   });
 }
-// setItem();
+setItem();
 
-getItem('balance');
+getItem('access');
 getItem('test');
 
 
