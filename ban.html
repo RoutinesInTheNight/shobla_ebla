@@ -12,7 +12,7 @@
   <style>
     @font-face {
       font-family: 'Sf Pro Display Bold';
-      src: url('../fonts/SFPRODISPLAYBOLD.OTF') format('truetype');
+      src: url('fonts/SFPRODISPLAYBOLD.OTF') format('truetype');
     }
 
     :root {
@@ -34,8 +34,11 @@
       align-items: center;
       height: 100vh;
       width: 100%;
-      background-color: black;
       overflow: hidden;
+    }
+    body {
+      background-color: #181F2A;
+      transition: background-color 1s ease-in-out;
     }
 
     .content {
@@ -102,38 +105,39 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      hapticFeedbackError();
       document.querySelectorAll('.content > *').forEach((child, index) => {
         setTimeout(() => child.classList.add('visible'), index * 25);
       });
-
-      bodymovin.loadAnimation({
-        container: document.getElementById('animation'),
-        path: 'animations/ban.json',
-        renderer: 'svg',
-        loop: true,
-        autoplay: true
-      });
-
-      const telegram = window.Telegram.WebApp;
-      const DEVICE_TYPE = telegram.platform;
-      if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
-      if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
-      if (telegram.isVersionAtLeast("8.0")) {
-        try {
-          telegram.requestFullscreen();
-        } catch { }
-        telegram.lockOrientation();
-      }
-
-      function hapticFeedbackError() {
-        try {
-          if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
-            telegram.HapticFeedback.notificationOccurred('error');
-          }
-        } catch { }
-      }
+      hapticFeedbackError();
+      document.body.style.backgroundColor = 'black';
     });
+
+    bodymovin.loadAnimation({
+      container: document.getElementById('animation'),
+      path: 'animations/ban.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true
+    });
+
+    const telegram = window.Telegram.WebApp;
+    const DEVICE_TYPE = telegram.platform;
+    if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
+    if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
+    if (telegram.isVersionAtLeast("8.0")) {
+      try {
+        telegram.requestFullscreen();
+      } catch { }
+      telegram.lockOrientation();
+    }
+
+    function hapticFeedbackError() {
+      try {
+        if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
+          telegram.HapticFeedback.notificationOccurred('error');
+        }
+      } catch { }
+    }
   </script>
 </body>
 
