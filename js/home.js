@@ -93,23 +93,14 @@ const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
-if (telegram.isVersionAtLeast("6.1")) {
-  telegram.BackButton.hide();
-};
-
-if (telegram.isVersionAtLeast("7.7")) {
-  telegram.disableVerticalSwipes();
-};
-
+if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
+if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
 if (telegram.isVersionAtLeast("8.0")) {
   try {
     telegram.requestFullscreen();
-  } catch (e) {
-  };
+  } catch { }
   telegram.lockOrientation();
-};
-
-
+}
 
 
 

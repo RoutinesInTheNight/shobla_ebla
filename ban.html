@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Банда «Псы»</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Sf Pro Display Bold';
+      src: url('../fonts/SFPRODISPLAYBOLD.OTF') format('truetype');
+    }
+
+    :root {
+      --dynamic-vw: 1vw;
+    }
+
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+    }
+
+    html,
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    .content {
+      position: relative;
+      text-align: center;
+    }
+
+    #animation {
+      width: calc(50 * var(--dynamic-vw));
+      margin: 0 auto;
+    }
+
+    .txt1 {
+      color: #ED242C;
+      font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+      font-size: calc(100 / 1284 * 75 * var(--dynamic-vw));
+      margin: calc(5 * var(--dynamic-vw)) 0 calc(2.5 * var(--dynamic-vw));
+    }
+
+    .txt2 {
+      color: #CCC8C0;
+      font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+      font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+      margin: 0 0 calc(15 * var(--dynamic-vw));
+    }
+
+    a {
+      color: #8a8781;
+      font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+      font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    }
+
+    .content>* {
+      transform: scale(0.9);
+      opacity: 0;
+      transition: transform 0.25s ease-out, opacity 1s ease-out;
+    }
+
+    .content>*.visible {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    @media (min-width: 500px) {
+      :root {
+        --body-width: calc(100vh * 0.5);
+        --dynamic-vw: calc(var(--body-width) / 100);
+      }
+
+      body {
+        width: var(--body-width);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content" id="content">
+    <div id="animation"></div>
+    <p class="txt1">Доступ закрыт</p>
+    <p class="txt2">Это мини-приложение только для<br>закрытого чата «Банда Псы»</p>
+    <a href="https://t.me/el_scamino">@el_scamino</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      hapticFeedbackError();
+      document.querySelectorAll('.content > *').forEach((child, index) => {
+        setTimeout(() => child.classList.add('visible'), index * 25);
+      });
+
+      bodymovin.loadAnimation({
+        container: document.getElementById('animation'),
+        path: 'animations/ban.json',
+        renderer: 'svg',
+        loop: true,
+        autoplay: true
+      });
+
+      const telegram = window.Telegram.WebApp;
+      const DEVICE_TYPE = telegram.platform;
+      if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
+      if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
+      if (telegram.isVersionAtLeast("8.0")) {
+        try {
+          telegram.requestFullscreen();
+        } catch { }
+        telegram.lockOrientation();
+      }
+
+      function hapticFeedbackError() {
+        try {
+          if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
+            telegram.HapticFeedback.notificationOccurred('error');
+          }
+        } catch { }
+      }
+    });
+  </script>
+</body>
+
+</html>

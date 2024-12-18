@@ -95,55 +95,63 @@
 
     telegram.expand();
 
-    if (telegram.isVersionAtLeast("6.1")) {
-      telegram.BackButton.hide();
-    };
-
-    if (telegram.isVersionAtLeast("7.7")) {
-      telegram.disableVerticalSwipes();
-    };
-
+    if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
+    if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
     if (telegram.isVersionAtLeast("8.0")) {
       try {
         telegram.requestFullscreen();
-      } catch (e) {
-      };
+      } catch { }
       telegram.lockOrientation();
-    };
+    }
 
     telegram.ready()
+
+    let redirect = "ban.html";
+    let resources = [
+      'ban.html',
+      'fonts/SFPRODISPLAYBOLD.OTF',
+      'animations/ban.json'
+    ];
+    if (telegram.isVersionAtLeast("6.9")) {
+      try {
+        telegram.CloudStorage.getItem("access", (err, res) => {
+          if (!err && res === "true") {
+            redirect = "home?start";
+            resources = [
+              'home.html',
+              'js/home.js',
+              'css/home.css',
+              'fonts/SFPRODISPLAYREGULAR.OTF',
+              'fonts/SFPRODISPLAYMEDIUM.OTF',
+              'fonts/SFPRODISPLAYBOLD.OTF',
+              'images/top-img-1.png',
+              'images/avatar.png',
+              'images/coin.png',
+              'images/home-cup.png',
+              'images/right-arrow.png',
+              'images/bet.png',
+              'images/roulette.png',
+              'images/slots.png',
+              'images/slots-deluxe.png',
+              'images/no-photo2.png',
+              'images/dice.png',
+              'images/gray-sand-watch.png',
+              'images/green-check.png',
+              'images/bank.png',
+              'images/lottery.png',
+              'images/home-white.png',
+              'images/rank.png',
+              'images/account.png'
+            ];
+          }
+        });
+      } catch { }
+    }
 
 
     const preloaderImage = document.getElementById('preloader-image');
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('progress');
-
-    const resources = [
-      'home.html',
-      'js/home.js',
-      'css/home.css',
-      'fonts/SFPRODISPLAYREGULAR.OTF',
-      'fonts/SFPRODISPLAYMEDIUM.OTF',
-      'fonts/SFPRODISPLAYBOLD.OTF',
-      'images/top-img-1.png',
-      'images/avatar.png',
-      'images/coin.png',
-      'images/home-cup.png',
-      'images/right-arrow.png',
-      'images/bet.png',
-      'images/roulette.png',
-      'images/slots.png',
-      'images/slots-deluxe.png',
-      'images/no-photo2.png',
-      'images/dice.png',
-      'images/gray-sand-watch.png',
-      'images/green-check.png',
-      'images/bank.png',
-      'images/lottery.png',
-      'images/home-white.png',
-      'images/rank.png',
-      'images/account.png'
-    ];
 
     const MIN_PRELOADER_TIME = 2000;
     let loadedCount = 0;
@@ -214,7 +222,7 @@
         document.body.style.backgroundColor = '#181F2A';
 
         // Редирект
-        setTimeout(() => window.location.href = 'home', 1000);
+        setTimeout(() => window.location.href = redirect, 1000);
 
       } catch (error) {
         console.error('Ошибка при загрузке:', error);
