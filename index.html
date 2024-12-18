@@ -65,7 +65,7 @@
       width: 0;
       height: 100%;
       background-color: #444;
-      transition: width 1s ease-in-out;
+      transition: width 0.1s ease-in-out;
     }
 
     @media (min-width: 500px) {
@@ -213,7 +213,7 @@
         preloader.classList.add('hidden');
         document.body.style.backgroundColor = '#181F2A';
 
-        // Редирект (закомментировано)
+        // Редирект
         setTimeout(() => window.location.href = 'home', 1000);
 
       } catch (error) {

@@ -22,7 +22,7 @@ const DEVICE_TYPE = telegram.platform;
 telegram.expand();
 
 telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../../'));
+telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home'));
 
 if (telegram.isVersionAtLeast("7.7")){
   telegram.disableVerticalSwipes();
