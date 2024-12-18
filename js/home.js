@@ -125,6 +125,20 @@ function getBalance() {
 getBalance();
 
 
+function setItem() {
+  const key = 'balance';
+  
+  telegram.CloudStorage.setItem("test", "223", function(err, res) {
+      if (err) {
+          console.error('Ошибка при test:', err);
+      } else {
+          console.log(`Ключ добавлен test: "${res}"`);
+      }
+  });
+}
+setItem();
+
+
 
 
 
