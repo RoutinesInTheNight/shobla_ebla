@@ -155,9 +155,9 @@ function getKeys() {
   });
 }
 
-setItem('access', "true");
-getItem('access');
-getKeys();
+// setItem('access', "true");
+// getItem('access');
+// getKeys();
 
 
 
