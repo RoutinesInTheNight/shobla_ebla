@@ -114,25 +114,45 @@ if (telegram.isVersionAtLeast("8.0")) {
 function getBalance() {
   const key = 'balance';
   
-  telegram.CloudStorage.getItems([key], function(err, res) {
+  telegram.CloudStorage.getItem(key, function(err, res) {
       if (err) {
           console.error('Ошибка при получении ключа "balance":', err);
-          return;
-      }
-
-      if (res[key] === undefined) {
-          console.log('Ключ "balance" не найден.');
       } else {
-          console.log('Значение ключа "balance":', res[key]);
+          console.log('Значение ключа "balance":', res);
       }
   });
 }
 getBalance();
 
+
+
+
+
+function getKeys() {
+  telegram.CloudStorage.getKeys(function(err, keys) {
+      if (err) {
+          console.error('Ошибка при получении ключа "balance":', err);
+      } else {
+          console.log('Ключи в Cloud Storage:', keys);
+      }
+  });
+}
+getKeys();
+
+
+
+
+
+
+
+
+
+
+
 // console.log('initDataUnsafe.user', telegram.initDataUnsafe.user);
-// console.log('User ID:', USER_ID);
+console.log('User ID:', USER_ID);
 // console.log('Premium:', IS_PREMIUM);
-// console.log('Device Type:', DEVICE_TYPE);
+console.log('Device Type:', DEVICE_TYPE);
 
 
 
