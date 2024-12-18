@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+  <title>Банда «Псы»</title>
+  <link rel="stylesheet" href="css/home.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+
+<body>
+
+
+  <div class="content" id="content">
+
+    <img src="images/top-img-1.png" class="top-background-img">
+
+    <p class="user-name">КОНСТАНТИН</p>
+
+    <div class="user-image-container">
+      <img src="images/avatar.png" class="user-image">
+    </div>
+
+    <div class="balance-container">
+      <img src="images/coin.png">
+      <p>214 146</p>
+    </div>
+
+    <p class="miniapp-description">
+      Играй и увеличивай пенсию
+    </p>
+    
+
+
+    <div class="league-container" onclick="hapticFeedback('soft', 'leagues')">
+      <div class="left">
+        <img src="images/home-cup.png">
+      </div>
+      <div class="center">
+        <div class="progress-bar">
+          <div class="progress"></div>
+        </div>
+        <div class="league-marks">
+          <p class="left-mark">100K</p>
+          <p class="right-mark">250K</p>
+        </div>
+        <div class="user-league-info">
+          <p>3 ЛИГА:</p>
+          <p>ИНЦЕЛ</p>
+        </div>
+
+      </div>
+      <div class="right">
+        <img src="images/right-arrow.png">
+      </div>
+    </div>
+
+
+    <div class="games-or-achievements">
+      <div id="games" class="games">
+        <p>Игры</p>
+        <div class="rectangle"></div>
+      </div>
+      <div id="achievements" class="achievements">
+        <p>Ачивки</p>
+        <div class="rectangle"></div>
+      </div>
+    </div>
+
+
+
+
+
+    <div id="games-container" class="content-container">
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/bet.png">
+        <p class="name">Ставка пса</p>
+        <p class="description">Выбери лучший кэф и ставь всю пенсию на исход</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/roulette.png">
+        <p class="name">Рулетка пса</p>
+        <p class="description">Твоя пенсия зависит лишь от красного или чёрного</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/slots.png">
+        <p class="name">Слоты пса</p>
+        <p class="description">Классика: три слота, один Джекпот и х100 от пенсии</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/slots-deluxe.png">
+        <p class="name">Слоты пса Deluxe</p>
+        <p class="description">Больше слотов, больше Джектопов и больше пенсия</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/no-photo2.png">
+        <p class="name">Шобла Комбат</p>
+        <p class="description">Прокачивай карты и собирай прибыль каждые 3 часа</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/no-photo2.png">
+        <p class="name">Никита AirDrop</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/dice.png">
+        <p class="name">Кости Кости</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft', 'games/darts')">
+        <img src="images/no-photo2.png">
+        <p class="name">Дартс</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/no-photo2.png">
+        <p class="name">Баскетбол</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/no-photo2.png">
+        <p class="name">Пенальти</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+
+      <div class="game" onclick="hapticFeedback('soft')">
+        <img src="images/no-photo2.png">
+        <p class="name">Боулинг</p>
+        <p class="description">Описание будет позже</p>
+      </div>
+      
+
+    </div>
+
+
+
+
+
+
+    <div id="achievements-container" class="content-container hidden">
+
+      <div class="achievement">
+        <div class="info">
+          <p class="description">Сорви пломбу у Костика дома</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 10 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement">
+        <div class="info">
+          <p class="description">Выгони раковину у Костика дома</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 25 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement completed">
+        <div class="info">
+          <p class="description">Взгрей Костика фирменной жижкой</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
+      <div class="achievement completed">
+        <div class="info">
+          <p class="description">Взгрей Шоблыча чекушкой</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
+      <div class="achievement completed">
+        <div class="info">
+          <p class="description">Взгрей Шоблыча чекушкой со слабительным</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
+
+      <p class="section">Шобла Комбат</p>
+
+      <div class="achievement">
+        <div class="info">
+          <p class="description">Сделай это это это</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 250 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement">
+        <div class="info">
+          <p class="description">Сделай то то то</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 5 000 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement completed">
+        <div class="info">
+          <p class="description">Сделай таси-баси</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
+
+      <p class="section">Домашние задания Тайлера Дердена</p>
+
+      <div class="achievement">
+        <div class="info">
+          <p class="description">Забеги к Костику домой и пердани Шоблычу в лицо</p>
+          <div class="reward">
+            <img src="images/coin.png">
+            <p>+ 1 000 000 000 000 000 000 000</p>
+          </div>
+        </div>
+        <div class="status"><img src="images/gray-sand-watch.png"></div>
+      </div>
+
+      <div class="achievement completed">
+        <div class="info">
+          <p class="description">Подкинь домой к Костику кота</p>
+        </div>
+        <div class="status">
+          <img src="images/green-check.png">
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+    <!-- <div class="top-achievement-banner" id="top-achievement-banner">
+      <div class="status"><img src="images/green-check.png"></div>
+      <div class="info">
+        <p class="description" id="top-achievement-banner-description">Описание</p>
+        <div class="reward">
+          <img src="images/coin.png">
+          <p id="top-achievement-banner-reward">+ 10 000</p>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+    <div class="bottom-menu">
+
+      <div class="menu" onclick="hapticFeedback('error')">
+        <img src="images/bank.png" class="icon">
+        <p>Банк</p>
+      </div>
+
+      <div class="menu" onclick="hapticFeedback('error')">
+        <img src="images/lottery.png" class="icon">
+        <p>Лотереи</p>
+      </div>
+
+      <div class="menu selected" onclick="hapticFeedback('warning')">
+        <div class="rectangle"></div>
+        <img src="images/home-white.png" class="icon">
+        <p>Главная</p>
+      </div>
+
+      <div class="menu" onclick="hapticFeedback('error')">
+        <img src="images/rank.png" class="icon">
+        <p>Рейтинг</p>
+      </div>
+
+      <div class="menu" onclick="hapticFeedback('error')">
+        <img src="images/account.png" class="icon">
+        <p>Профиль</p>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <script src="js/home.js"></script>
+
+</body>
+</html>

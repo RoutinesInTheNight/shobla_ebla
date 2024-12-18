@@ -1,66 +1,12 @@
-// ЗАСТАВКА И ПОЯВЛЕНИЕ КОНТЕНТА
-const referrer = document.referrer;
-if (!referrer || referrer.replace(/\/$/, '') === 'https://routinesinthenight.github.io/shobla_ebla/') {
-  window.addEventListener('DOMContentLoaded', () => {
-    const preloader = document.getElementById('preloader');
-    const progress = document.getElementById('progress');
-
-    const getRandomIntervals = (totalDuration, steps) => {
-      const intervals = [];
-      let sum = 0;
-      for (let i = 0; i < steps - 1; i++) {
-        const remaining = totalDuration - sum;
-        const interval = Math.random() * (remaining / (steps - i));
-        intervals.push(interval);
-        sum += interval;
-      }
-      intervals.push(totalDuration - sum);
-      return intervals;
-    };
-
-    const totalDuration = 1500; // Длительность заставки
-    const steps = 5;
-    const intervals = getRandomIntervals(totalDuration, steps);
-
-    let accumulatedTime = 0;
-    intervals.forEach((interval, index) => {
-      setTimeout(() => {
-        const progressPercentage = ((index + 1) / steps) * 100;
-        progress.style.transitionDuration = `${interval}ms`;
-        progress.style.width = `${progressPercentage}%`;
-      }, accumulatedTime);
-      accumulatedTime += interval;
-    });
-
-    // Убираем прелоадер и показываем контент
+// Просто появление контента
+window.addEventListener('DOMContentLoaded', () => {
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
     setTimeout(() => {
-      preloader.classList.add('hidden');
-      hapticFeedback('success');
-      setTimeout(() => {
-        const children = document.querySelectorAll('.content > *');
-        children.forEach((child, index) => {
-          if (!child.classList.contains('top-achievement-banner')) {
-            setTimeout(() => {
-              child.classList.add('visible');
-            }, index * 25);
-          }
-        });
-      }, 100);
-    }, totalDuration);
+      child.classList.add('visible');
+    }, index * 25);
   });
-} else {
-  // Просто появление контента
-  window.addEventListener('DOMContentLoaded', () => {
-    const preloader = document.getElementById('preloader');
-    preloader.classList.add('hidden'); // Убираем preloader
-    const children = document.querySelectorAll('.content > *');
-    children.forEach((child, index) => {
-      setTimeout(() => {
-        child.classList.add('visible');
-      }, index * 25);
-    });
-  });
-}
+});
 
 
 
@@ -259,7 +205,7 @@ function generateImages() {
         createMovingImage(randomIndex);
     }
 }
-setInterval(generateImages, interval);
+// setInterval(generateImages, interval);
 
 
 
