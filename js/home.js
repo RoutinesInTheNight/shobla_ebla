@@ -155,22 +155,9 @@ function getKeys() {
   });
 }
 
-
-removeItem('test')
-removeItem('test')
-removeItem('test2')
-removeItem('hueta')
-
-setItem('access', true);
+setItem('access', "true");
 getItem('access');
-
-getItem('test');
-
 getKeys();
-
-
-
-
 
 
 
