@@ -111,45 +111,61 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 
 
+
+
+
+
 function getItem(key) {
-  
   telegram.CloudStorage.getItem(key, function(err, res) {
       if (err) {
-          console.error(`Ошибка при получении ключа "${key}": "${err}"`);
+          console.error(`Ошибка при получении ключа "${key}":`, err);
       } else {
-          console.log(`Значение ключа "${key}": "${res}"`);
+          console.log(`Значение ключа "${key}":`, res);
       }
   });
 }
 
-
-
-function setItem() {
-  
-  telegram.CloudStorage.setItem("access", true, function(err, res) {
+function removeItem(key) {
+  telegram.CloudStorage.removeItem(key, function(err, res) {
       if (err) {
-          console.error('Ошибка при access:', err);
+          console.error(`Ошибка при удалении ключа "${key}":`, err);
       } else {
-          console.log(`Ключ добавлен access: "${res}"`);
+          console.log(`Удалён ключ "${key}":`, res);
       }
   });
 }
-setItem();
 
-getItem('access');
-getItem('test');
-
-
+function setItem(key, value) {
+  telegram.CloudStorage.setItem(key, value, function(err, res) {
+      if (err) {
+          console.error(`Ошибка при добавлении ключа "${key}" со значением "${value}":`, err);
+      } else {
+          console.log(`Добавлен ключ "${key}" со значением "${value}":`, res);
+      }
+  });
+}
 
 function getKeys() {
   telegram.CloudStorage.getKeys(function(err, keys) {
       if (err) {
-          console.error('Ошибка при получении ключа "balance":', err);
+          console.error('Ошибка при получении ключей из Cloud Storage:', err);
       } else {
           console.log('Ключи в Cloud Storage:', keys);
       }
   });
 }
+
+
+removeItem('test')
+removeItem('test')
+removeItem('test2')
+removeItem('hueta')
+
+setItem('access', true);
+getItem('access');
+
+getItem('test');
+
 getKeys();
 
 
