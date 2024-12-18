@@ -88,7 +88,11 @@
     const telegram = window.Telegram.WebApp;
 
     telegram.BackButton.show()
-    telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home'));
+    // telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home'));
+    telegram.BackButton.onClick(() => {
+      telegram.HapticFeedback.impactOccurred('soft');
+      window.location.href = '../../home';
+    });
 
     if (telegram.isVersionAtLeast("7.7")) {
       telegram.disableVerticalSwipes();
