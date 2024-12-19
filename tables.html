@@ -96,22 +96,12 @@
     const telegram = window.Telegram.WebApp;
 
     telegram.BackButton.show()
-    telegram.BackButton.onClick(() => hapticFeedback('soft', 'home'));
-    function hapticFeedback(type, redirectUrl) {
+    telegram.BackButton.onClick(() => hapticFeedback());
+    function hapticFeedback() {
       if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
-        switch (type) {
-          case 'soft':
-            telegram.HapticFeedback.impactOccurred('soft');
-            break;
-          default:
-            console.warn('Unknown haptic feedback type:', type);
-        }
+        telegram.HapticFeedback.impactOccurred('soft');
       }
-      if (redirectUrl && redirectUrl !== '#') {
-        setTimeout(() => {
-          window.location.href = redirectUrl;
-        }, children.length * 25);
-      }
+      window.location.href = 'home';
     }
 
 
