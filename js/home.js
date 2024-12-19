@@ -28,6 +28,20 @@ window.addEventListener('load', () => {
 
 
 
+// При открытии мини-приложения срабатывает вибрация
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('start')) {
+    hapticFeedback('success');
+  }
+});
+
+
+
+
+
+
+
 
 
 // ПЕРЕКЛЮЧАТЕЛЬ ИГР И АЧИВОК
