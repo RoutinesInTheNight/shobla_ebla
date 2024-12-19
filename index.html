@@ -13,29 +13,26 @@
       --dynamic-vw: 1vw;
     }
 
+    html,
     body {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      height: 100%;
-      width: 100%;
-      background-color: black;
+      align-items: center;
+      height: 100vh;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      overflow: hidden;
       overscroll-behavior: none;
       transition: background-color 1s ease-in-out;
     }
 
+    body {
+      background-color: black;
+    }
+
     #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -106,7 +103,7 @@
 
     telegram.ready()
 
-    let redirect = "ban.html";
+    let redirect = "ban";
     let resources = [
       'ban.html',
       'fonts/SFPRODISPLAYBOLD.OTF',
@@ -127,7 +124,7 @@
               'images/top-img-1.png',
               'images/avatar.png',
               'images/coin.png',
-              'images/home-cup.png',
+              'images/home-cup.svg',
               'images/right-arrow.png',
               'images/bet.png',
               'images/roulette.png',
@@ -219,10 +216,13 @@
         ]);
 
         preloader.classList.add('hidden');
-        document.body.style.backgroundColor = '#181F2A';
 
-        // Редирект
-        setTimeout(() => window.location.href = redirect, 1000);
+        if (redirect === "ban") {
+          setTimeout(() => window.location.href = redirect, 1000);
+        } else {
+          document.body.style.backgroundColor = '#181F2A';
+          setTimeout(() => window.location.href = redirect, 1000);
+        };
 
       } catch (error) {
         console.error('Ошибка при загрузке:', error);
