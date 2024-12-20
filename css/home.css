@@ -99,7 +99,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--dynamic-vw);
+    gap: calc(100 / 1284 * 10 * var(--dynamic-vw));
     margin-top: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
 .balance-container img {
@@ -154,7 +154,7 @@ body {
     margin-top: calc(100 / 1284 * 25 * var(--dynamic-vw));
 }
 .progress {
-    width: 76%;
+    width: calc(100 / 1284 * 25 * var(--dynamic-vw));
     height: 100%;
     background-color: rgb(250, 225, 150);
     border-radius: calc(100 / 1284 * 15 * var(--dynamic-vw));
@@ -686,7 +686,9 @@ body::-webkit-scrollbar {
 
 
 
-
+#wqffwqf {
+    height: calc(100 / 1284 * 347 * var(--dynamic-vw));
+}
 
 
 

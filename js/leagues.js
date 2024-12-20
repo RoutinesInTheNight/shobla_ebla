@@ -29,7 +29,7 @@ telegram.BackButton.show()
 telegram.BackButton.onClick(() => hapticFeedback('soft', '../'));
 
 
-if (telegram.isVersionAtLeast("7.7")){
+if (telegram.isVersionAtLeast("7.7")) {
   telegram.disableVerticalSwipes();
 };
 
@@ -128,17 +128,35 @@ function hapticFeedback(type, redirectUrl) {
 
 
 
-const animations = ['1.json', '2.json', '3.json', '4.json', '5.json', '6.json'];
+
+const animations = ['1.json', '2.json', '3.json', '4.json', '5.json', '6.json']; // Рандомные анимации
+const initialAnimation = '7.json'; // Седьмая анимация
 const container = document.getElementById('animation-container');
 const throwButton = document.getElementById('throw-button');
-let currentAnimation = null; // Ссылка на текущую анимацию
-let isPlaying = false; // Флаг, указывающий, воспроизводится ли анимация
 
-// Загружаем анимации в массив, но они изначально скрыты
+let currentAnimation = null; // Текущая анимация
+let isPlaying = false; // Флаг воспроизведения анимации
+let initialMode = true; // Флаг начальной анимации
+
+// Создаём контейнер для седьмой анимации
+const initialContainer = document.createElement('div');
+container.appendChild(initialContainer);
+
+// Загружаем седьмую анимацию
+const initialAnimationInstance = bodymovin.loadAnimation({
+  container: initialContainer,
+  path: `animations/${initialAnimation}`,
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  name: 'initial-animation',
+});
+
+// Загружаем рандомные анимации в массив
 const animationInstances = animations.map((path, index) => {
-  const animationContainer = document.createElement('div'); // Создаем отдельный контейнер для каждой анимации
-  animationContainer.style.display = 'none'; // Скрываем контейнер
-  container.appendChild(animationContainer); // Добавляем в общий контейнер
+  const animationContainer = document.createElement('div');
+  animationContainer.style.display = 'none';
+  container.appendChild(animationContainer);
 
   return bodymovin.loadAnimation({
     container: animationContainer,
@@ -146,25 +164,26 @@ const animationInstances = animations.map((path, index) => {
     renderer: 'svg',
     loop: false,
     autoplay: false,
-    name: `animation-${index}`
+    name: `animation-${index}`,
   });
 });
 
 // Функция для скрытия всех анимаций
 function hideAllAnimations() {
   animationInstances.forEach(instance => {
-    instance.wrapper.style.display = 'none'; // Скрываем контейнер анимации
+    instance.wrapper.style.display = 'none';
   });
+  initialContainer.style.display = 'none';
 }
 
 // Функция для отображения текущей анимации
 function showCurrentAnimation(animation) {
   if (animation) {
-    animation.wrapper.style.display = 'block'; // Показываем контейнер текущей анимации
+    animation.wrapper.style.display = 'block';
   }
 }
 
-// Функция для остановки текущей анимации и возврата к первому кадру
+// Функция для остановки текущей анимации
 function stopCurrentAnimation() {
   if (currentAnimation) {
     currentAnimation.stop();
@@ -172,41 +191,40 @@ function stopCurrentAnimation() {
   }
 }
 
-// Функция для запуска текущей анимации
-function playCurrentAnimation() {
-  if (currentAnimation) {
-    isPlaying = true;
-    currentAnimation.play();
-
-    // После окончания анимации сбрасываем флаг
-    currentAnimation.addEventListener('complete', () => {
-      isPlaying = false;
-    });
-  }
-}
-
 // Обработчик для кнопки "Бросок"
 throwButton.addEventListener('click', () => {
-  if (isPlaying) return; // Если анимация воспроизводится, ничего не делаем
+  if (isPlaying) return; // Если анимация проигрывается, ничего не делаем
 
-  // Останавливаем текущую анимацию
-  stopCurrentAnimation();
-
-  // Скрываем текущую анимацию
-  hideAllAnimations();
-
-  // Выбираем новую случайную анимацию
-  currentAnimation = animationInstances[Math.floor(Math.random() * animationInstances.length)];
-
-  // Показываем новую анимацию
-  showCurrentAnimation(currentAnimation);
-
-  // Запускаем новую анимацию
-  playCurrentAnimation();
+  if (initialMode) {
+    // Если сейчас начальная анимация
+    initialAnimationInstance.loop = false; // Останавливаем циклическое воспроизведение
+    initialAnimationInstance.addEventListener('complete', () => {
+      // Когда седьмая анимация завершает цикл
+      initialMode = false; // Отключаем начальный режим
+      hideAllAnimations(); // Скрываем седьмую анимацию
+      playRandomAnimation(); // Запускаем случайную анимацию
+    });
+  } else {
+    // Если уже не начальная анимация
+    playRandomAnimation();
+  }
 });
 
-// Инициализация: выбираем случайную анимацию и показываем её
-currentAnimation = animationInstances[Math.floor(Math.random() * animationInstances.length)];
+// Функция для запуска случайной анимации
+function playRandomAnimation() {
+  stopCurrentAnimation();
+  hideAllAnimations();
+  currentAnimation = animationInstances[Math.floor(Math.random() * animationInstances.length)];
+  showCurrentAnimation(currentAnimation);
+  currentAnimation.play();
+
+  // Устанавливаем флаг воспроизведения
+  isPlaying = true;
+  currentAnimation.addEventListener('complete', () => {
+    isPlaying = false; // Сбрасываем флаг после завершения
+  });
+}
+
+// Начальная инициализация: показываем только седьмую анимацию
 hideAllAnimations();
-showCurrentAnimation(currentAnimation);
-stopCurrentAnimation();
+initialContainer.style.display = 'block';

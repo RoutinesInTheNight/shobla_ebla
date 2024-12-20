@@ -1,15 +1,99 @@
-// Просто появление контента
-window.addEventListener('DOMContentLoaded', () => {
+const telegram = window.Telegram.WebApp;
+const USER_ID = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.id : null;
+const DEVICE_TYPE = telegram.platform;
+
+telegram.expand();
+if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
+if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
+if (telegram.isVersionAtLeast("8.0")) {
+  telegram.requestFullscreen();
+  telegram.lockOrientation();
+}
+
+
+
+if (telegram.isVersionAtLeast("6.9")) {
+  try {
+    telegram.CloudStorage.getItem("access", (err, res) => {
+      if (!err && res === "true") {
+        redirect = "home?start";
+        resources = [];
+      }
+    });
+  } catch { }
+}
+
+
+
+
+
+// Анимированное появление контента, проверка на доступ
+// При открытии мини-приложения: вибрация, удаление из ссылки "?start", отправка времени захода в бд
+window.addEventListener('DOMContentLoaded', async () => {
   const children = document.querySelectorAll('.content > *');
   children.forEach((child, index) => {
     setTimeout(() => {
       child.classList.add('visible');
     }, index * 25);
   });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('start')) {
+    hapticFeedback('success');
+
+    urlParams.delete('start');
+    const newUrl = `${window.location.pathname}${urlParams.toString() ? '?' + urlParams.toString() : ''}`;
+    window.history.replaceState({}, '', newUrl);
+
+    const db = await getTGItem('db');
+    const user_name = await getTGItem('user_name');
+
+    if (db === null || user_name === null) {
+      window.location.href = "ban"
+    } else {
+      try {
+        const response = await fetch(db, {
+          method: 'POST',
+          body: JSON.stringify({
+            method: "login",
+            user_name: user_name,
+            time: Math.floor(Date.now() / 1000),
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          mode: 'no-cors'
+        });
+        const result = await response.text();
+        console.log("Ответ сервера:", result);
+      } catch {
+        window.location.href = "error"
+      }
+    }
+  }
 });
 
 
-// Перемещение к нужному блоку с игрой после возвращения на главную
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Перемещение к нужному блоку с игрой после возвращения со страницы игры
 window.addEventListener('load', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const elementId = urlParams.get('centerElementId');
@@ -23,23 +107,32 @@ window.addEventListener('load', () => {
   }
 });
 
-// 1 000 000 000 000 000
-// 9999999999999999
-// jnbbgSGrA
-// 1-424323525_2-2525235235_
-// месяц - 600
-// 
 
 
 
 
-// При открытии мини-приложения срабатывает вибрация
-window.addEventListener('load', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('start')) {
-    hapticFeedback('success');
-  }
-});
+async function getTGItem(key) {
+  return new Promise(resolve => {
+    telegram.CloudStorage.getItem(key, (_, res) => {
+      resolve(res === "" ? null : res);
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -105,65 +198,54 @@ window.onload = () => {
 
 
 
-const telegram = window.Telegram.WebApp;
-const USER_ID = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.id : null;
-const IS_PREMIUM = telegram.initDataUnsafe.user ? telegram.initDataUnsafe.user.is_premium || false : false;
-const DEVICE_TYPE = telegram.platform;
-
-telegram.expand();
-
-if (telegram.isVersionAtLeast("6.1")) telegram.BackButton.hide();
-if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
-if (telegram.isVersionAtLeast("8.0")) {
-  try {
-    telegram.requestFullscreen();
-  } catch { }
-  telegram.lockOrientation();
-}
 
 
 
 
 
-function getItem(key) {
-  telegram.CloudStorage.getItem(key, function(err, res) {
-      if (err) {
-          console.error(`Ошибка при получении ключа "${key}":`, err);
-      } else {
-          console.log(`Значение ключа "${key}":`, res);
-      }
-  });
-}
+// function getItem(key) {
+//   telegram.CloudStorage.getItem(key, function (err, res) {
+//     if (err) {
+//       console.error(`Ошибка при получении ключа "${key}":`, err);
+//     } else {
+//       console.log(`Значение ключа "${key}":`, res);
+//     }
+//   });
+// }
 
 function removeItem(key) {
-  telegram.CloudStorage.removeItem(key, function(err, res) {
-      if (err) {
-          console.error(`Ошибка при удалении ключа "${key}":`, err);
-      } else {
-          console.log(`Удалён ключ "${key}":`, res);
-      }
+  telegram.CloudStorage.removeItem(key, function (err, res) {
+    if (err) {
+      console.error(`Ошибка при удалении ключа "${key}":`, err);
+    } else {
+      console.log(`Удалён ключ "${key}":`, res);
+    }
   });
 }
 
 function setItem(key, value) {
-  telegram.CloudStorage.setItem(key, value, function(err, res) {
-      if (err) {
-          console.error(`Ошибка при добавлении ключа "${key}" со значением "${value}":`, err);
-      } else {
-          console.log(`Добавлен ключ "${key}" со значением "${value}":`, res);
-      }
+  telegram.CloudStorage.setItem(key, value, function (err, res) {
+    if (err) {
+      console.error(`Ошибка при добавлении ключа "${key}" со значением "${value}":`, err);
+    } else {
+      console.log(`Добавлен ключ "${key}" со значением "${value}":`, res);
+    }
   });
 }
 
 function getKeys() {
-  telegram.CloudStorage.getKeys(function(err, keys) {
-      if (err) {
-          console.error('Ошибка при получении ключей из Cloud Storage:', err);
-      } else {
-          console.log('Ключи в Cloud Storage:', keys);
-      }
+  telegram.CloudStorage.getKeys(function (err, keys) {
+    if (err) {
+      console.error('Ошибка при получении ключей из Cloud Storage:', err);
+    } else {
+      console.log('Ключи в Cloud Storage:', keys);
+    }
   });
 }
+
+
+// getItem('user_name');
+
 
 // setItem('access', "true");
 // getItem('access');
@@ -422,3 +504,11 @@ document.addEventListener('DOMContentLoaded', () => {
   onContentSafeAreaChanged();
   onSafeAreaChanged();
 });
+
+
+
+
+
+
+
+
