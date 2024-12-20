@@ -96,13 +96,10 @@
     const telegram = window.Telegram.WebApp;
 
     telegram.BackButton.show()
-    telegram.BackButton.onClick(() => hapticFeedback());
-    function hapticFeedback() {
-      if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
-        telegram.HapticFeedback.impactOccurred('soft');
-      }
+    telegram.BackButton.onClick(() => {
+      telegram.HapticFeedback.impactOccurred('soft');
       window.location.href = 'home';
-    }
+    });
 
 
     async function loadCloudStorageData() {

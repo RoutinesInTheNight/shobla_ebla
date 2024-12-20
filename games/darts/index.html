@@ -13,40 +13,26 @@
       --dynamic-vw: 1vw;
     }
 
+    html,
     body {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      height: 100%;
-      width: 100%;
-      background-color: #181F2A;
+      align-items: center;
+      height: 100vh;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      overflow: hidden;
       overscroll-behavior: none;
-      transition: background-color 0.5s ease-in-out;
+    }
+
+    body {
+      background-color: #2a1818;
     }
 
     #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    #preloader.visible {
-      opacity: 1;
-    }
-
-    #preloader.hidden {
-      opacity: 0;
     }
 
     #progress-bar {
@@ -85,27 +71,22 @@
   </div>
 
   <script>
+
     const telegram = window.Telegram.WebApp;
-
-    telegram.BackButton.show()
-    // telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home'));
-    telegram.BackButton.onClick(() => {
-      telegram.HapticFeedback.impactOccurred('soft');
-      window.location.href = '../../home';
-    });
-
-    if (telegram.isVersionAtLeast("7.7")) {
-      telegram.disableVerticalSwipes();
-    };
-
+    if (telegram.isVersionAtLeast("6.1")) {
+      telegram.BackButton.onClick(() => {
+        try {
+          telegram.HapticFeedback.impactOccurred('soft');
+        } catch { }
+        window.location.href = '../../home';
+      });
+    }
+    if (telegram.isVersionAtLeast("7.7")) telegram.disableVerticalSwipes();
     if (telegram.isVersionAtLeast("8.0")) {
-      try {
-        telegram.requestFullscreen();
-      } catch (e) { };
+      telegram.requestFullscreen();
       telegram.lockOrientation();
-    };
+    }
 
-    
 
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('progress');
@@ -126,24 +107,16 @@
 
     let loadedCount = 0;
 
-    function showPreloader() {
-      setTimeout(() => {
-            preloader.classList.add('visible');
-          }, 1000);
-
-      return new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-
     function loadResource(resource) {
       const ext = resource.split('.').pop().toLowerCase();
 
       return new Promise((resolve) => {
-        if (['png', 'jpg', 'jpeg', 'webp'].includes(ext)) {
+        if (['png', 'jpg', 'jpeg', 'webp', 'svg'].includes(ext)) {
           const img = new Image();
           img.onload = resolve;
           img.onerror = resolve;
           img.src = resource;
-        } else if (['woff2', 'ttf'].includes(ext)) {
+        } else if (['woff2', 'ttf', 'otf'].includes(ext)) {
           const font = new FontFace('PreloadFont', `url(${resource})`);
           font.load().then(() => {
             document.fonts.add(font);
@@ -166,17 +139,10 @@
 
     async function startLoading() {
       try {
-        await showPreloader();
-        document.body.style.backgroundColor = '#2a1818';
-
         await Promise.all([
           loadResources()
         ]);
-        preloader.classList.add('hidden');
-
-        // Редирект (закомментировано)
         setTimeout(() => window.location.href = 'darts', 1000);
-
       } catch (error) {
         console.error('Ошибка при загрузке:', error);
       }
