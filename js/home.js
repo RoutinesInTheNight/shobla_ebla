@@ -12,6 +12,19 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 
 
+// if (telegram.isVersionAtLeast("6.9")) {
+//   try {
+//     telegram.CloudStorage.getItem("access", (err, res) => {
+//       if (!err && res === "true") {
+//         redirect = "home?start";
+//         resources = [];
+//       }
+//     });
+//   } catch { }
+// }
+
+
+
 
 
 // Анимированное появление контента, проверка на доступ
@@ -51,23 +64,46 @@ window.addEventListener('DOMContentLoaded', async () => {
           },
           mode: 'no-cors'
         });
-        const result = await response.text();
-        console.log("Ответ сервера:", result);
+        // const result = await response.text();
+        // console.log("Ответ сервера:", result);
       } catch {
-        window.location.href = "error"
+        // window.location.href = "error"
       }
     }
   }
+
+  const balance = await getTGItem('balance');
+  const league = await getTGItem('league');
+
+  // Функция для форматирования чисел
+  const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+  // Получение JSON с лигами
+  const leaguesResponse = await fetch('leagues/leagues.json');
+  const leagues = await leaguesResponse.json();
+
+  // Получение текущей и следующей лиги
+  const currentLeague = leagues[league];
+  const nextLeague = leagues[parseInt(league) + 1];
+
+  // Вставка значений в DOM
+  document.getElementById('balance').textContent = formatNumber(balance);
+  document.getElementById('league-num').textContent = `${league} ЛИГА:`;
+  document.getElementById('league-name').textContent = currentLeague.name.toUpperCase();
+  if (nextLeague) {
+    document.getElementById('next-league-start').textContent = formatNumber(nextLeague.start);
+  } else {
+    document.getElementById('next-league-start').textContent = 'Нет следующей лиги';
+  }
+  const nextStart = nextLeague ? nextLeague.start : balance;
+  const percent = Math.min((balance / nextStart) * 100, 100);
+  document.getElementById('league-percent').textContent = `${Math.floor(percent)}%`;
+  const minProgress = (100 / 709) * 25;
+  const maxProgress = 100 - ((100 / 709) * 12.5);
+  const progress = Math.max(Math.min(percent, maxProgress), minProgress);
+  document.getElementById('league-progress').style.width = `${progress}%`;
+
 });
-
-
-
-
-
-
-
-
-
 
 
 
