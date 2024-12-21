@@ -61,8 +61,8 @@ window.addEventListener('DOMContentLoaded', async () => {
           }),
           headers: {
             'Content-Type': 'application/json',
-          },
-          mode: 'no-cors'
+          }
+          // mode: 'no-cors'
         });
         // const result = await response.text();
         // console.log("Ответ сервера:", result);
