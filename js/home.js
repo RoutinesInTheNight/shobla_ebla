@@ -60,9 +60,8 @@ window.addEventListener('DOMContentLoaded', async () => {
             time: Math.floor(Date.now() / 1000),
           }),
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'text/plain;charset=UTF-8',
           }
-          // mode: 'no-cors'
         });
         // const result = await response.text();
         // console.log("Ответ сервера:", result);
