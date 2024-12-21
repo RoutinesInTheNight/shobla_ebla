@@ -12,19 +12,6 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 
 
-if (telegram.isVersionAtLeast("6.9")) {
-  try {
-    telegram.CloudStorage.getItem("access", (err, res) => {
-      if (!err && res === "true") {
-        redirect = "home?start";
-        resources = [];
-      }
-    });
-  } catch { }
-}
-
-
-
 
 
 // Анимированное появление контента, проверка на доступ
