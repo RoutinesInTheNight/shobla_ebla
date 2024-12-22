@@ -15,7 +15,7 @@ def base64_to_image(base64_str, output_path):
         output_file.write(image_data)
 
 # Пример использования
-image_path = "Без имеwfни-1.jpg"  # Замените на свой файл
+image_path = "IMG_9150.JPG"  # Замените на свой файл
 output_path = "restored_image.jpg"
 
 # Преобразование изображения в текст
@@ -25,7 +25,7 @@ print(base64_str)
 print(len(base64_str))
 
 # Восстановление изображения из текста
-# base64_to_image(base64_str, output_path)
+base64_to_image(base64_str, output_path)
 # print(f"Восстановленное изображение сохранено как {output_path}")
 
 

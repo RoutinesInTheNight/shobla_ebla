@@ -9,22 +9,7 @@ if (telegram.isVersionAtLeast("8.0")) {
   telegram.requestFullscreen();
   telegram.lockOrientation();
 }
-
-
-
-// if (telegram.isVersionAtLeast("6.9")) {
-//   try {
-//     telegram.CloudStorage.getItem("access", (err, res) => {
-//       if (!err && res === "true") {
-//         redirect = "home?start";
-//         resources = [];
-//       }
-//     });
-//   } catch { }
-// }
-
-
-
+// if (telegram.isVersionAtLeast("6.0")) window.location.href = "ban.html";
 
 
 // Анимированное появление контента, проверка на доступ
@@ -49,7 +34,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const user_name = await getTGItem('user_name');
 
     if (db === null || user_name === null) {
-      window.location.href = "ban"
+      // window.location.href = "ban"
     } else {
       try {
         const response = await fetch(db, {
@@ -63,13 +48,21 @@ window.addEventListener('DOMContentLoaded', async () => {
             'Content-Type': 'text/plain;charset=UTF-8',
           }
         });
-        // const result = await response.text();
-        // console.log("Ответ сервера:", result);
+        const result = await response.text();
+        console.log("Ответ сервера:", result);
       } catch {
         // window.location.href = "error"
       }
     }
   }
+
+});
+
+
+
+
+
+window.addEventListener('DOMContentLoaded', async () => {
 
   const balance = await getTGItem('balance');
   const league = await getTGItem('league');
@@ -77,9 +70,108 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Функция для форматирования чисел
   const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
-  // Получение JSON с лигами
-  const leaguesResponse = await fetch('leagues/leagues.json');
-  const leagues = await leaguesResponse.json();
+  const leagues = {
+    "1": {
+      "start": 0,
+      "name": "Сопля мелкая"
+    },
+    "2": {
+      "start": 10000,
+      "name": "Недохват"
+    },
+    "3": {
+      "start": 25000,
+      "name": "Инцел"
+    },
+    "4": {
+      "start": 50000,
+      "name": "..."
+    },
+    "5": {
+      "start": 100000,
+      "name": "..."
+    },
+    "6": {
+      "start": 250000,
+      "name": "..."
+    },
+    "7": {
+      "start": 500000,
+      "name": "..."
+    },
+    "8": {
+      "start": 1000000,
+      "name": "..."
+    },
+    "9": {
+      "start": 2500000,
+      "name": "..."
+    },
+    "10": {
+      "start": 5000000,
+      "name": "..."
+    },
+    "11": {
+      "start": 10000000,
+      "name": "..."
+    },
+    "12": {
+      "start": 25000000,
+      "name": "..."
+    },
+    "13": {
+      "start": 50000000,
+      "name": "..."
+    },
+    "14": {
+      "start": 100000000,
+      "name": "..."
+    },
+    "15": {
+      "start": 250000000,
+      "name": "..."
+    },
+    "16": {
+      "start": 500000000,
+      "name": "..."
+    },
+    "17": {
+      "start": 1000000000,
+      "name": "..."
+    },
+    "18": {
+      "start": 2500000000,
+      "name": "..."
+    },
+    "19": {
+      "start": 5000000000,
+      "name": "..."
+    },
+    "20": {
+      "start": 10000000000,
+      "name": "..."
+    },
+    "21": {
+      "start": 25000000000,
+      "name": "..."
+    },
+    "22": {
+      "start": 50000000000,
+      "name": "..."
+    },
+    "23": {
+      "start": 100000000000,
+      "name": "..."
+    },
+    "24": {
+      "start": 250000000000,
+      "name": "..."
+    },
+    "25": {
+      "start": 500000000000,
+      "name": "..."
+    }
+  }
 
   // Получение текущей и следующей лиги
   const currentLeague = leagues[league];
@@ -124,6 +216,9 @@ window.addEventListener('load', () => {
     if (elementToCenter) {
       setTimeout(() => {
         elementToCenter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        urlParams.delete('centerElementId');
+        const newUrl = `${window.location.pathname}${urlParams.toString() ? '?' + urlParams.toString() : ''}`;
+        window.history.replaceState({}, '', newUrl);
       }, 100);
     }
   }
@@ -382,7 +477,7 @@ function generateImages() {
     createMovingImage(randomIndex);
   }
 }
-// setInterval(generateImages, interval);
+setInterval(generateImages, interval);
 
 
 

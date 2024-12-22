@@ -170,12 +170,12 @@
       const ext = resource.split('.').pop().toLowerCase();
 
       return new Promise((resolve) => {
-        if (['png', 'jpg', 'jpeg', 'webp'].includes(ext)) {
+        if (['png', 'jpg', 'jpeg', 'webp', 'svg'].includes(ext)) {
           const img = new Image();
           img.onload = resolve;
           img.onerror = resolve;
           img.src = resource;
-        } else if (['woff2', 'ttf'].includes(ext)) {
+        } else if (['woff2', 'ttf', 'otf'].includes(ext)) {
           const font = new FontFace('PreloadFont', `url(${resource})`);
           font.load().then(() => {
             document.fonts.add(font);
