@@ -14,15 +14,7 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 // Анимированное появление контента
 // При открытии мини-приложения: вибрация, удаление из ссылки "?start", отправка времени захода в бд
-window.addEventListener('load', async () => {
-  const children = document.querySelectorAll('.content > *');
-  children.forEach((child, index) => {
-    setTimeout(() => {
-      child.classList.add('visible');
-    }, index * 25);
-  });
 
-});
 
 
 
@@ -139,11 +131,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Получение текущей и следующей лиги
   const currentLeague = leagues[league];
   const nextLeague = leagues[parseInt(league) + 1];
 
-  // Вставка значений в DOM
   document.getElementById('balance').textContent = formatNumber(balance);
   document.getElementById('league-num').textContent = `${league} ЛИГА:`;
   document.getElementById('league-name').textContent = currentLeague.name.toUpperCase();
@@ -159,6 +149,16 @@ window.addEventListener('DOMContentLoaded', async () => {
   const maxProgress = 100 - ((100 / 709) * 12.5);
   const progress = Math.max(Math.min(percent, maxProgress), minProgress);
   document.getElementById('league-progress').style.width = `${progress}%`;
+
+
+
+
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
+    setTimeout(() => {
+      child.classList.add('visible');
+    }, index * 25);
+  });
 
 
 
