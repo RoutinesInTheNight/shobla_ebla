@@ -12,49 +12,15 @@ if (telegram.isVersionAtLeast("8.0")) {
 // if (telegram.isVersionAtLeast("6.0")) window.location.href = "ban.html";
 
 
-// Анимированное появление контента, проверка на доступ
+// Анимированное появление контента
 // При открытии мини-приложения: вибрация, удаление из ссылки "?start", отправка времени захода в бд
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('load', async () => {
   const children = document.querySelectorAll('.content > *');
   children.forEach((child, index) => {
     setTimeout(() => {
       child.classList.add('visible');
     }, index * 25);
   });
-
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('start')) {
-    hapticFeedback('success');
-
-    urlParams.delete('start');
-    const newUrl = `${window.location.pathname}${urlParams.toString() ? '?' + urlParams.toString() : ''}`;
-    window.history.replaceState({}, '', newUrl);
-
-    const db = await getTGItem('db');
-    const user_name = await getTGItem('user_name');
-
-    if (db === null || user_name === null) {
-      // window.location.href = "ban"
-    } else {
-      try {
-        const response = await fetch(db, {
-          method: 'POST',
-          body: JSON.stringify({
-            method: "login",
-            user_name: user_name,
-            time: Math.floor(Date.now() / 1000),
-          }),
-          headers: {
-            'Content-Type': 'text/plain;charset=UTF-8',
-          }
-        });
-        const result = await response.text();
-        console.log("Ответ сервера:", result);
-      } catch {
-        // window.location.href = "error"
-      }
-    }
-  }
 
 });
 
@@ -194,6 +160,44 @@ window.addEventListener('DOMContentLoaded', async () => {
   const progress = Math.max(Math.min(percent, maxProgress), minProgress);
   document.getElementById('league-progress').style.width = `${progress}%`;
 
+
+
+
+
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('start')) {
+    hapticFeedback('success');
+
+    urlParams.delete('start');
+    const newUrl = `${window.location.pathname}${urlParams.toString() ? '?' + urlParams.toString() : ''}`;
+    window.history.replaceState({}, '', newUrl);
+
+    const db = await getTGItem('db');
+    const user_name = await getTGItem('user_name');
+
+    if (db === null || user_name === null) {
+      // window.location.href = "ban"
+    } else {
+      try {
+        const response = await fetch(db, {
+          method: 'POST',
+          body: JSON.stringify({
+            method: "login",
+            user_name: user_name,
+            time: Math.floor(Date.now() / 1000),
+          }),
+          headers: {
+            'Content-Type': 'text/plain;charset=UTF-8',
+          }
+        });
+        const result = await response.text();
+        console.log("Ответ сервера:", result);
+      } catch {
+        // window.location.href = "error"
+      }
+    }
+  }
 });
 
 
