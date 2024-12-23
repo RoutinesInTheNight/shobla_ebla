@@ -469,7 +469,7 @@ body::-webkit-scrollbar {
 
     margin-bottom: 500vw;
     opacity: 1;
-    transition: opacity 0.25s, transform 0.25s;
+    transition: opacity 0.3s, transform 0.15s;
 }
 
 #throw-button.active {

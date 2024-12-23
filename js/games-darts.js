@@ -413,7 +413,7 @@ throwButton.addEventListener('click', () => {
   // Увеличиваем кнопку обратно через 0.5 секунды
   setTimeout(() => {
     throwButton.classList.remove('shrink');
-  }, 250);
+  }, 150);
 
   if (initialMode) {
     // Если сейчас начальная анимация
@@ -446,13 +446,17 @@ function playRandomAnimation() {
   setTimeout(() => {
     hapticFeedback('heavy');
     console.log('1сек');
+    throwButton.classList.remove('active');
   }, 1000); // 1 секунда = 1000 мс
+  
+
+
 
   currentAnimation.addEventListener('complete', () => {
     isPlaying = false; // Сбрасываем флаг после завершения
 
     // Возвращаем цвет кнопки обратно в черный
-    throwButton.classList.remove('active');
+    // throwButton.classList.remove('active');
   });
 }
 
