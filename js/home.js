@@ -22,8 +22,10 @@ if (telegram.isVersionAtLeast("8.0")) {
 
 window.addEventListener('DOMContentLoaded', async () => {
 
-  const balance = await getTGItem('balance');
-  const league = await getTGItem('league');
+  // const balance = await getTGItem('balance');
+  // const league = await getTGItem('league');
+  const balance = 500000000000;
+  const league = 24;
 
   // Функция для форматирования чисел
   const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');

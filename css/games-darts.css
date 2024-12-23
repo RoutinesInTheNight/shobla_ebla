@@ -359,7 +359,8 @@ body::-webkit-scrollbar {
     gap: calc(100 / 1284 * 50 * var(--dynamic-vw));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding: 0 calc(50 * var(--dynamic-vw)); /* Паддинг для первого и последнего элемента */
+    padding: 0 calc(50 * var(--dynamic-vw));
+    /* Паддинг для первого и последнего элемента */
 }
 
 
@@ -370,11 +371,7 @@ body::-webkit-scrollbar {
     gap: calc(100 / 1284 * 6 * var(--dynamic-vw));
     background-color: #4c3636;
     padding:
-        calc(100 / 1284 * 44 * var(--dynamic-vw))
-        calc(100 / 1284 * 50 * var(--dynamic-vw))
-        calc(100 / 1284 * 44 * var(--dynamic-vw))
-        calc(100 / 1284 * 50 * var(--dynamic-vw))
-    ;
+        calc(100 / 1284 * 44 * var(--dynamic-vw)) calc(100 / 1284 * 50 * var(--dynamic-vw)) calc(100 / 1284 * 44 * var(--dynamic-vw)) calc(100 / 1284 * 50 * var(--dynamic-vw));
     border-radius: calc(100 / 1284 * 50 * var(--dynamic-vw));
     scroll-snap-align: center;
     text-align: center;
@@ -392,6 +389,7 @@ body::-webkit-scrollbar {
     margin: 0;
     white-space: nowrap;
 }
+
 .bet p {
     margin-left: 0;
 }
@@ -403,29 +401,25 @@ body::-webkit-scrollbar {
 
 
 
-
-
-
-
-
 .fade-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
     width: calc(100 / 1284 * 500 * var(--dynamic-vw));
-    pointer-events: none; /* Чтобы градиенты не мешали скроллу */
+    pointer-events: none;
+    /* Чтобы градиенты не мешали скроллу */
     z-index: 10;
-  }
-  
-  .fade-left {
+}
+
+.fade-left {
     left: 0;
     background: linear-gradient(to right, rgba(56, 32, 32, 1) 0%, rgba(56, 32, 32, 1) 20%, rgba(255, 255, 0, 0) 100%);
-  }
-  
-  .fade-right {
+}
+
+.fade-right {
     right: 0;
     background: linear-gradient(to left, rgba(56, 32, 32, 1) 0%, rgba(56, 32, 32, 1) 20%, rgba(255, 255, 0, 0) 100%);
-  }
+}
 
 
 
@@ -474,8 +468,17 @@ body::-webkit-scrollbar {
     border-radius: calc(100 / 1284 * 100 * var(--dynamic-vw));
 
     margin-bottom: 500vw;
+    opacity: 1;
+    transition: opacity 0.25s, transform 0.25s;
 }
 
+#throw-button.active {
+    opacity: 0.5;
+}
+
+#throw-button.shrink {
+    transform: scale(0.95);
+}
 
 
 
