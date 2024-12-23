@@ -352,10 +352,6 @@ body::-webkit-scrollbar {
     align-items: center;
     position: relative;
     width: 100%;
-    /* width: calc(100 / 1284 * 1084 * var(--dynamic-vw)); */
-
-    margin-top: calc(60 * var(--dynamic-vw));
-    /* background-color: #f0f0f0; */
 }
 
 .choice-bet {
@@ -394,6 +390,7 @@ body::-webkit-scrollbar {
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 60 * var(--dynamic-vw));
     margin: 0;
+    white-space: nowrap;
 }
 .bet p {
     margin-left: 0;
@@ -467,7 +464,7 @@ body::-webkit-scrollbar {
     color: black;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
-    margin: calc(100 / 1284 * 100 * var(--dynamic-vw)) 0 0 0;
+    margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 0;
     background-color: #fbaa80;
     width: calc(100 / 1284 * 1084 * var(--dynamic-vw));
     height: calc(100 / 1284 * 200 * var(--dynamic-vw));
@@ -477,4 +474,17 @@ body::-webkit-scrollbar {
     border-radius: calc(100 / 1284 * 100 * var(--dynamic-vw));
 
     margin-bottom: 500vw;
+}
+
+
+
+
+
+
+
+
+
+#animation-container {
+    width: calc(65 * var(--dynamic-vw));
+    margin: calc(100 / 1284 * 50 * var(--dynamic-vw));
 }
