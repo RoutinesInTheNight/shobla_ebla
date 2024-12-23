@@ -141,3 +141,69 @@ function hapticFeedback(type, redirectUrl) {
     }, children.length * 25);
   }
 }
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const choiceBet = document.querySelector('.choice-bet');
+  const bets = document.querySelectorAll('.bet');
+
+  // Локальная переменная вместо Cloud Storage
+  let currentBetValue = localStorage.getItem('current_bet') || '100';
+
+  const highlightBet = (betElement) => {
+    bets.forEach(bet => bet.classList.remove('selected'));
+    betElement.classList.add('selected');
+    currentBetValue = betElement.dataset.bet;
+    localStorage.setItem('current_bet', currentBetValue);
+  };
+
+  const scrollToBet = (betElement) => {
+    const offset = betElement.offsetLeft - choiceBet.offsetWidth / 2 + betElement.offsetWidth / 2;
+    choiceBet.scrollTo({
+      left: offset,
+      behavior: 'smooth',
+    });
+    highlightBet(betElement);
+  };
+
+  // Центрируем изначально выбранный элемент
+  const initialBetElement = Array.from(bets).find(bet => bet.dataset.bet === currentBetValue);
+  if (initialBetElement) {
+    choiceBet.scrollTo({
+      left: initialBetElement.offsetLeft - choiceBet.offsetWidth / 2 + initialBetElement.offsetWidth / 2,
+      behavior: 'auto',
+    });
+    highlightBet(initialBetElement);
+  }
+
+  // Добавляем плавное центрирование при прокрутке
+  let isScrolling;
+  choiceBet.addEventListener('scroll', () => {
+    clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      const center = choiceBet.scrollLeft + choiceBet.clientWidth / 2;
+      const closestBet = Array.from(bets).reduce((closest, bet) => {
+        const betCenter = bet.offsetLeft + bet.offsetWidth / 2;
+        const distance = Math.abs(center - betCenter);
+        return distance < closest.distance ? { bet, distance } : closest;
+      }, { bet: null, distance: Infinity }).bet;
+
+      if (closestBet) {
+        scrollToBet(closestBet);
+      }
+    }, 150);
+  });
+
+  // Добавляем выбор по клику
+  bets.forEach(bet => {
+    bet.addEventListener('click', () => scrollToBet(bet));
+  });
+
+  // Предотвращаем автоматический фокус
+  document.body.scrollTo(0, 0);
+});
