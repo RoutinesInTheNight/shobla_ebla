@@ -148,11 +148,14 @@ function hapticFeedback(type, redirectUrl) {
 
 
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const choiceBet = document.querySelector('.choice-bet');
   const bets = document.querySelectorAll('.bet');
 
-  // Локальная переменная вместо Cloud Storage
   let currentBetValue = localStorage.getItem('current_bet') || '100';
 
   const highlightBet = (betElement) => {
@@ -162,13 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('current_bet', currentBetValue);
   };
 
-  const scrollToBet = (betElement) => {
-    const offset = betElement.offsetLeft - choiceBet.offsetWidth / 2 + betElement.offsetWidth / 2;
-    choiceBet.scrollTo({
-      left: offset,
-      behavior: 'smooth',
-    });
-    highlightBet(betElement);
+  const getCenterBet = () => {
+    const center = choiceBet.scrollLeft + choiceBet.clientWidth / 2;
+
+    // Находим ближайший элемент к центру
+    return Array.from(bets).reduce((closest, bet) => {
+      const betCenter = bet.offsetLeft + bet.offsetWidth / 2;
+      const distance = Math.abs(center - betCenter);
+      return distance < closest.distance ? { bet, distance } : closest;
+    }, { bet: null, distance: Infinity }).bet;
   };
 
   // Центрируем изначально выбранный элемент
@@ -181,37 +186,37 @@ document.addEventListener('DOMContentLoaded', () => {
     highlightBet(initialBetElement);
   }
 
-  // Добавляем плавное центрирование при прокрутке
-  let isScrolling;
-  choiceBet.addEventListener('scroll', () => {
-    clearTimeout(isScrolling);
-    isScrolling = setTimeout(() => {
-      const center = choiceBet.scrollLeft + choiceBet.clientWidth / 2;
-      
-      // Находим ближайший элемент к центру
-      const closestBet = Array.from(bets).reduce((closest, bet) => {
-        const betCenter = bet.offsetLeft + bet.offsetWidth / 2;
-        const distance = Math.abs(center - betCenter);
-        return distance < closest.distance ? { bet, distance } : closest;
-      }, { bet: null, distance: Infinity }).bet;
+  let lastBet = null;
 
-      // Если элемент найден, центрируем его и выводим ставку в консоль
-      if (closestBet) {
-        scrollToBet(closestBet);
-        hapticFeedback('light')
-        console.log(`Текущая ставка: ${closestBet.dataset.bet}`);
-      }
-    }, 100);
+  choiceBet.addEventListener('scroll', () => {
+    // Находим ближайший к центру элемент
+    const centerBet = getCenterBet();
+
+    // Если элемент изменился, обновляем класс и выводим в консоль
+    if (centerBet && centerBet !== lastBet) {
+      highlightBet(centerBet);
+      hapticFeedback('change');
+      console.log(`Текущая ставка: ${centerBet.dataset.bet}`);
+      lastBet = centerBet;
+    }
   });
 
   // Добавляем выбор по клику
   bets.forEach(bet => {
-    bet.addEventListener('click', () => scrollToBet(bet));
+    bet.addEventListener('click', () => {
+      const offset = bet.offsetLeft - choiceBet.offsetWidth / 2 + bet.offsetWidth / 2;
+      choiceBet.scrollTo({
+        left: offset,
+        behavior: 'smooth',
+      });
+      highlightBet(bet);
+    });
   });
 
   // Предотвращаем автоматический фокус
   document.body.scrollTo(0, 0);
 });
+
 
 
 
