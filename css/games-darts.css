@@ -86,6 +86,7 @@ body {
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
     margin: 0;
+    transition: color 0.2s;
 }
 
 
@@ -359,8 +360,7 @@ body::-webkit-scrollbar {
     gap: calc(100 / 1284 * 50 * var(--dynamic-vw));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding: 0 calc(50 * var(--dynamic-vw));
-    /* Паддинг для первого и последнего элемента */
+    padding: 0 calc(50 * var(--dynamic-vw)); /* Паддинг для первого и последнего элемента bet */
 }
 
 
@@ -421,17 +421,6 @@ body::-webkit-scrollbar {
     background: linear-gradient(to left, rgba(56, 32, 32, 1) 0%, rgba(56, 32, 32, 1) 20%, rgba(255, 255, 0, 0) 100%);
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .choice-bet {
     overflow-x: scroll;
     /* Включаем горизонтальную прокрутку */
@@ -455,7 +444,7 @@ body::-webkit-scrollbar {
 
 
 #throw-button {
-    color: black;
+    color: #4c3636;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 0;
@@ -469,17 +458,8 @@ body::-webkit-scrollbar {
 
     margin-bottom: 500vw;
     opacity: 1;
-    transition: opacity 0.3s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.1s;
 }
-
-#throw-button.active {
-    opacity: 0.5;
-}
-
-#throw-button.shrink {
-    transform: scale(0.95);
-}
-
 
 
 
@@ -490,4 +470,39 @@ body::-webkit-scrollbar {
 #animation-container {
     width: calc(65 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 50 * var(--dynamic-vw));
+    position: relative;
+    overflow: visible; /* Чтобы текст мог выходить за пределы контейнера */
+}
+
+.round-result {
+    position: absolute;
+    top: 0%; /* Начальная позиция чуть ниже верхней части контейнера */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: calc(100 / 1284 * 10 * var(--dynamic-vw));
+    font-size: calc(100 / 1284 * 100 * var(--dynamic-vw));
+    font-family: 'Sf Pro Display Bold', Arial, sans-serif;
+    opacity: 0;
+    animation: floatUp 3s ease-out forwards;
+    white-space: nowrap;
+}
+
+.round-result img {
+    height: calc(100 / 1284 * 100 * var(--dynamic-vw));
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 0;
+    }
+    50% { /* 1 секунда — полностью видно */
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, calc(-15 * var(--dynamic-vw))); /* Движение вверх на 50vw */
+        opacity: 0; /* Исчезновение */
+    }
 }

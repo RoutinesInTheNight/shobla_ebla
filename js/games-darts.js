@@ -236,6 +236,8 @@ let deposit = 0;
 
 
 
+
+
 // СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -262,6 +264,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     betElement.classList.add('selected');
     currentBetValue = betElement.dataset.bet;
     localStorage.setItem('current_bet', currentBetValue);
+
+    if (Number(currentBetValue) > balance) {
+      document.getElementById('throw-button').style.opacity = 0.25;
+    } else {
+      document.getElementById('throw-button').style.opacity = 1;
+    }
+
+
   };
 
   const getCenterBet = () => {
@@ -288,6 +298,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let lastBet = null;
 
   choiceBet.addEventListener('scroll', () => {
+
     // Находим ближайший к центру элемент
     const centerBet = getCenterBet();
 
@@ -297,6 +308,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       hapticFeedback('change');
       console.log(`Текущая ставка: ${centerBet.dataset.bet}`);
       lastBet = centerBet;
+      
+
+
+
     }
   });
 
@@ -407,39 +422,65 @@ function stopCurrentAnimation() {
   }
 }
 
-// Обработчик для кнопки "Бросок"
-// Обработчик для кнопки "Бросок"
+
+// НАЖАТИЕ НА КНОПКУ "БРОСОК": вибрация, отключение прокрутки ставок и анимация кнопки "Бросок"
 throwButton.addEventListener('click', () => {
-  if (isPlaying) return; // Если анимация проигрывается, ничего не делаем
+  if (isPlaying) return;
 
-
-  hapticFeedback('soft');
-
-
-  // Меняем цвет и уменьшаем кнопку
-  throwButton.classList.add('active', 'shrink');
-
-  // Увеличиваем кнопку обратно через 0.5 секунды
+  document.getElementById('throw-button').style.transform = 'scale(0.95)';
   setTimeout(() => {
-    throwButton.classList.remove('shrink');
-  }, 150);
+    document.getElementById('throw-button').style.transform = 'scale(1)';
+  }, 100);
+  if (currentBetValue <= balance) {
+    hapticFeedback('soft');
+    document.getElementById('choice-bet').style.overflow = 'hidden';
+    document.getElementById('throw-button').style.opacity = 0.5;
+  } else {
+    hapticFeedback('error');
+    document.getElementById('throw-button').style.opacity = 0.25;
+    document.getElementById('balance').style.color = '#F22D3D';
+    setTimeout(() => {
+      document.getElementById('balance').style.color = 'white';
+    }, 200);
+    return;
+  }
 
   if (initialMode) {
     // Если сейчас начальная анимация
-    initialAnimationInstance.loop = false; // Останавливаем циклическое воспроизведение
+    initialAnimationInstance.loop = false;
     initialAnimationInstance.addEventListener('complete', () => {
-      // Когда седьмая анимация завершает цикл
-      initialMode = false; // Отключаем начальный режим
-      hideAllAnimations(); // Скрываем седьмую анимацию
-      playRandomAnimation(); // Запускаем случайную анимацию
+      initialMode = false;
+      hideAllAnimations();
+      playRandomAnimation();
     });
   } else {
-    // Если уже не начальная анимация
     playRandomAnimation();
   }
 });
 
-// Функция для запуска случайной анимации
+
+
+
+// АНИМАЦИЯ ИЗМЕНЕНИЯ ЧИСЕЛ
+function animateCounter(element, startValue, endValue, duration) {
+  const range = endValue - startValue;
+  const startTime = performance.now();
+  function updateCounter(currentTime) {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / duration, 1);
+    const currentValue = Math.round(startValue + range * progress);
+    element.textContent = formatNumber(currentValue);
+    if (progress < 1) {
+      requestAnimationFrame(updateCounter);
+    }
+  }
+  requestAnimationFrame(updateCounter);
+}
+
+
+
+
+// ЗАПУСК РАНДОНОЙ АНИМАЦИИ
 function playRandomAnimation() {
   stopCurrentAnimation();
   hideAllAnimations();
@@ -452,67 +493,150 @@ function playRandomAnimation() {
   showCurrentAnimation(currentAnimation);
   currentAnimation.play();
 
+
   currentBetValue = Number(currentBetValue)
+
+  const balanceElement = document.getElementById('balance');
+  const piggyBankElement = document.getElementById('piggy-bank');
+  const depositElement = document.getElementById('deposit');
+
+  animateCounter(balanceElement, balance, balance - currentBetValue, 250);
+  animateCounter(depositElement, deposit, deposit + currentBetValue, 250);
   balance -= currentBetValue;
   deposit += currentBetValue;
-  document.getElementById('balance').textContent = formatNumber(balance);
-  document.getElementById('deposit').textContent = formatNumber(deposit);
-
-
-
-
-
-
-
-
-
-
+  // ТУТ В ТГ КЛАУД ДОБАВИТЬ
 
   isPlaying = true;
 
-  // Устанавливаем таймер на 1 секунду
+
+  // Момент удара дротика
   setTimeout(() => {
     hapticFeedback('heavy');
-    throwButton.classList.remove('active');
+    const actions = {
+      'darts-1': () => {
 
-    const selectedPath = animations[randomIndex];
-    if (selectedPath.includes('darts-1.json')) {
-      balance += piggyBank + (currentBetValue * 3);
-      piggyBank = 0;
-      deposit = 0;
-    } else if (selectedPath.includes('darts-2.json')) {
-      piggyBank += currentBetValue * 2;
-    } else if (selectedPath.includes('darts-3.json')) {
-      piggyBank += currentBetValue * 1.5;
-    } else if (selectedPath.includes('darts-4.json')) {
-      piggyBank += currentBetValue * 1.25;
-    } else if (selectedPath.includes('darts-5.json')) {
-      piggyBank += currentBetValue;
-    } else if (selectedPath.includes('darts-lose.json')) {
-      piggyBank = 0;
-      deposit = 0;
+        if (piggyBank === 0) {
+          piggyBank += currentBetValue * 5;
+        } else if (piggyBank === deposit - currentBetValue) {
+          piggyBank += currentBetValue * 1.5;
+        } else {
+          piggyBank += currentBetValue;
+        }
+
+        showRoundResult(piggyBank - deposit);
+        animateCounter(balanceElement, balance, balance + piggyBank, 250);
+        animateCounter(piggyBankElement, piggyBank, 0, 250);
+        animateCounter(depositElement, deposit, 0, 250);
+        balance += piggyBank;
+        piggyBank = 0;
+        deposit = 0;
+
+      },
+      'darts-2': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 3, 250);
+        piggyBank += currentBetValue * 3;
+      },
+      'darts-3': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2, 250);
+        piggyBank += currentBetValue * 2;
+      },
+      'darts-4': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.5, 250);
+        piggyBank += currentBetValue * 1.5;
+      },
+      'darts-5': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue, 250);
+        piggyBank += currentBetValue;
+      },
+      'darts-lose': () => {
+        showRoundResult(deposit * -1);
+        animateCounter(piggyBankElement, piggyBank, 0, 250);
+        animateCounter(depositElement, deposit, 0, 250);
+        piggyBank = 0;
+        deposit = 0;
+      },
+    };
+    const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
+    if (actions[animationName]) {
+      actions[animationName]();
     }
-    document.getElementById('balance').textContent = formatNumber(balance);
-    document.getElementById('piggy-bank').textContent = formatNumber(piggyBank);
-    document.getElementById('deposit').textContent = formatNumber(deposit);
-
-
-
   }, 1000);
 
 
+  // Возвращение стилей кнопки "Бросок"
+  setTimeout(() => {
+    if (currentBetValue <= balance) {
+      document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
+      document.getElementById('throw-button').style.opacity = 1;
+    }
+  }, 1300);
 
-
+  // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
   currentAnimation.addEventListener('complete', () => {
-    isPlaying = false; // Сбрасываем флаг после завершения
-
-    // Возвращаем цвет кнопки обратно в черный
-    // throwButton.classList.remove('active');
+    isPlaying = false;
+    document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+    document.getElementById('choice-bet').style.overflow = 'auto';
   });
 }
 
 
-
-// Начальная инициализация: показываем только седьмую анимацию
+// Начальная инициализация анимаций
 hideAllAnimations();
 initialContainer.style.display = 'block';
+
+
+
+
+
+
+
+
+
+
+
+
+function showRoundResult(num) {
+
+  let roundResult;
+  if (Number(num) < 0) {
+    roundResult = '- ' + formatNumber(Number(num) * -1)
+  } else {
+    roundResult = '+ ' + formatNumber(num)
+  }
+  
+  const container = document.getElementById('animation-container');
+
+  // Создаем элемент для сообщения
+  const messageElement = document.createElement('div');
+  messageElement.className = 'round-result';
+
+  // Добавляем изображение
+  const imgElement = document.createElement('img');
+  imgElement.src = '../../images/coin.png';
+  imgElement.alt = 'icon';
+
+  // Добавляем текст
+  const textElement = document.createElement('span');
+  textElement.textContent = roundResult;
+  if (Number(num) < 0) {
+    textElement.style.color = '#F22D3D';
+  } else {
+    textElement.style.color = '#2df249';
+  }
+
+  // Собираем структуру
+  // messageElement.appendChild(imgElement);
+  messageElement.appendChild(textElement);
+
+  // Добавляем элемент в контейнер
+  container.appendChild(messageElement);
+
+  // Удаляем элемент после завершения анимации (4 секунды)
+  setTimeout(() => {
+      messageElement.remove();
+  }, 3000);
+}
+
+
+
+
