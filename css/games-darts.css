@@ -143,8 +143,8 @@ body {
 
 .game-container .info .name {
     color: white;
-    font-family: 'Sf Pro Display Medium', Arial, sans-serif;
-    font-size: calc(100 / 1284 * 40 * var(--dynamic-vw));
+    font-family: 'Sf Pro Display Regular', Arial, sans-serif;
+    font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 calc(100 / 1284 * 12.5 * var(--dynamic-vw)) 0;
 }
 

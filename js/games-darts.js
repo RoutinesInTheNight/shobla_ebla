@@ -89,45 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
+// ВИБРАЦИЯ И РЕДИРЕКТ
 function hapticFeedback(type, redirectUrl) {
-  if (telegram.isVersionAtLeast("6.1") && (DEVICE_TYPE === 'android' || DEVICE_TYPE === 'ios')) {
-    switch (type) {
-      case 'light':
-        telegram.HapticFeedback.impactOccurred('light');
-        break;
-      case 'medium':
-        telegram.HapticFeedback.impactOccurred('medium');
-        break;
-      case 'heavy':
-        telegram.HapticFeedback.impactOccurred('heavy');
-        break;
-      case 'rigid':
-        telegram.HapticFeedback.impactOccurred('rigid');
-        break;
-      case 'soft':
-        telegram.HapticFeedback.impactOccurred('soft');
-        break;
-      case 'error':
-        telegram.HapticFeedback.notificationOccurred('error');
-        break;
-      case 'success':
-        telegram.HapticFeedback.notificationOccurred('success');
-        break;
-      case 'warning':
-        telegram.HapticFeedback.notificationOccurred('warning');
-        break;
-      case 'change':
-        telegram.HapticFeedback.selectionChanged();
-        break;
-      default:
-        console.warn('Unknown haptic feedback type:', type);
+  if (telegram.isVersionAtLeast('6.1')) {
+    if (['light', 'medium', 'heavy', 'rigid', 'soft'].includes(type)) {
+      telegram.HapticFeedback.impactOccurred(type);
+    } else if (['error', 'success', 'warning'].includes(type)) {
+      telegram.HapticFeedback.notificationOccurred(type);
+    } else if (type === 'change') {
+      telegram.HapticFeedback.selectionChanged();
     }
-  } else {
-    console.error('Haptic feedback is not supported in this environment.');
   }
-
-  if (redirectUrl && redirectUrl !== '#') {
+  if (redirectUrl) {
     const children = document.querySelectorAll('.content > *');
     children.forEach((child, index) => {
       setTimeout(() => {
@@ -135,7 +108,6 @@ function hapticFeedback(type, redirectUrl) {
         child.classList.add('hidden');
       }, index * 25);
     });
-
     setTimeout(() => {
       window.location.href = redirectUrl;
     }, children.length * 25);
@@ -151,7 +123,7 @@ function hapticFeedback(type, redirectUrl) {
 
 
 
-
+// ДОБАВЛЕНИЕ В HTML СУММ СТАВКИ
 document.addEventListener('DOMContentLoaded', () => {
   const betsData = [
     { bet: 100, text: '100' },
@@ -219,41 +191,71 @@ document.addEventListener('DOMContentLoaded', () => {
     { bet: 900000000, text: '900M' },
     { bet: 1000000000, text: '1B' },
   ];
-
-  // Контейнер для элементов
   const choiceBetContainer = document.getElementById('choice-bet');
-
-  // Заполняем контейнер элементами
   betsData.forEach(item => {
-    // Создаём элемент div с классом "bet"
     const betDiv = document.createElement('div');
     betDiv.classList.add('bet');
     betDiv.setAttribute('data-bet', item.bet);
-
-    // Создаём img
     const img = document.createElement('img');
     img.src = '../../images/coin.png';
-
-    // Создаём p с текстом
     const p = document.createElement('p');
     p.textContent = item.text;
-
-    // Вставляем img и p в div
     betDiv.appendChild(img);
     betDiv.appendChild(p);
-
-    // Добавляем div в контейнер
     choiceBetContainer.appendChild(betDiv);
   });
+});
 
 
 
 
+
+
+
+async function getTGItem(key) {
+  return new Promise(resolve => {
+    telegram.CloudStorage.getItem(key, (_, res) => {
+      resolve(res === "" ? null : res);
+    });
+  });
+}
+
+
+
+// Функция для форматирования чисел
+const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+
+
+
+
+let currentBetValue = localStorage.getItem('current_bet') || '500';
+let balance = 500000;
+let piggyBank = 0;
+let deposit = 0;
+
+
+
+// СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
+document.addEventListener('DOMContentLoaded', async () => {
 
   const choiceBet = document.querySelector('.choice-bet');
   const bets = document.querySelectorAll('.bet');
 
-  let currentBetValue = localStorage.getItem('current_bet') || '500';
+  if (telegram.isVersionAtLeast('6.9')) {
+    balance = await getTGItem('balance');
+    piggyBank = await getTGItem('darts_piggy_bank');
+    deposit = await getTGItem('darts_deposit');
+  } else {
+    // window.location.href = '../../ban';
+  }
+  localStorage.setItem('balance', balance);
+  localStorage.setItem('darts_piggy_bank', piggyBank);
+  localStorage.setItem('darts_deposit', deposit);
+  document.getElementById('balance').textContent = formatNumber(balance);
+  document.getElementById('piggy-bank').textContent = formatNumber(piggyBank);
+  document.getElementById('deposit').textContent = formatNumber(deposit);
+
 
   const highlightBet = (betElement) => {
     bets.forEach(bet => bet.classList.remove('selected'));
@@ -336,8 +338,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const animations = ['1.json', '2.json', '3.json', '4.json', '5.json', '6.json']; // Рандомные анимации
-const initialAnimation = '7.json'; // Седьмая анимация
+const animations = [
+  '../../../animations/darts-1.json',
+  '../../../animations/darts-2.json',
+  '../../../animations/darts-3.json',
+  '../../../animations/darts-4.json',
+  '../../../animations/darts-5.json',
+  '../../../animations/darts-lose.json'
+];
+const initialAnimation = '../../../animations/darts-wait.json';
 const container = document.getElementById('animation-container');
 const throwButton = document.getElementById('throw-button');
 
@@ -431,24 +440,66 @@ throwButton.addEventListener('click', () => {
 });
 
 // Функция для запуска случайной анимации
-// Функция для запуска случайной анимации
 function playRandomAnimation() {
   stopCurrentAnimation();
   hideAllAnimations();
-  currentAnimation = animationInstances[Math.floor(Math.random() * animationInstances.length)];
+
+  // Выбираем случайную анимацию
+  const randomIndex = Math.floor(Math.random() * animationInstances.length);
+  currentAnimation = animationInstances[randomIndex];
+
+  // Показываем текущую анимацию
   showCurrentAnimation(currentAnimation);
   currentAnimation.play();
 
-  // Устанавливаем флаг воспроизведения
+  currentBetValue = Number(currentBetValue)
+  balance -= currentBetValue;
+  deposit += currentBetValue;
+  document.getElementById('balance').textContent = formatNumber(balance);
+  document.getElementById('deposit').textContent = formatNumber(deposit);
+
+
+
+
+
+
+
+
+
+
+
   isPlaying = true;
 
   // Устанавливаем таймер на 1 секунду
   setTimeout(() => {
     hapticFeedback('heavy');
-    console.log('1сек');
     throwButton.classList.remove('active');
-  }, 1000); // 1 секунда = 1000 мс
-  
+
+    const selectedPath = animations[randomIndex];
+    if (selectedPath.includes('darts-1.json')) {
+      balance += piggyBank + (currentBetValue * 3);
+      piggyBank = 0;
+      deposit = 0;
+    } else if (selectedPath.includes('darts-2.json')) {
+      piggyBank += currentBetValue * 2;
+    } else if (selectedPath.includes('darts-3.json')) {
+      piggyBank += currentBetValue * 1.5;
+    } else if (selectedPath.includes('darts-4.json')) {
+      piggyBank += currentBetValue * 1.25;
+    } else if (selectedPath.includes('darts-5.json')) {
+      piggyBank += currentBetValue;
+    } else if (selectedPath.includes('darts-lose.json')) {
+      piggyBank = 0;
+      deposit = 0;
+    }
+    document.getElementById('balance').textContent = formatNumber(balance);
+    document.getElementById('piggy-bank').textContent = formatNumber(piggyBank);
+    document.getElementById('deposit').textContent = formatNumber(deposit);
+
+
+
+  }, 1000);
+
 
 
 
