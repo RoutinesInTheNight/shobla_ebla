@@ -530,6 +530,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             await setTGItem('balance', balance);
             await setTGItem('darts_piggy_bank', piggyBank);
             await setTGItem('darts_deposit', deposit);
+            console.log('ОООООООО ДАААААААААА')
             resolve();
           } catch (error) {
             console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
@@ -544,19 +545,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // Возвращение стилей кнопки "Бросок"
-    setTimeout(() => {
-      if (currentBetValue <= balance) {
-        document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
-        document.getElementById('throw-button').style.opacity = 1;
-      }
-    }, 1300);
+    // setTimeout(() => {
+    //   if (currentBetValue <= balance) {
+    //     document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
+    //     document.getElementById('throw-button').style.opacity = 1;
+    //   }
+    // }, 1300);
 
 
 
     // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
     currentAnimation.addEventListener('complete', () => {
       isPlaying = false;
-      document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+      // document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+      document.getElementById('throw-button').style.opacity = 1;
       document.getElementById('choice-bet').style.overflow = 'auto';
     });
 
