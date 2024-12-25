@@ -233,12 +233,12 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-// let balance = 5000000;
-// let piggyBank = 0;
-// let deposit = 0;
-let balance;
-let piggyBank;
-let deposit;
+let balance = 5000000;
+let piggyBank = 0;
+let deposit = 0;
+// let balance;
+// let piggyBank;
+// let deposit;
 
 
 
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { bet: null, distance: Infinity }).bet;
   };
 
-  const initialBetElement = Array.from(bets).find(bet => bet.dataset.bet === currentBetValue);
+  const initialBetElement = Array.from(bets).find(bet => bet.dataset.bet === String(currentBetValue));
   if (initialBetElement) {
     choiceBet.scrollTo({
       left: initialBetElement.offsetLeft - choiceBet.offsetWidth / 2 + initialBetElement.offsetWidth / 2,
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     deposit += currentBetValue;
 
     // Момент удара дротика
-    setTimeout(() => {
+    setTimeout(async () => {
       hapticFeedback('heavy');
       const actions = {
         'darts-1': () => {
@@ -508,23 +508,21 @@ document.addEventListener('DOMContentLoaded', async () => {
           animateCounter(depositElement, deposit, 0, 250);
           piggyBank = 0;
           deposit = 0;
-        },
+        }
       };
       const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
       if (actions[animationName]) {
         actions[animationName]();
       }
+
+      if (telegram.isVersionAtLeast('6.9')) {
+        await setTGItem('balance', balance);
+        await setTGItem('darts_piggy_bank', piggyBank);
+        await setTGItem('darts_deposit', deposit);
+      } else {
+        // window.location.href = '../../ban';
+      }
     }, 1000);
-
-
-    if (telegram.isVersionAtLeast('6.9')) {
-      await setTGItem('balance', balance);
-      await setTGItem('darts_piggy_bank', piggyBank);
-      await setTGItem('darts_deposit', deposit);
-    } else {
-      // window.location.href = '../../ban';
-    }
-
 
     // Возвращение стилей кнопки "Бросок"
     setTimeout(() => {
@@ -540,6 +538,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
       document.getElementById('choice-bet').style.overflow = 'auto';
     });
+
+
   }
 
 
