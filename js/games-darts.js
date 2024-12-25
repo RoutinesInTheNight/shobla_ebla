@@ -223,6 +223,7 @@ function setTGItem(key, value) {
   return new Promise((resolve, reject) => {
     telegram.CloudStorage.setItem(key, value, (err, success) => {
       if (!err && success) {
+        console.log('ОТВЕТ ЗАПРОСА: ', success)
         resolve(); // Успешно завершено
       } else {
         reject(err || new Error(`Failed to store ${key}`)); // Возвращаем ошибку
