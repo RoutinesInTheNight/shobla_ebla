@@ -212,13 +212,26 @@ async function getTGItem(key) {
   });
 }
 
+// function setTGItem(key, value) {
+//   return new Promise(resolve => {
+//     telegram.CloudStorage.setItem(key, value, function () {
+//       resolve();
+//     });
+//   });
+// }
 function setTGItem(key, value) {
-  return new Promise(resolve => {
-    telegram.CloudStorage.setItem(key, value, function () {
-      resolve();
+  return new Promise((resolve, reject) => {
+    telegram.CloudStorage.setItem(key, value, function (err) {
+      if (err) {
+        console.error(`Ошибка с записью ключа ${key}: ${value}`, err);
+        reject(err);
+      } else {
+        resolve();
+      }
     });
   });
 }
+
 
 
 
@@ -523,6 +536,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // window.location.href = '../../ban';
       }
     }, 1000);
+
+
+
 
     // Возвращение стилей кнопки "Бросок"
     setTimeout(() => {
