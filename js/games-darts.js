@@ -522,13 +522,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // После завершения анимации записываем данные в облако
       if (telegram.isVersionAtLeast('6.9')) {
-        Promise.all([
-          setTGItem('balance', balance),
-          setTGItem('darts_piggy_bank', piggyBank),
-          setTGItem('darts_deposit', deposit),
-        ])
+        // Возвращаем Promise, чтобы дождаться записи в облако
+        const saveToCloud = new Promise((resolve, reject) => {
+          Promise.all([
+            setTGItem('balance', balance),
+            setTGItem('darts_piggy_bank', piggyBank),
+            setTGItem('darts_deposit', deposit),
+          ])
+            .then(() => {
+              console.log('Все данные успешно записаны в облако');
+              resolve();
+            })
+            .catch((error) => {
+              console.error('Ошибка при записи данных в Telegram CloudStorage:', error);
+              reject(error);
+            });
+        });
+  
+        // Дожидаемся окончания записи в облако
+        saveToCloud
           .then(() => {
-            console.log('Все данные успешно записаны в облако');
+            // После записи в облако можно завершить анимацию
             currentAnimation.addEventListener('complete', () => {
               console.log('Анимация завершена');
               isPlaying = false;
@@ -537,14 +551,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
           })
           .catch((error) => {
-            console.error('Ошибка при записи данных в Telegram CloudStorage:', error);
-            // window.location.href = '../../ban';
+            console.error("Ошибка при сохранении данных в облако", error);
+            // Дополнительная обработка ошибок, например, редирект
           });
       } else {
         console.log('Версия Telegram ниже 6.9');
         // window.location.href = '../../ban';
       }
-    }, 1000); // После 1 се
+    }, 1000); // По
 
 
   }
