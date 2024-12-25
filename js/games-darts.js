@@ -476,84 +476,89 @@ document.addEventListener('DOMContentLoaded', async () => {
     balance -= currentBetValue;
     deposit += currentBetValue;
 
-    // Момент удара дротика
-    setTimeout(async () => {
-      hapticFeedback('heavy');
-      const actions = {
-        'darts-1': () => {
-          piggyBank += currentBetValue * 5.05;
-          showRoundResult(piggyBank - deposit);
-          animateCounter(balanceElement, balance, balance + piggyBank, 250);
-          animateCounter(piggyBankElement, piggyBank, 0, 250);
-          animateCounter(depositElement, deposit, 0, 250);
-          balance += piggyBank;
-          piggyBank = 0;
-          deposit = 0;
-        },
-        'darts-2': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2.35, 250);
-          piggyBank += currentBetValue * 2.35;
-        },
-        'darts-3': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.45, 250);
-          piggyBank += currentBetValue * 1.45;
-        },
-        'darts-4': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.15, 250);
-          piggyBank += currentBetValue * 1.15;
-        },
-        'darts-5': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.05, 250);
-          piggyBank += currentBetValue * 1.05;
-        },
-        'darts-lose': () => {
-          showRoundResult(deposit * -1);
-          animateCounter(piggyBankElement, piggyBank, 0, 250);
-          animateCounter(depositElement, deposit, 0, 250);
-          piggyBank = 0;
-          deposit = 0;
-        },
-      };
-
-      const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
-      if (actions[animationName]) {
-        actions[animationName]();
+    const actions = {
+      'darts-1': () => {
+        piggyBank += currentBetValue * 5.05;
+        showRoundResult(piggyBank - deposit);
+        animateCounter(balanceElement, balance, balance + piggyBank, 250);
+        animateCounter(piggyBankElement, piggyBank, 0, 250);
+        animateCounter(depositElement, deposit, 0, 250);
+        balance += piggyBank;
+        piggyBank = 0;
+        deposit = 0;
+      },
+      'darts-2': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2.35, 250);
+        piggyBank += currentBetValue * 2.35;
+      },
+      'darts-3': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.45, 250);
+        piggyBank += currentBetValue * 1.45;
+      },
+      'darts-4': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.15, 250);
+        piggyBank += currentBetValue * 1.15;
+      },
+      'darts-5': () => {
+        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.05, 250);
+        piggyBank += currentBetValue * 1.05;
+      },
+      'darts-lose': () => {
+        showRoundResult(deposit * -1);
+        animateCounter(piggyBankElement, piggyBank, 0, 250);
+        animateCounter(depositElement, deposit, 0, 250);
+        piggyBank = 0;
+        deposit = 0;
       }
+    };
 
-      if (telegram.isVersionAtLeast('6.9')) {
-        try {
-          // Дожидаемся записи всех значений
-          await Promise.all([
-            setTGItem('balance', balance),
-            setTGItem('darts_piggy_bank', piggyBank),
-            setTGItem('darts_deposit', deposit),
-          ]);
-          console.log("All keys successfully stored in the cloud storage.");
+    // Выбор рандомной анимации
+    const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
 
-          // Таймаут для возврата стилей кнопки "Бросок"
-          setTimeout(() => {
-            if (currentBetValue <= balance) {
-              document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
-              document.getElementById('throw-button').style.opacity = 1;
-            }
-          }, 1300);
 
-          // Событие завершения анимации
-          currentAnimation.addEventListener('complete', () => {
-            isPlaying = false;
-            document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
-            document.getElementById('choice-bet').style.overflow = 'auto';
-          });
-        
-        } catch (error) {
-          console.error("Error storing data in cloud storage:", error);
-          // Переход на другую страницу в случае ошибки
+    // Момент удара дротика
+    await new Promise(resolve => {
+      setTimeout(async () => {
+        hapticFeedback('heavy');
+    
+        if (actions[animationName]) {
+          actions[animationName]();
+        }
+    
+        if (telegram.isVersionAtLeast('6.9')) {
+          try {
+            await setTGItem('balance', balance);
+            await setTGItem('darts_piggy_bank', piggyBank);
+            await setTGItem('darts_deposit', deposit);
+            resolve();
+          } catch (error) {
+            console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
+            // window.location.href = '../../ban';
+          }
+        } else {
           // window.location.href = '../../ban';
         }
-      } else {
-        // window.location.href = '../../ban';
+      }, 1000);
+    });
+    
+
+
+    // Возвращение стилей кнопки "Бросок"
+    setTimeout(() => {
+      if (currentBetValue <= balance) {
+        document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
+        document.getElementById('throw-button').style.opacity = 1;
       }
-    }, 1000);
+    }, 1300);
+
+
+
+    // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
+    currentAnimation.addEventListener('complete', () => {
+      isPlaying = false;
+      document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+      document.getElementById('choice-bet').style.overflow = 'auto';
+    });
 
 
   }
