@@ -233,7 +233,7 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-let balance = 5000000;
+let balance = 1000000;
 let piggyBank = 0;
 let deposit = 0;
 // let balance;
@@ -469,13 +469,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const actions = {
         'darts-1': () => {
 
-          if (piggyBank === 0) {
-            piggyBank += currentBetValue * 5;
-          } else if (piggyBank === deposit - currentBetValue) {
-            piggyBank += currentBetValue * 1.5;
-          } else {
-            piggyBank += currentBetValue;
-          }
+          // if (piggyBank === 0) {
+          //   piggyBank += currentBetValue * 10;
+          // } else {
+          //   piggyBank += currentBetValue;
+          // }
+          piggyBank += currentBetValue * 5.05;
+
 
           showRoundResult(piggyBank - deposit);
           animateCounter(balanceElement, balance, balance + piggyBank, 250);
@@ -487,20 +487,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         },
         'darts-2': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 3, 250);
-          piggyBank += currentBetValue * 3;
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2.35, 250);
+          piggyBank += currentBetValue * 2.35;
         },
         'darts-3': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2, 250);
-          piggyBank += currentBetValue * 2;
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.45, 250);
+          piggyBank += currentBetValue * 1.45;
         },
         'darts-4': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.5, 250);
-          piggyBank += currentBetValue * 1.5;
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.15, 250);
+          piggyBank += currentBetValue * 1.15;
         },
         'darts-5': () => {
-          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue, 250);
-          piggyBank += currentBetValue;
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.05, 250);
+          piggyBank += currentBetValue * 1.05;
         },
         'darts-lose': () => {
           showRoundResult(deposit * -1);
