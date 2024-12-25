@@ -537,6 +537,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // window.location.href = '../../ban';
           }
         } else {
+          console.log('1')
           // window.location.href = '../../ban';
         }
       }, 1000);
@@ -556,8 +557,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
     currentAnimation.addEventListener('complete', () => {
+      console.log('2')
       isPlaying = false;
       // document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+      console.log('3')
       document.getElementById('throw-button').style.opacity = 1;
       document.getElementById('choice-bet').style.overflow = 'auto';
     });
