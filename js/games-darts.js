@@ -246,12 +246,12 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-// let balance = 1000000;
-// let piggyBank = 0;
-// let deposit = 0;
-let balance;
-let piggyBank;
-let deposit;
+let balance = 1000000;
+let piggyBank = 0;
+let deposit = 0;
+// let balance;
+// let piggyBank;
+// let deposit;
 
 
 
@@ -525,21 +525,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (telegram.isVersionAtLeast('6.9')) {
       try {
-        // Сначала выполняем все асинхронные операции
         await Promise.all([
           setTGItem('balance', balance),
           setTGItem('darts_piggy_bank', piggyBank),
           setTGItem('darts_deposit', deposit)
         ]);
         console.log('Все данные успешно записаны в облако');
-        resolve();  // Разрешаем Promise, когда все запросы прошли успешно
       } catch (error) {
         console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
-        // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+        // window.location.href = '../../ban';
       }
     } else {
       console.log('Версия Telegram ниже 6.9');
-      // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+      // window.location.href = '../../ban';
     }
 
 
