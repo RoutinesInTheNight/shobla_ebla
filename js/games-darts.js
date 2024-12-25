@@ -221,16 +221,16 @@ async function getTGItem(key) {
 // }
 function setTGItem(key, value) {
   return new Promise((resolve, reject) => {
-    telegram.CloudStorage.setItem(key, value, function (err) {
-      if (err) {
-        console.error(`Ошибка с записью ключа ${key}: ${value}`, err);
-        reject(err);
+    telegram.CloudStorage.setItem(key, value, (err, success) => {
+      if (!err && success) {
+        resolve(); // Успешно завершено
       } else {
-        resolve();
+        reject(err || new Error(`Failed to store ${key}`)); // Возвращаем ошибку
       }
     });
   });
 }
+
 
 
 
@@ -529,12 +529,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       if (telegram.isVersionAtLeast('6.9')) {
-        await setTGItem('balance', balance);
-        await setTGItem('darts_piggy_bank', piggyBank);
-        await setTGItem('darts_deposit', deposit);
+        try {
+          // Дожидаемся записи всех значений
+          await Promise.all([
+            setTGItem('balance', balance),
+            setTGItem('darts_piggy_bank', piggyBank),
+            setTGItem('darts_deposit', deposit),
+          ]);
+          console.log("All keys successfully stored in the cloud storage.");
+        } catch (error) {
+          console.error("Error storing data in cloud storage:", error);
+          // Переход на другую страницу в случае ошибки
+          window.location.href = '../../ban';
+        }
       } else {
         // window.location.href = '../../ban';
       }
+
     }, 1000);
 
 
