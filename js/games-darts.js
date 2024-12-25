@@ -246,12 +246,12 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-// let balance = 1000000;
-// let piggyBank = 0;
-// let deposit = 0;
-let balance;
-let piggyBank;
-let deposit;
+let balance = 1000000;
+let piggyBank = 0;
+let deposit = 0;
+// let balance;
+// let piggyBank;
+// let deposit;
 
 
 
@@ -481,15 +481,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       hapticFeedback('heavy');
       const actions = {
         'darts-1': () => {
-
-          // if (piggyBank === 0) {
-          //   piggyBank += currentBetValue * 10;
-          // } else {
-          //   piggyBank += currentBetValue;
-          // }
           piggyBank += currentBetValue * 5.05;
-
-
           showRoundResult(piggyBank - deposit);
           animateCounter(balanceElement, balance, balance + piggyBank, 250);
           animateCounter(piggyBankElement, piggyBank, 0, 250);
@@ -497,7 +489,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           balance += piggyBank;
           piggyBank = 0;
           deposit = 0;
-
         },
         'darts-2': () => {
           animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2.35, 250);
@@ -521,8 +512,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           animateCounter(depositElement, deposit, 0, 250);
           piggyBank = 0;
           deposit = 0;
-        }
+        },
       };
+
       const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
       if (actions[animationName]) {
         actions[animationName]();
@@ -537,34 +529,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTGItem('darts_deposit', deposit),
           ]);
           console.log("All keys successfully stored in the cloud storage.");
+
+          // Таймаут для возврата стилей кнопки "Бросок"
+          setTimeout(() => {
+            if (currentBetValue <= balance) {
+              document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
+              document.getElementById('throw-button').style.opacity = 1;
+            }
+          }, 1300);
+
+          // Событие завершения анимации
+          currentAnimation.addEventListener('complete', () => {
+            isPlaying = false;
+            document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+            document.getElementById('choice-bet').style.overflow = 'auto';
+          });
+        
         } catch (error) {
           console.error("Error storing data in cloud storage:", error);
           // Переход на другую страницу в случае ошибки
-          window.location.href = '../../ban';
+          // window.location.href = '../../ban';
         }
       } else {
         // window.location.href = '../../ban';
       }
-
     }, 1000);
-
-
-
-
-    // Возвращение стилей кнопки "Бросок"
-    setTimeout(() => {
-      if (currentBetValue <= balance) {
-        document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
-        document.getElementById('throw-button').style.opacity = 1;
-      }
-    }, 1300);
-
-    // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
-    currentAnimation.addEventListener('complete', () => {
-      isPlaying = false;
-      document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
-      document.getElementById('choice-bet').style.overflow = 'auto';
-    });
 
 
   }
