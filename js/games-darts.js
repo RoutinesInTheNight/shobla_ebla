@@ -233,12 +233,12 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-let balance = 1000000;
-let piggyBank = 0;
-let deposit = 0;
-// let balance;
-// let piggyBank;
-// let deposit;
+// let balance = 1000000;
+// let piggyBank = 0;
+// let deposit = 0;
+let balance;
+let piggyBank;
+let deposit;
 
 
 
