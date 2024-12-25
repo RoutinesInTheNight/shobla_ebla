@@ -520,47 +520,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     await new Promise(resolve => {
       setTimeout(async () => {
         hapticFeedback('heavy');
-    
+
         if (actions[animationName]) {
           actions[animationName]();
         }
-    
+
         if (telegram.isVersionAtLeast('6.9')) {
           try {
-            await setTGItem('balance', balance);
-            await setTGItem('darts_piggy_bank', piggyBank);
-            await setTGItem('darts_deposit', deposit);
-            console.log('ОООООООО ДАААААААААА')
-            resolve();
+            // Сначала выполняем все асинхронные операции
+            await Promise.all([
+              setTGItem('balance', balance),
+              setTGItem('darts_piggy_bank', piggyBank),
+              setTGItem('darts_deposit', deposit)
+            ]);
+            console.log('Все данные успешно записаны в облако');
+            resolve();  // Разрешаем Promise, когда все запросы прошли успешно
           } catch (error) {
             console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
-            // window.location.href = '../../ban';
+            // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
           }
         } else {
-          console.log('1')
-          // window.location.href = '../../ban';
+          console.log('Версия Telegram ниже 6.9');
+          // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
         }
       }, 1000);
     });
-    
 
-
-    // Возвращение стилей кнопки "Бросок"
-    // setTimeout(() => {
-    //   if (currentBetValue <= balance) {
-    //     document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
-    //     document.getElementById('throw-button').style.opacity = 1;
-    //   }
-    // }, 1300);
-
-
-
-    // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
+    // Остановка анимации и возвращение стилей кнопки "Бросок"
     currentAnimation.addEventListener('complete', () => {
-      console.log('2')
+      console.log('Анимация завершена');
       isPlaying = false;
-      // document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
-      console.log('3')
       document.getElementById('throw-button').style.opacity = 1;
       document.getElementById('choice-bet').style.overflow = 'auto';
     });
