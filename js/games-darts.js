@@ -269,8 +269,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const highlightBet = (betElement) => {
     bets.forEach(bet => bet.classList.remove('selected'));
     betElement.classList.add('selected');
-    currentBetValue = Number(betElement.dataset.bet);
-    localStorage.setItem('current_bet', currentBetValue);
+    localStorage.setItem('current_bet', betElement.dataset.bet);
+    currentBetValue = Number(betElement.dataset.bet)
 
     if (currentBetValue > balance) {
       document.getElementById('throw-button').style.opacity = 0.25;
