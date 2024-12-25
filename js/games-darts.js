@@ -246,12 +246,12 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-let balance = 1000000;
-let piggyBank = 0;
-let deposit = 0;
-// let balance;
-// let piggyBank;
-// let deposit;
+// let balance = 1000000;
+// let piggyBank = 0;
+// let deposit = 0;
+let balance;
+let piggyBank;
+let deposit;
 
 
 
@@ -472,79 +472,76 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     animateCounter(balanceElement, balance, balance - currentBetValue, 250);
     animateCounter(depositElement, deposit, deposit + currentBetValue, 250);
-
     balance -= currentBetValue;
     deposit += currentBetValue;
 
-    const actions = {
-      'darts-1': () => {
-        piggyBank += currentBetValue * 5.05;
-        showRoundResult(piggyBank - deposit);
-        animateCounter(balanceElement, balance, balance + piggyBank, 250);
-        animateCounter(piggyBankElement, piggyBank, 0, 250);
-        animateCounter(depositElement, deposit, 0, 250);
-        balance += piggyBank;
-        piggyBank = 0;
-        deposit = 0;
-      },
-      'darts-2': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2.35, 250);
-        piggyBank += currentBetValue * 2.35;
-      },
-      'darts-3': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.45, 250);
-        piggyBank += currentBetValue * 1.45;
-      },
-      'darts-4': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.15, 250);
-        piggyBank += currentBetValue * 1.15;
-      },
-      'darts-5': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.05, 250);
-        piggyBank += currentBetValue * 1.05;
-      },
-      'darts-lose': () => {
-        showRoundResult(deposit * -1);
-        animateCounter(piggyBankElement, piggyBank, 0, 250);
-        animateCounter(depositElement, deposit, 0, 250);
-        piggyBank = 0;
-        deposit = 0;
-      }
-    };
 
     // Выбор рандомной анимации
     const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
 
 
-    // Момент удара дротика
-    await new Promise(resolve => {
-      setTimeout(async () => {
-        hapticFeedback('heavy');
+    let balanceBefore = balance
+    let depositBefore = deposit
+    let piggyBankBefore = piggyBank
 
-        if (actions[animationName]) {
-          actions[animationName]();
-        }
+    const multipliers = {
+      'darts-1': 5.05,
+      'darts-2': 2.35,
+      'darts-3': 1.45,
+      'darts-4': 1.15,
+      'darts-5': 1.05
+    }
 
-        if (telegram.isVersionAtLeast('6.9')) {
-          try {
-            // Сначала выполняем все асинхронные операции
-            await Promise.all([
-              setTGItem('balance', balance),
-              setTGItem('darts_piggy_bank', piggyBank),
-              setTGItem('darts_deposit', deposit)
-            ]);
-            console.log('Все данные успешно записаны в облако');
-            resolve();  // Разрешаем Promise, когда все запросы прошли успешно
-          } catch (error) {
-            console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
-            // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
-          }
-        } else {
-          console.log('Версия Telegram ниже 6.9');
-          // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
-        }
-      }, 1000);
-    });
+    if (animationName === 'darts-1') {
+      piggyBankBefore += currentBetValue * multipliers[animationName];
+      balance += piggyBank;
+      piggyBank = 0;
+      deposit = 0;
+    } else if (['darts-2', 'darts-3', 'darts-4', 'darts-5'].includes(animationName)) {
+      piggyBank += currentBetValue * multipliers[animationName];
+    } else {
+      piggyBank = 0;
+      deposit = 0;
+    }
+
+    // Момент удара дротика: вибрация и изменение чисел
+    setTimeout(() => {
+      hapticFeedback('heavy');
+      if (animationName === 'darts-1') {
+        showRoundResult(piggyBankBefore - depositBefore);
+        animateCounter(balanceElement, balanceBefore, balance, 250);
+        animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
+        animateCounter(depositElement, depositBefore, 0, 250);
+      } else if (['darts-2', 'darts-3', 'darts-4', 'darts-5'].includes(animationName)) {
+        animateCounter(piggyBankElement, piggyBankBefore, piggyBank, 250);
+      } else {
+        showRoundResult(depositBefore * -1);
+        animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
+        animateCounter(depositElement, depositBefore, 0, 250);
+      }
+    }, 1000);
+
+
+
+    if (telegram.isVersionAtLeast('6.9')) {
+      try {
+        // Сначала выполняем все асинхронные операции
+        await Promise.all([
+          setTGItem('balance', balance),
+          setTGItem('darts_piggy_bank', piggyBank),
+          setTGItem('darts_deposit', deposit)
+        ]);
+        console.log('Все данные успешно записаны в облако');
+        resolve();  // Разрешаем Promise, когда все запросы прошли успешно
+      } catch (error) {
+        console.error("Ошибка при записи данных в Telegram CloudStorage:", error);
+        // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+      }
+    } else {
+      console.log('Версия Telegram ниже 6.9');
+      // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+    }
+
 
     // Остановка анимации и возвращение стилей кнопки "Бросок"
     currentAnimation.addEventListener('complete', () => {
