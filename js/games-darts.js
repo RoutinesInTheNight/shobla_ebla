@@ -519,42 +519,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
         animateCounter(depositElement, depositBefore, 0, 250);
       }
-    }, 1000);
 
-
-
-    await new Promise((resolve) => {
-      currentAnimation.addEventListener('complete', resolve, { once: true });
-    });
-
-    // Ждём завершения записи в Telegram CloudStorage
-    if (telegram.isVersionAtLeast('6.9')) {
-      try {
-        await Promise.all([
+      // После завершения анимации записываем данные в облако
+      if (telegram.isVersionAtLeast('6.9')) {
+        Promise.all([
           setTGItem('balance', balance),
           setTGItem('darts_piggy_bank', piggyBank),
           setTGItem('darts_deposit', deposit),
-        ]);
-        console.log('Все данные успешно записаны в облако');
-      } catch (error) {
-        console.error('Ошибка при записи данных в Telegram CloudStorage:', error);
+        ])
+          .then(() => {
+            console.log('Все данные успешно записаны в облако');
+            currentAnimation.addEventListener('complete', () => {
+              console.log('Анимация завершена');
+              isPlaying = false;
+              document.getElementById('throw-button').style.opacity = 1;
+              document.getElementById('choice-bet').style.overflow = 'auto';
+            });
+          })
+          .catch((error) => {
+            console.error('Ошибка при записи данных в Telegram CloudStorage:', error);
+            // window.location.href = '../../ban';
+          });
+      } else {
+        console.log('Версия Telegram ниже 6.9');
         // window.location.href = '../../ban';
-        return; // Прерываем выполнение, если произошла ошибка.
       }
-    } else {
-      console.log('Версия Telegram ниже 6.9');
-      // window.location.href = '../../ban';
-      return; // Прерываем выполнение, если версия Telegram не подходит.
-    }
-
-
-    // Остановка анимации и возвращение стилей кнопки "Бросок"
-    currentAnimation.addEventListener('complete', () => {
-      console.log('Анимация завершена');
-      isPlaying = false;
-      document.getElementById('throw-button').style.opacity = 1;
-      document.getElementById('choice-bet').style.overflow = 'auto';
-    });
+    }, 1000); // После 1 се
 
 
   }
