@@ -1,12 +1,4 @@
-// Просто появление контента
-window.addEventListener('DOMContentLoaded', () => {
-  const children = document.querySelectorAll('.content > *');
-  children.forEach((child, index) => {
-    setTimeout(() => {
-      child.classList.add('visible');
-    }, index * 25);
-  });
-});
+
 
 
 
@@ -220,6 +212,17 @@ async function getTGItem(key) {
   });
 }
 
+function setTGItem(key, value) {
+  return new Promise(resolve => {
+    telegram.CloudStorage.setItem(key, value, function () {
+      resolve();
+    });
+  });
+}
+
+
+
+
 
 
 // Функция для форматирования чисел
@@ -229,55 +232,55 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 
-let currentBetValue = localStorage.getItem('current_bet') || '500';
-let balance = 500000;
-let piggyBank = 0;
-let deposit = 0;
+let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
+// let balance = 5000000;
+// let piggyBank = 0;
+// let deposit = 0;
+let balance;
+let piggyBank;
+let deposit;
 
 
 
 
 
-// СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
 document.addEventListener('DOMContentLoaded', async () => {
+
+  // СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
+  // 
 
   const choiceBet = document.querySelector('.choice-bet');
   const bets = document.querySelectorAll('.bet');
 
   if (telegram.isVersionAtLeast('6.9')) {
-    balance = await getTGItem('balance');
-    piggyBank = await getTGItem('darts_piggy_bank');
-    deposit = await getTGItem('darts_deposit');
+    balance = Number(await getTGItem('balance'));
+    piggyBank = Number(await getTGItem('darts_piggy_bank'));
+    deposit = Number(await getTGItem('darts_deposit'));
   } else {
     // window.location.href = '../../ban';
   }
-  localStorage.setItem('balance', balance);
-  localStorage.setItem('darts_piggy_bank', piggyBank);
-  localStorage.setItem('darts_deposit', deposit);
+
   document.getElementById('balance').textContent = formatNumber(balance);
   document.getElementById('piggy-bank').textContent = formatNumber(piggyBank);
   document.getElementById('deposit').textContent = formatNumber(deposit);
 
 
+
   const highlightBet = (betElement) => {
     bets.forEach(bet => bet.classList.remove('selected'));
     betElement.classList.add('selected');
-    currentBetValue = betElement.dataset.bet;
+    currentBetValue = Number(betElement.dataset.bet);
     localStorage.setItem('current_bet', currentBetValue);
 
-    if (Number(currentBetValue) > balance) {
+    if (currentBetValue > balance) {
       document.getElementById('throw-button').style.opacity = 0.25;
     } else {
       document.getElementById('throw-button').style.opacity = 1;
     }
-
-
   };
 
   const getCenterBet = () => {
     const center = choiceBet.scrollLeft + choiceBet.clientWidth / 2;
-
-    // Находим ближайший элемент к центру
     return Array.from(bets).reduce((closest, bet) => {
       const betCenter = bet.offsetLeft + bet.offsetWidth / 2;
       const distance = Math.abs(center - betCenter);
@@ -285,7 +288,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { bet: null, distance: Infinity }).bet;
   };
 
-  // Центрируем изначально выбранный элемент
   const initialBetElement = Array.from(bets).find(bet => bet.dataset.bet === currentBetValue);
   if (initialBetElement) {
     choiceBet.scrollTo({
@@ -296,26 +298,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   let lastBet = null;
-
   choiceBet.addEventListener('scroll', () => {
-
-    // Находим ближайший к центру элемент
     const centerBet = getCenterBet();
-
-    // Если элемент изменился, обновляем класс и выводим в консоль
     if (centerBet && centerBet !== lastBet) {
       highlightBet(centerBet);
       hapticFeedback('change');
-      console.log(`Текущая ставка: ${centerBet.dataset.bet}`);
       lastBet = centerBet;
-      
-
-
-
     }
   });
 
-  // Добавляем выбор по клику
   bets.forEach(bet => {
     bet.addEventListener('click', () => {
       const offset = bet.offsetLeft - choiceBet.offsetWidth / 2 + bet.offsetWidth / 2;
@@ -327,136 +318,240 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Предотвращаем автоматический фокус
   document.body.scrollTo(0, 0);
-});
 
 
 
+  // ЗАГРУЗКА АНИМАЦИЙ И ВКЛЮЧЕНИЕ СТАРТОВОЙ АНИМАЦИИ
+  // 
 
+  const animations = [
+    '../../../animations/darts-1.json',
+    '../../../animations/darts-2.json',
+    '../../../animations/darts-3.json',
+    '../../../animations/darts-4.json',
+    '../../../animations/darts-5.json',
+    '../../../animations/darts-lose.json'
+  ];
+  const initialAnimation = '../../../animations/darts-wait.json';
+  const container = document.getElementById('animation-container');
+  const throwButton = document.getElementById('throw-button');
 
+  let currentAnimation = null;
+  let isPlaying = false;
+  let initialMode = true;
 
+  const initialContainer = document.createElement('div');
+  container.appendChild(initialContainer);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const animations = [
-  '../../../animations/darts-1.json',
-  '../../../animations/darts-2.json',
-  '../../../animations/darts-3.json',
-  '../../../animations/darts-4.json',
-  '../../../animations/darts-5.json',
-  '../../../animations/darts-lose.json'
-];
-const initialAnimation = '../../../animations/darts-wait.json';
-const container = document.getElementById('animation-container');
-const throwButton = document.getElementById('throw-button');
-
-let currentAnimation = null; // Текущая анимация
-let isPlaying = false; // Флаг воспроизведения анимации
-let initialMode = true; // Флаг начальной анимации
-
-// Создаём контейнер для седьмой анимации
-const initialContainer = document.createElement('div');
-container.appendChild(initialContainer);
-
-// Загружаем седьмую анимацию
-const initialAnimationInstance = bodymovin.loadAnimation({
-  container: initialContainer,
-  path: `animations/${initialAnimation}`,
-  renderer: 'svg',
-  loop: true,
-  autoplay: true,
-  name: 'initial-animation',
-});
-
-// Загружаем рандомные анимации в массив
-const animationInstances = animations.map((path, index) => {
-  const animationContainer = document.createElement('div');
-  animationContainer.style.display = 'none';
-  container.appendChild(animationContainer);
-
-  return bodymovin.loadAnimation({
-    container: animationContainer,
-    path: `animations/${path}`,
+  const initialAnimationInstance = bodymovin.loadAnimation({
+    container: initialContainer,
+    path: `animations/${initialAnimation}`,
     renderer: 'svg',
-    loop: false,
-    autoplay: false,
-    name: `animation-${index}`,
+    loop: true,
+    autoplay: true,
+    name: 'initial-animation',
   });
-});
 
-// Функция для скрытия всех анимаций
-function hideAllAnimations() {
-  animationInstances.forEach(instance => {
-    instance.wrapper.style.display = 'none';
-  });
-  initialContainer.style.display = 'none';
-}
-
-// Функция для отображения текущей анимации
-function showCurrentAnimation(animation) {
-  if (animation) {
-    animation.wrapper.style.display = 'block';
-  }
-}
-
-// Функция для остановки текущей анимации
-function stopCurrentAnimation() {
-  if (currentAnimation) {
-    currentAnimation.stop();
-    currentAnimation.goToAndStop(0, true);
-  }
-}
-
-
-// НАЖАТИЕ НА КНОПКУ "БРОСОК": вибрация, отключение прокрутки ставок и анимация кнопки "Бросок"
-throwButton.addEventListener('click', () => {
-  if (isPlaying) return;
-
-  document.getElementById('throw-button').style.transform = 'scale(0.95)';
-  setTimeout(() => {
-    document.getElementById('throw-button').style.transform = 'scale(1)';
-  }, 100);
-  if (currentBetValue <= balance) {
-    hapticFeedback('soft');
-    document.getElementById('choice-bet').style.overflow = 'hidden';
-    document.getElementById('throw-button').style.opacity = 0.5;
-  } else {
-    hapticFeedback('error');
-    document.getElementById('throw-button').style.opacity = 0.25;
-    document.getElementById('balance').style.color = '#F22D3D';
-    setTimeout(() => {
-      document.getElementById('balance').style.color = 'white';
-    }, 200);
-    return;
-  }
-
-  if (initialMode) {
-    // Если сейчас начальная анимация
-    initialAnimationInstance.loop = false;
-    initialAnimationInstance.addEventListener('complete', () => {
-      initialMode = false;
-      hideAllAnimations();
-      playRandomAnimation();
+  const animationInstances = animations.map((path, index) => {
+    const animationContainer = document.createElement('div');
+    animationContainer.style.display = 'none';
+    container.appendChild(animationContainer);
+    return bodymovin.loadAnimation({
+      container: animationContainer,
+      path: `animations/${path}`,
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      name: `animation-${index}`,
     });
-  } else {
-    playRandomAnimation();
+  });
+
+  function hideAllAnimations() {
+    animationInstances.forEach(instance => {
+      instance.wrapper.style.display = 'none';
+    });
+    initialContainer.style.display = 'none';
   }
+  function showCurrentAnimation(animation) {
+    if (animation) {
+      animation.wrapper.style.display = 'block';
+    }
+  }
+  function stopCurrentAnimation() {
+    if (currentAnimation) {
+      currentAnimation.stop();
+      currentAnimation.goToAndStop(0, true);
+    }
+  }
+
+
+
+  // ПОКАЗ ЭЛЕМЕНТОВ СТРАНИЦЫ
+  const children = document.querySelectorAll('.content > *');
+  children.forEach((child, index) => {
+    setTimeout(() => {
+      child.classList.add('visible');
+    }, index * 25);
+  });
+
+
+
+  // НАЖАТИЕ НА КНОПКУ "БРОСОК": вибрация, отключение прокрутки ставок и анимация кнопки "Бросок"
+  // 
+
+  throwButton.addEventListener('click', () => {
+    if (isPlaying) return;
+
+    document.getElementById('throw-button').style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      document.getElementById('throw-button').style.transform = 'scale(1)';
+    }, 100);
+    if (currentBetValue <= balance) {
+      hapticFeedback('soft');
+      document.getElementById('choice-bet').style.overflow = 'hidden';
+      document.getElementById('throw-button').style.opacity = 0.5;
+    } else {
+      hapticFeedback('error');
+      document.getElementById('throw-button').style.opacity = 0.25;
+      document.getElementById('balance').style.color = '#F22D3D';
+      setTimeout(() => {
+        document.getElementById('balance').style.color = 'white';
+      }, 200);
+      return;
+    }
+
+    if (initialMode) {
+      initialAnimationInstance.loop = false;
+      initialAnimationInstance.addEventListener('complete', () => {
+        initialMode = false;
+        hideAllAnimations();
+        playRandomAnimation();
+      });
+    } else {
+      playRandomAnimation();
+    }
+  });
+
+
+
+  // ИГРА
+  // 
+
+  async function playRandomAnimation() {
+    stopCurrentAnimation();
+    hideAllAnimations();
+
+    // Выбираем случайную анимацию
+    const randomIndex = Math.floor(Math.random() * animationInstances.length);
+    currentAnimation = animationInstances[randomIndex];
+
+    // Показываем текущую анимацию
+    showCurrentAnimation(currentAnimation);
+    currentAnimation.play();
+
+    isPlaying = true;
+
+
+    const balanceElement = document.getElementById('balance');
+    const piggyBankElement = document.getElementById('piggy-bank');
+    const depositElement = document.getElementById('deposit');
+
+    animateCounter(balanceElement, balance, balance - currentBetValue, 250);
+    animateCounter(depositElement, deposit, deposit + currentBetValue, 250);
+
+    balance -= currentBetValue;
+    deposit += currentBetValue;
+
+    // Момент удара дротика
+    setTimeout(() => {
+      hapticFeedback('heavy');
+      const actions = {
+        'darts-1': () => {
+
+          if (piggyBank === 0) {
+            piggyBank += currentBetValue * 5;
+          } else if (piggyBank === deposit - currentBetValue) {
+            piggyBank += currentBetValue * 1.5;
+          } else {
+            piggyBank += currentBetValue;
+          }
+
+          showRoundResult(piggyBank - deposit);
+          animateCounter(balanceElement, balance, balance + piggyBank, 250);
+          animateCounter(piggyBankElement, piggyBank, 0, 250);
+          animateCounter(depositElement, deposit, 0, 250);
+          balance += piggyBank;
+          piggyBank = 0;
+          deposit = 0;
+
+        },
+        'darts-2': () => {
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 3, 250);
+          piggyBank += currentBetValue * 3;
+        },
+        'darts-3': () => {
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2, 250);
+          piggyBank += currentBetValue * 2;
+        },
+        'darts-4': () => {
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.5, 250);
+          piggyBank += currentBetValue * 1.5;
+        },
+        'darts-5': () => {
+          animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue, 250);
+          piggyBank += currentBetValue;
+        },
+        'darts-lose': () => {
+          showRoundResult(deposit * -1);
+          animateCounter(piggyBankElement, piggyBank, 0, 250);
+          animateCounter(depositElement, deposit, 0, 250);
+          piggyBank = 0;
+          deposit = 0;
+        },
+      };
+      const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
+      if (actions[animationName]) {
+        actions[animationName]();
+      }
+    }, 1000);
+
+
+    if (telegram.isVersionAtLeast('6.9')) {
+      await setTGItem('balance', balance);
+      await setTGItem('darts_piggy_bank', piggyBank);
+      await setTGItem('darts_deposit', deposit);
+    } else {
+      // window.location.href = '../../ban';
+    }
+
+
+    // Возвращение стилей кнопки "Бросок"
+    setTimeout(() => {
+      if (currentBetValue <= balance) {
+        document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
+        document.getElementById('throw-button').style.opacity = 1;
+      }
+    }, 1300);
+
+    // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
+    currentAnimation.addEventListener('complete', () => {
+      isPlaying = false;
+      document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
+      document.getElementById('choice-bet').style.overflow = 'auto';
+    });
+  }
+
+
+  // Начальная инициализация анимаций
+  hideAllAnimations();
+  initialContainer.style.display = 'block';
 });
+
+
+
+
+
 
 
 
@@ -480,121 +575,6 @@ function animateCounter(element, startValue, endValue, duration) {
 
 
 
-// ЗАПУСК РАНДОНОЙ АНИМАЦИИ
-function playRandomAnimation() {
-  stopCurrentAnimation();
-  hideAllAnimations();
-
-  // Выбираем случайную анимацию
-  const randomIndex = Math.floor(Math.random() * animationInstances.length);
-  currentAnimation = animationInstances[randomIndex];
-
-  // Показываем текущую анимацию
-  showCurrentAnimation(currentAnimation);
-  currentAnimation.play();
-
-
-  currentBetValue = Number(currentBetValue)
-
-  const balanceElement = document.getElementById('balance');
-  const piggyBankElement = document.getElementById('piggy-bank');
-  const depositElement = document.getElementById('deposit');
-
-  animateCounter(balanceElement, balance, balance - currentBetValue, 250);
-  animateCounter(depositElement, deposit, deposit + currentBetValue, 250);
-  balance -= currentBetValue;
-  deposit += currentBetValue;
-  // ТУТ В ТГ КЛАУД ДОБАВИТЬ
-
-  isPlaying = true;
-
-
-  // Момент удара дротика
-  setTimeout(() => {
-    hapticFeedback('heavy');
-    const actions = {
-      'darts-1': () => {
-
-        if (piggyBank === 0) {
-          piggyBank += currentBetValue * 5;
-        } else if (piggyBank === deposit - currentBetValue) {
-          piggyBank += currentBetValue * 1.5;
-        } else {
-          piggyBank += currentBetValue;
-        }
-
-        showRoundResult(piggyBank - deposit);
-        animateCounter(balanceElement, balance, balance + piggyBank, 250);
-        animateCounter(piggyBankElement, piggyBank, 0, 250);
-        animateCounter(depositElement, deposit, 0, 250);
-        balance += piggyBank;
-        piggyBank = 0;
-        deposit = 0;
-
-      },
-      'darts-2': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 3, 250);
-        piggyBank += currentBetValue * 3;
-      },
-      'darts-3': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 2, 250);
-        piggyBank += currentBetValue * 2;
-      },
-      'darts-4': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue * 1.5, 250);
-        piggyBank += currentBetValue * 1.5;
-      },
-      'darts-5': () => {
-        animateCounter(piggyBankElement, piggyBank, piggyBank + currentBetValue, 250);
-        piggyBank += currentBetValue;
-      },
-      'darts-lose': () => {
-        showRoundResult(deposit * -1);
-        animateCounter(piggyBankElement, piggyBank, 0, 250);
-        animateCounter(depositElement, deposit, 0, 250);
-        piggyBank = 0;
-        deposit = 0;
-      },
-    };
-    const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
-    if (actions[animationName]) {
-      actions[animationName]();
-    }
-  }, 1000);
-
-
-  // Возвращение стилей кнопки "Бросок"
-  setTimeout(() => {
-    if (currentBetValue <= balance) {
-      document.getElementById('throw-button').style.transition = 'opacity 0.4s, transform 0.1s';
-      document.getElementById('throw-button').style.opacity = 1;
-    }
-  }, 1300);
-
-  // Остановка анимации, возвращение стилей кнопки "Бросок" и включение прокрутки ставок
-  currentAnimation.addEventListener('complete', () => {
-    isPlaying = false;
-    document.getElementById('throw-button').style.transition = 'opacity 0.2s, transform 0.1s';
-    document.getElementById('choice-bet').style.overflow = 'auto';
-  });
-}
-
-
-// Начальная инициализация анимаций
-hideAllAnimations();
-initialContainer.style.display = 'block';
-
-
-
-
-
-
-
-
-
-
-
-
 function showRoundResult(num) {
 
   let roundResult;
@@ -603,7 +583,7 @@ function showRoundResult(num) {
   } else {
     roundResult = '+ ' + formatNumber(num)
   }
-  
+
   const container = document.getElementById('animation-container');
 
   // Создаем элемент для сообщения
@@ -633,7 +613,7 @@ function showRoundResult(num) {
 
   // Удаляем элемент после завершения анимации (4 секунды)
   setTimeout(() => {
-      messageElement.remove();
+    messageElement.remove();
   }, 3000);
 }
 
