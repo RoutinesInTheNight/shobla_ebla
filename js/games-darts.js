@@ -460,6 +460,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     stopCurrentAnimation();
     hideAllAnimations();
 
+    const startTime = Date.now();
+
     // Выбираем случайную анимацию
     const randomIndex = Math.floor(Math.random() * animationInstances.length);
     currentAnimation = animationInstances[randomIndex];
@@ -499,7 +501,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (animationName === 'darts-1') {
       piggyBankBefore += currentBetValue * multipliers[animationName];
-      balance += piggyBank;
+      balance += piggyBankBefore;
       piggyBank = 0;
       deposit = 0;
     } else if (['darts-2', 'darts-3', 'darts-4', 'darts-5'].includes(animationName)) {
@@ -531,32 +533,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    setTimeout(() => {
-      // Создаем массив промисов для всех запросов
-      const keysToAdd = [
-        setTGItem('balance', balance),
-        setTGItem('darts_piggy_bank', piggyBank),
-        setTGItem('darts_deposit', deposit)
-      ];
+    // Создаем массив промисов для всех запросов
+    const keysToAdd = [
+      setTGItem('balance', balance),
+      setTGItem('darts_piggy_bank', piggyBank),
+      setTGItem('darts_deposit', deposit)
+    ];
 
-      // Ожидаем завершения всех запросов
-      Promise.all(keysToAdd)
-        .then(() => {
-          // Если все запросы прошли успешно
+    // Ожидаем завершения всех запросов
+    Promise.all(keysToAdd)
+      .then(() => {
+        const elapsedTime = Date.now() - startTime;
+
+        if (elapsedTime >= 1500) {
+          // Если прошло больше или равно 1.5 секунд — останавливаем анимацию
           animationIsPlaying = false;
-          console.log('Анимация остановлена')
+          console.log('Анимация остановлена');
           if (balance >= currentBetValue) {
             document.getElementById('throw-button').style.opacity = 1;
           }
           document.getElementById('choice-bet').style.opacity = 1;
           document.getElementById('choice-bet').style.overflow = 'auto';
-        })
-        .catch((err) => {
-          // Если хотя бы один запрос завершился с ошибкой
-          console.error('Ошибка при добавлении ключей:', err);
-          // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
-        });
-    }, 1500);
+        } else {
+          // Если 1.5 секунды еще не прошло, ждём завершения
+          setTimeout(() => {
+            animationIsPlaying = false;
+            console.log('Анимация остановлена');
+            if (balance >= currentBetValue) {
+              document.getElementById('throw-button').style.opacity = 1;
+            }
+            document.getElementById('choice-bet').style.opacity = 1;
+            document.getElementById('choice-bet').style.overflow = 'auto';
+          }, 1500 - elapsedTime);
+        }
+
+      })
+      .catch((err) => {
+        // Если хотя бы один запрос завершился с ошибкой
+        console.error('Ошибка при добавлении ключей:', err);
+        // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+      });
+
 
 
 
