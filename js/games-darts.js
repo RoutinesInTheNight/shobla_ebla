@@ -417,13 +417,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   throwButton.addEventListener('click', () => {
     if (animationIsPlaying) return;
-    animationIsPlaying = true;
 
     document.getElementById('throw-button').style.transform = 'scale(0.95)';
     setTimeout(() => {
       document.getElementById('throw-button').style.transform = 'scale(1)';
     }, 100);
+
     if (currentBetValue <= balance) {
+      animationIsPlaying = true;
       hapticFeedback('soft');
       document.getElementById('choice-bet').style.overflow = 'hidden';
       document.getElementById('choice-bet').style.opacity = 0.5;
