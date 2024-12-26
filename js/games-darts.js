@@ -222,16 +222,15 @@ async function getTGItem(key) {
 function setTGItem(key, value) {
   return new Promise((resolve, reject) => {
     telegram.CloudStorage.setItem(key, value, (err, success) => {
-      if (!err && success) {
-        console.log('ОТВЕТ ЗАПРОСА: ', success)
-        resolve(); // Успешно завершено
+      if (!err && (success === true || success === 'true')) {
+        console.log('ОТВЕТ ЗАПРОСА: ', success);
+        resolve(true); // Успешно завершено
       } else {
         reject(err || new Error(`Failed to store ${key}`)); // Возвращаем ошибку
       }
     });
   });
 }
-
 
 
 
@@ -247,12 +246,14 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-// let balance = 1000000;
-// let piggyBank = 0;
-// let deposit = 0;
-let balance;
-let piggyBank;
-let deposit;
+let balance = 1000000;
+let piggyBank = 0;
+let deposit = 0;
+
+let animationIsPlaying = false; // Активна ли анимация
+// let balance;
+// let piggyBank;
+// let deposit;
 
 
 
@@ -323,6 +324,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   bets.forEach(bet => {
     bet.addEventListener('click', () => {
+      if (animationIsPlaying) return;
       const offset = bet.offsetLeft - choiceBet.offsetWidth / 2 + bet.offsetWidth / 2;
       choiceBet.scrollTo({
         left: offset,
@@ -352,7 +354,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const throwButton = document.getElementById('throw-button');
 
   let currentAnimation = null;
-  let isPlaying = false;
   let initialMode = true;
 
   const initialContainer = document.createElement('div');
@@ -415,7 +416,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 
 
   throwButton.addEventListener('click', () => {
-    if (isPlaying) return;
+    if (animationIsPlaying) return;
 
     document.getElementById('throw-button').style.transform = 'scale(0.95)';
     setTimeout(() => {
@@ -424,6 +425,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (currentBetValue <= balance) {
       hapticFeedback('soft');
       document.getElementById('choice-bet').style.overflow = 'hidden';
+      document.getElementById('choice-bet').style.opacity = 0.5;
       document.getElementById('throw-button').style.opacity = 0.5;
     } else {
       hapticFeedback('error');
@@ -464,7 +466,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     showCurrentAnimation(currentAnimation);
     currentAnimation.play();
 
-    isPlaying = true;
+    animationIsPlaying = true;
 
 
     const balanceElement = document.getElementById('balance');
@@ -505,7 +507,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       deposit = 0;
     }
 
-    // Момент удара дротика: вибрация и изменение чисел
+    // Момент удара дротика: вибрация и визуальное изменение чисел
     setTimeout(() => {
       hapticFeedback('heavy');
       if (animationName === 'darts-1') {
@@ -520,46 +522,61 @@ document.addEventListener('DOMContentLoaded', async () => {
         animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
         animateCounter(depositElement, depositBefore, 0, 250);
       }
-
-      // После завершения анимации записываем данные в облако
-      if (telegram.isVersionAtLeast('6.9')) {
-        // Возвращаем Promise, чтобы дождаться записи в облако
-        const saveToCloud = new Promise((resolve, reject) => {
-          Promise.all([
-            setTGItem('balance', balance),
-            setTGItem('darts_piggy_bank', piggyBank),
-            setTGItem('darts_deposit', deposit),
-          ])
-            .then(() => {
-              console.log('Все данные успешно записаны в облако');
-              resolve();
-            })
-            .catch((error) => {
-              console.error('Ошибка при записи данных в Telegram CloudStorage:', error);
-              reject(error);
-            });
-        });
-  
-        // Дожидаемся окончания записи в облако
-        saveToCloud
-          .then(() => {
-            // После записи в облако можно завершить анимацию
-            currentAnimation.addEventListener('complete', () => {
-              console.log('Анимация завершена');
-              isPlaying = false;
-              document.getElementById('throw-button').style.opacity = 1;
-              document.getElementById('choice-bet').style.overflow = 'auto';
-            });
-          })
-          .catch((error) => {
-            console.error("Ошибка при сохранении данных в облако", error);
-            // Дополнительная обработка ошибок, например, редирект
-          });
-      } else {
-        console.log('Версия Telegram ниже 6.9');
-        // window.location.href = '../../ban';
+      if (balance < currentBetValue) {
+        document.getElementById('throw-button').style.opacity = 0.25;
       }
-    }, 1000); // По
+    }, 1000);
+
+
+
+
+    // Начинаем добавление ключей в облако сразу
+    if (telegram.isVersionAtLeast('6.9')) {
+      const keysToAdd = [
+        setTGItem('balance', balance),
+        setTGItem('darts_piggy_bank', piggyBank),
+        setTGItem('darts_deposit', deposit),
+      ];
+  
+      let allKeysAdded = false;
+  
+      Promise.all(keysToAdd.map((promise) =>
+        promise
+          .then((response) => response === true)
+          .catch(() => {
+            console.error('Ошибка при записи ключей');
+            // window.location.href = '../../ban';
+            return false;
+          })
+      )).then((results) => {
+        allKeysAdded = results.every((result) => result === true);
+        console.log('Все ключи добавлены:', allKeysAdded);
+      });
+    } else {
+      // window.location.href = '../../ban';
+      // allKeysAdded = true;
+    }
+
+    // Завершаем анимацию при её окончании
+    currentAnimation.addEventListener('complete', () => {
+      const interval = setInterval(() => {
+        if (allKeysAdded) {
+          clearInterval(interval);
+          animationIsPlaying = false;
+          if (balance >= currentBetValue) {
+            document.getElementById('throw-button').style.opacity = 1;
+          }
+          document.getElementById('choice-bet').style.opacity = 1;
+          document.getElementById('choice-bet').style.overflow = 'auto';
+          console.log('Анимация завершена');
+        }
+      }, 100);
+    });
+
+
+
+
+
 
 
   }

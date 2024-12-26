@@ -361,6 +361,7 @@ body::-webkit-scrollbar {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding: 0 calc(50 * var(--dynamic-vw)); /* Паддинг для первого и последнего элемента bet */
+    transition: opacity 0.2s;
 }
 
 
