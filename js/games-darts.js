@@ -529,7 +529,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-
+    let allKeysAdded = false;
+    
     // Начинаем добавление ключей в облако сразу
     if (telegram.isVersionAtLeast('6.9')) {
       const keysToAdd = [
@@ -537,8 +538,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTGItem('darts_piggy_bank', piggyBank),
         setTGItem('darts_deposit', deposit),
       ];
-  
-      let allKeysAdded = false;
   
       Promise.all(keysToAdd.map((promise) =>
         promise
