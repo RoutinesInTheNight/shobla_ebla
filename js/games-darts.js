@@ -571,6 +571,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (balance >= currentBetValue) {
             document.getElementById('throw-button').style.opacity = 1;
           }
+          document.getElementById('choice-bet').style.opacity = 1;
           document.getElementById('choice-bet').style.overflow = 'auto';
         })
         .catch((err) => {
