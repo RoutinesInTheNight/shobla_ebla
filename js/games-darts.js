@@ -574,6 +574,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         document.getElementById('throw-button').style.opacity = 1;
         document.getElementById('choice-bet').style.overflow = 'auto';
+        console.log('Анимация завершена');
       } else {
         console.log('Ожидание завершения добавления ключей...');
         const interval = setInterval(() => {
@@ -585,6 +586,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             document.getElementById('throw-button').style.opacity = 1;
             document.getElementById('choice-bet').style.overflow = 'auto';
+            console.log('Анимация завершена');
           }
         }, 100);
       }
