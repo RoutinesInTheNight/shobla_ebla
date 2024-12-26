@@ -246,14 +246,14 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-let balance = 1000000;
-let piggyBank = 0;
-let deposit = 0;
+// let balance = 1000000;
+// let piggyBank = 0;
+// let deposit = 0;
 
 let animationIsPlaying = false; // Активна ли анимация
-// let balance;
-// let piggyBank;
-// let deposit;
+let balance;
+let piggyBank;
+let deposit;
 
 
 
@@ -527,70 +527,59 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }, 1000);
 
+    // setTimeout(() => {
+    //   telegram.CloudStorage.setItem('balance', balance, function (err, res) {
+    //     if (err && res != true) {
+    //       // window.location.href = '../../ban';
+    //     }
+    //   });
+    //   telegram.CloudStorage.setItem('darts_piggy_bank', piggyBank, function (err, res) {
+    //     if (err && res != true) {
+    //       // window.location.href = '../../ban';
+    //     }
+    //   });
+    //   telegram.CloudStorage.setItem('darts_deposit', deposit, function (err, res) {
+    //     if (err && res != true) {
+    //       // window.location.href = '../../ban';
+    //     }
+    //   });
+    //   animationIsPlaying = false;
+    //   if (balance >= currentBetValue) {
+    //     document.getElementById('throw-button').style.opacity = 1;
+    //   }
+    //   document.getElementById('throw-button').style.opacity = 1;
+    //   document.getElementById('choice-bet').style.overflow = 'auto';
+    // }, 1500);
 
 
-    let allKeysAdded = false;
 
-    // Начинаем добавление ключей в облако сразу
-    if (telegram.isVersionAtLeast('6.9')) {
+
+    setTimeout(() => {
+      // Создаем массив промисов для всех запросов
       const keysToAdd = [
         setTGItem('balance', balance),
         setTGItem('darts_piggy_bank', piggyBank),
-        setTGItem('darts_deposit', deposit),
+        setTGItem('darts_deposit', deposit)
       ];
 
-      Promise.all(
-        keysToAdd.map((promise) =>
-          promise
-            .then((response) => {
-              if (response === true || response === 'true') {
-                return true;
-              } else {
-                throw new Error('Некорректный ответ');
-              }
-            })
-            .catch((err) => {
-              console.error('Ошибка при записи ключей:', err);
-              // window.location.href = '../../ban'; // Переход при ошибке
-              return false;
-            })
-        )
-      ).then((results) => {
-        allKeysAdded = results.every((result) => result === true);
-        console.log('Все ключи добавлены:', allKeysAdded);
-      });
-    } else {
-      // Переход на другую страницу при неподдерживаемой версии
-      // window.location.href = '../../ban';
-    }
-
-    // Завершаем анимацию при её окончании
-    currentAnimation.addEventListener('complete', () => {
-      if (allKeysAdded) {
-        // Выполняем действия после завершения анимации и добавления ключей
-        animationIsPlaying = false;
-        if (balance >= currentBetValue) {
-          document.getElementById('throw-button').style.opacity = 1;
-        }
-        document.getElementById('throw-button').style.opacity = 1;
-        document.getElementById('choice-bet').style.overflow = 'auto';
-        console.log('Анимация завершена');
-      } else {
-        console.log('Ожидание завершения добавления ключей...');
-        const interval = setInterval(() => {
-          if (allKeysAdded) {
-            clearInterval(interval);
-            animationIsPlaying = false;
-            if (balance >= currentBetValue) {
-              document.getElementById('throw-button').style.opacity = 1;
-            }
+      // Ожидаем завершения всех запросов
+      Promise.all(keysToAdd)
+        .then(() => {
+          // Если все запросы прошли успешно
+          animationIsPlaying = false;
+          console.log('Анимация остановлена')
+          if (balance >= currentBetValue) {
             document.getElementById('throw-button').style.opacity = 1;
-            document.getElementById('choice-bet').style.overflow = 'auto';
-            console.log('Анимация завершена');
           }
-        }, 100);
-      }
-    });
+          document.getElementById('choice-bet').style.overflow = 'auto';
+        })
+        .catch((err) => {
+          // Если хотя бы один запрос завершился с ошибкой
+          console.error('Ошибка при добавлении ключей:', err);
+          // window.location.href = '../../ban'; // Переход на другую страницу в случае ошибки
+        });
+    }, 1500);
+
 
 
 
