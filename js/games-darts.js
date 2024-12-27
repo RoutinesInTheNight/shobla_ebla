@@ -290,28 +290,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Ожидание загрузки всех данных
 
-  console.log('Начало инициализаций')
+  // console.log('Начало инициализаций')
   await initializeData();
-  console.log('Инициализация 1')
-  await initializeData();
-  console.log('Инициализация 2')
-  await initializeData();
-  console.log('Инициализация 3')
-  await initializeData();
-  console.log('Инициализация 4')
-  await initializeData();
-  console.log('Инициализация 5')
-  await initializeData();
-  console.log('Инициализация 6')
-  await initializeData();
-  console.log('Инициализация 7')
-  await initializeData();
-  console.log('Инициализация 8')
-  await initializeData();
-  console.log('Инициализация 9')
-  await initializeData();
-  console.log('Инициализация 10')
-  console.log('Конец инициализаций')
+  // console.log('Инициализация 1')
+  // await initializeData();
+  // console.log('Инициализация 2')
+  // await initializeData();
+  // console.log('Инициализация 3')
+  // await initializeData();
+  // console.log('Инициализация 4')
+  // await initializeData();
+  // console.log('Инициализация 5')
+  // await initializeData();
+  // console.log('Инициализация 6')
+  // await initializeData();
+  // console.log('Инициализация 7')
+  // await initializeData();
+  // console.log('Инициализация 8')
+  // await initializeData();
+  // console.log('Инициализация 9')
+  // await initializeData();
+  // console.log('Инициализация 10')
+  // console.log('Конец инициализаций')
 
 
 
