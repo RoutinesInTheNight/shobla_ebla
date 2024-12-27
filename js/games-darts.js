@@ -557,6 +557,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       new Promise(async (resolve) => {
         // const dartsData = await getTGItem('darts'); // Ждем результата выполнения
         // telegramDartsData = JSON.parse(dartsData || '{}'); // Парсим только строку
+
         telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
         roundStartTimeCheck = telegramDartsData.round_start_time;
         if (roundStartTimeCheck === undefined) {
@@ -564,8 +565,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (roundStartTime != roundStartTimeCheck) {
           location.reload(true);
         }
-        if (roundStartTime === null || roundStartTime === 0) {
+        if (roundStartTime === null) {
           roundStartTime = Math.floor(Date.now() / 1000);
+        } else if (animationName === 'darts-1' || animationName === 'darts-6') {
+          roundStartTime = null;
         }
         telegramDartsData = {
           'round_start_time': roundStartTime,
