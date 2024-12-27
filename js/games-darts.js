@@ -288,71 +288,25 @@ async function initializeData() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // Ожидание загрузки всех данных
-  // await initializeData();
   user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
-  user_name = await getTGItem('user_name');
+  balance = Number(await getTGItem('balance'));
+  const telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+  roundStartTime = telegramDartsData.round_start_time;
+  piggyBank = telegramDartsData.piggy_bank;
+  deposit = telegramDartsData.deposit;
+  throws = telegramDartsData.throws;
+  if (
+    roundStartTime === undefined ||
+    piggyBank === undefined ||
+    deposit === undefined ||
+    throws === undefined
+  ) {
+    // window.location.href = '../../ban';
+  }
 
 
-  await initializeData();
+
+
   // СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
   // 
 
@@ -585,9 +539,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
-    // piggyBank = telegramDartsData.piggy_bank;
-    // deposit = telegramDartsData.deposit;
-    // throws = telegramDartsData.throws;
     if (animationName === 'darts-1') {
       piggyBankBefore += currentBetValue * multipliers[animationName];
       balance += piggyBankBefore;
@@ -602,37 +553,56 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
+    await Promise.all([
+      new Promise(resolve => {
+        telegramDartsData = JSON.parse(getTGItem('darts') || '{}');
+        roundStartTimeCheck = telegramDartsData.round_start_time;
+        if (roundStartTimeCheck === undefined) {
+          // window.location.href = '../../ban';
+        } else if (roundStartTime != roundStartTimeCheck) {
+          location.reload(true);
+        }
+        if (roundStartTime === null) {
+          roundStartTime = Math.floor(Date.now() / 1000);
+        }
+        telegramDartsData = {
+          'round_start_time': roundStartTime,
+          'piggy_bank': piggyBank,
+          'deposit': deposit,
+          'throws': {}
+        }
+        resolve();
+      }),
 
+      // Момент удара дротика: вибрация и визуальное изменение чисел
+      new Promise(resolve => setTimeout(() => {
+        hapticFeedback('heavy');
+        if (animationName === 'darts-1') {
+          showRoundResult(piggyBankBefore - depositBefore);
+          animateCounter(balanceElement, balanceBefore, balance, 250);
+          animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
+          animateCounter(depositElement, depositBefore, 0, 250);
+        } else if (['darts-2', 'darts-3', 'darts-4', 'darts-5'].includes(animationName)) {
+          animateCounter(piggyBankElement, piggyBankBefore, piggyBank, 250);
+        } else {
+          showRoundResult(depositBefore * -1);
+          animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
+          animateCounter(depositElement, depositBefore, 0, 250);
+        }
+        if (balance < currentBetValue) {
+          document.getElementById('throw-button').style.opacity = 0.25;
+        }
+        resolve();
+      }, 1000))
 
-
-
-    // Момент удара дротика: вибрация и визуальное изменение чисел
-    setTimeout(() => {
-      hapticFeedback('heavy');
-      if (animationName === 'darts-1') {
-        showRoundResult(piggyBankBefore - depositBefore);
-        animateCounter(balanceElement, balanceBefore, balance, 250);
-        animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
-        animateCounter(depositElement, depositBefore, 0, 250);
-      } else if (['darts-2', 'darts-3', 'darts-4', 'darts-5'].includes(animationName)) {
-        animateCounter(piggyBankElement, piggyBankBefore, piggyBank, 250);
-      } else {
-        showRoundResult(depositBefore * -1);
-        animateCounter(piggyBankElement, piggyBankBefore, 0, 250);
-        animateCounter(depositElement, depositBefore, 0, 250);
-      }
-      if (balance < currentBetValue) {
-        document.getElementById('throw-button').style.opacity = 0.25;
-      }
-    }, 1000);
+    ]);
 
 
 
     // Создаем массив промисов для всех запросов
     const keysToAdd = [
       setTGItem('balance', balance),
-      setTGItem('darts_piggy_bank', piggyBank),
-      setTGItem('darts_deposit', deposit)
+      setTGItem('darts', telegramDartsData)
     ];
 
     // Ожидаем завершения всех запросов
@@ -663,6 +633,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
       })
+      
       .catch((err) => {
         // Если хотя бы один запрос завершился с ошибкой
         console.error('Ошибка при добавлении ключей:', err);
