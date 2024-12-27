@@ -565,11 +565,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (roundStartTime != roundStartTimeCheck) {
           location.reload(true);
         }
-        if (roundStartTime === null) {
-          roundStartTime = Math.floor(Date.now() / 1000);
-        } else if (animationName === 'darts-1' || animationName === 'darts-6') {
+        if (['darts-1', 'darts-lose'].includes(animationName)) {
           roundStartTime = null;
+        } else if (roundStartTime === null) {
+          roundStartTime = Math.floor(Date.now() / 1000);
         }
+
         telegramDartsData = {
           'round_start_time': roundStartTime,
           'piggy_bank': piggyBank,
