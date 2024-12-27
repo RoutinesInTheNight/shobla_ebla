@@ -246,14 +246,41 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-let balance = 1000000;
-let piggyBank = 0;
-let deposit = 0;
+// let balance = 1000000;
+// let piggyBank = 0;
+// let deposit = 0;
 
 let animationIsPlaying = false; // Активна ли анимация
-// let balance;
-// let piggyBank;
-// let deposit;
+
+let balance;
+let piggyBank;
+let deposit;
+let user_name;
+
+
+async function initializeData() {
+  if (telegram.isVersionAtLeast('6.9')) {
+    try {
+      user_name = await getTGItem('user_name');
+      balance = Number(await getTGItem('balance'));
+      const telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+      piggyBank = telegramDartsData.piggy_bank;
+      deposit = telegramDartsData.deposit;
+      throws = telegramDartsData.throws;
+      if (
+        piggyBank === undefined ||
+        deposit === undefined ||
+        throws === undefined
+      ) {
+        // window.location.href = '../../ban';
+      }
+    } catch {
+      // window.location.href = '../../ban';
+    }
+  } else {
+    // window.location.href = '../../ban';
+  }
+}
 
 
 
@@ -261,19 +288,40 @@ let animationIsPlaying = false; // Активна ли анимация
 
 document.addEventListener('DOMContentLoaded', async () => {
 
+  // Ожидание загрузки всех данных
+
+  console.log('Начало инициализаций')
+  await initializeData();
+  console.log('Инициализация 1')
+  await initializeData();
+  console.log('Инициализация 2')
+  await initializeData();
+  console.log('Инициализация 3')
+  await initializeData();
+  console.log('Инициализация 4')
+  await initializeData();
+  console.log('Инициализация 5')
+  await initializeData();
+  console.log('Инициализация 6')
+  await initializeData();
+  console.log('Инициализация 7')
+  await initializeData();
+  console.log('Инициализация 8')
+  await initializeData();
+  console.log('Инициализация 9')
+  await initializeData();
+  console.log('Инициализация 10')
+  console.log('Конец инициализаций')
+
+
+
+
+
   // СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
   // 
 
   const choiceBet = document.querySelector('.choice-bet');
   const bets = document.querySelectorAll('.bet');
-
-  if (telegram.isVersionAtLeast('6.9')) {
-    balance = Number(await getTGItem('balance'));
-    piggyBank = Number(await getTGItem('darts_piggy_bank'));
-    deposit = Number(await getTGItem('darts_deposit'));
-  } else {
-    // window.location.href = '../../ban';
-  }
 
   document.getElementById('balance').textContent = formatNumber(balance);
   document.getElementById('piggy-bank').textContent = formatNumber(piggyBank);
@@ -487,6 +535,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const animationName = animations[randomIndex].split('/').pop().replace('.json', '');
 
 
+
     let balanceBefore = balance
     let depositBefore = deposit
     let piggyBankBefore = piggyBank
@@ -499,6 +548,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       'darts-5': 1.05
     }
 
+
+    // piggyBank = telegramDartsData.piggy_bank;
+    // deposit = telegramDartsData.deposit;
+    // throws = telegramDartsData.throws;
     if (animationName === 'darts-1') {
       piggyBankBefore += currentBetValue * multipliers[animationName];
       balance += piggyBankBefore;
