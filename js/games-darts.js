@@ -554,8 +554,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     await Promise.all([
-      new Promise(resolve => {
-        telegramDartsData = JSON.parse(getTGItem('darts') || '{}');
+      new Promise(async (resolve) => {
+        telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
         roundStartTimeCheck = telegramDartsData.round_start_time;
         if (roundStartTimeCheck === undefined) {
           // window.location.href = '../../ban';
