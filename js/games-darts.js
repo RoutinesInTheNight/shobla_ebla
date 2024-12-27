@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Создаем массив промисов для всех запросов
     const keysToAdd = [
       setTGItem('balance', balance),
-      setTGItem('darts', telegramDartsData)
+      setTGItem('darts', JSON.stringify(telegramDartsData))
     ];
 
     // Ожидаем завершения всех запросов
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
       })
-      
+
       .catch((err) => {
         // Если хотя бы один запрос завершился с ошибкой
         console.error('Ошибка при добавлении ключей:', err);
