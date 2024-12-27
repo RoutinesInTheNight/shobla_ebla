@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   user_name = await getTGItem('user_name');
   balance = Number(await getTGItem('balance'));
-  const telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+  let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
   roundStartTime = telegramDartsData.round_start_time;
   piggyBank = telegramDartsData.piggy_bank;
   deposit = telegramDartsData.deposit;
