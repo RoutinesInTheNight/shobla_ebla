@@ -289,34 +289,70 @@ async function initializeData() {
 document.addEventListener('DOMContentLoaded', async () => {
 
   // Ожидание загрузки всех данных
+  // await initializeData();
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
+  user_name = await getTGItem('user_name');
 
-  // console.log('Начало инициализаций')
+
   await initializeData();
-  // console.log('Инициализация 1')
-  // await initializeData();
-  // console.log('Инициализация 2')
-  // await initializeData();
-  // console.log('Инициализация 3')
-  // await initializeData();
-  // console.log('Инициализация 4')
-  // await initializeData();
-  // console.log('Инициализация 5')
-  // await initializeData();
-  // console.log('Инициализация 6')
-  // await initializeData();
-  // console.log('Инициализация 7')
-  // await initializeData();
-  // console.log('Инициализация 8')
-  // await initializeData();
-  // console.log('Инициализация 9')
-  // await initializeData();
-  // console.log('Инициализация 10')
-  // console.log('Конец инициализаций')
-
-
-
-
-
   // СКРОЛЛ СУММ СТАВКИ И УПРАВЛЕНИЕ ТЕКУЩЕЙ СУММОЙ СТАВКИ
   // 
 
@@ -563,6 +599,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       piggyBank = 0;
       deposit = 0;
     }
+
+
+
+
+
+
 
     // Момент удара дротика: вибрация и визуальное изменение чисел
     setTimeout(() => {
