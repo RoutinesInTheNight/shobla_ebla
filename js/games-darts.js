@@ -562,14 +562,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (roundStartTime != roundStartTimeCheck) {
           location.reload(true);
         }
-        if (roundStartTime === null) {
+        if (roundStartTime === null || roundStartTime === 0) {
           roundStartTime = Math.floor(Date.now() / 1000);
         }
         telegramDartsData = {
           'round_start_time': roundStartTime,
           'piggy_bank': piggyBank,
           'deposit': deposit,
-          'throws': {}
+          'throws': 0
         }
         resolve();
       }),
@@ -596,7 +596,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 1000))
 
     ]);
-
 
 
     // Создаем массив промисов для всех запросов
