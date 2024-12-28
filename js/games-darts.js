@@ -499,9 +499,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    let balanceBefore = balance
-    let depositBefore = deposit
-    let piggyBankBefore = piggyBank
+    let balanceBefore = balance;
+    let depositBefore = deposit;
+    let piggyBankBefore = piggyBank;
 
     const multipliers = {
       'darts-1': 5.05,
@@ -538,8 +538,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           location.reload(true);
           return;
         };
+        syncTime = Math.floor(Date.now() / 1000);
         telegramDartsData = {
-          'sync_time': Math.floor(Date.now() / 1000),
+          'sync_time': syncTime,
           'piggy_bank': piggyBank,
           'deposit': deposit,
           'throws': null
