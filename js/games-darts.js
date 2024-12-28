@@ -246,57 +246,30 @@ const formatNumber = (num) => Math.round(num).toString().replace(/\B(?=(\d{3})+(
 
 
 let currentBetValue = Number(localStorage.getItem('current_bet')) || 500;
-// let balance = 1000000;
-// let piggyBank = 0;
-// let deposit = 0;
+let balance = 1000000;
+let piggyBank = 0;
+let deposit = 0;
 
 let animationIsPlaying = false; // Активна ли анимация
 
-let balance;
-let piggyBank;
-let deposit;
-let user_name;
-
-
-async function initializeData() {
-  if (telegram.isVersionAtLeast('6.9')) {
-    try {
-      user_name = await getTGItem('user_name');
-      balance = Number(await getTGItem('balance'));
-      const telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-      piggyBank = telegramDartsData.piggy_bank;
-      deposit = telegramDartsData.deposit;
-      throws = telegramDartsData.throws;
-      if (
-        piggyBank === undefined ||
-        deposit === undefined ||
-        throws === undefined
-      ) {
-        // window.location.href = '../../ban';
-      }
-    } catch {
-      // window.location.href = '../../ban';
-    }
-  } else {
-    // window.location.href = '../../ban';
-  }
-}
-
-
-
+// let balance;
+// let piggyBank;
+// let deposit;
+let userName;
+let syncTime;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  user_name = await getTGItem('user_name');
+  userName = await getTGItem('user_name');
   balance = Number(await getTGItem('balance'));
   let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-  roundStartTime = telegramDartsData.round_start_time;
+  syncTime = telegramDartsData.sync_time;
   piggyBank = telegramDartsData.piggy_bank;
   deposit = telegramDartsData.deposit;
   throws = telegramDartsData.throws;
   if (
-    roundStartTime === undefined ||
+    syncTime === undefined ||
     piggyBank === undefined ||
     deposit === undefined ||
     throws === undefined
@@ -552,30 +525,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
-
+    // Проверка 
     await Promise.all([
       new Promise(async (resolve) => {
-        // const dartsData = await getTGItem('darts'); // Ждем результата выполнения
-        // telegramDartsData = JSON.parse(dartsData || '{}'); // Парсим только строку
-
+        balanceCheck = await getTGItem('balance')
         telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-        roundStartTimeCheck = telegramDartsData.round_start_time;
-        if (roundStartTimeCheck === undefined) {
-          // window.location.href = '../../ban';
-        } else if (roundStartTime != roundStartTimeCheck) {
+        syncTimeCheck = telegramDartsData.sync_time;
+        if (syncTimeCheck === undefined) {
+          window.location.href = '../../error';
+          return;
+        } else if (syncTime != syncTimeCheck || balanceCheck != balanceBefore + currentBetValue) {
           location.reload(true);
-        }
-        if (['darts-1', 'darts-lose'].includes(animationName)) {
-          roundStartTime = null;
-        } else if (roundStartTime === null) {
-          roundStartTime = Math.floor(Date.now() / 1000);
-        }
-
+          return;
+        };
         telegramDartsData = {
-          'round_start_time': roundStartTime,
+          'sync_time': Math.floor(Date.now() / 1000),
           'piggy_bank': piggyBank,
           'deposit': deposit,
-          'throws': 0
+          'throws': null
+        }
+        if (['darts-1', 'darts-lose'].includes(animationName)) {
+          telegramDartsData.throws = {}
         }
         resolve();
       }),
