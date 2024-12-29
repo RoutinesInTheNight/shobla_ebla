@@ -14,7 +14,7 @@ const DEVICE_TYPE = telegram.platform;
 telegram.expand();
 
 
-const backButtonCallback = createFeedbackHandler('soft', '../../home.html?centerElementId=darts');
+const backButtonCallback = hapticFeedback('soft', '../../home.html?centerElementId=darts');
 telegram.BackButton.onClick(backButtonCallback);
 telegram.BackButton.show()
 
@@ -517,11 +517,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     if (animationName === 'darts-1') {
-      if (deposit === currentBetValue) {
-        piggyBankBefore += currentBetValue * 6;
-      } else {
-        piggyBankBefore += currentBetValue;
-      }
+      if (piggyBank === 0) piggyBankBefore += currentBetValue * 6; else piggyBankBefore += currentBetValue;
       balance += piggyBankBefore;
       piggyBank = 0;
       deposit = 0;
