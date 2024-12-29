@@ -508,16 +508,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     let piggyBankBefore = piggyBank;
 
     const multipliers = {
-      'darts-1': 5.05,
-      'darts-2': 2.35,
-      'darts-3': 1.45,
-      'darts-4': 1.15,
+      'darts-1': 1,
+      'darts-2': 3,
+      'darts-3': 2,
+      'darts-4': 1.25,
       'darts-5': 1.05
     }
 
 
     if (animationName === 'darts-1') {
-      piggyBankBefore += currentBetValue * multipliers[animationName];
+      if (deposit === currentBetValue) {
+        piggyBankBefore += currentBetValue * 6;
+      } else {
+        piggyBankBefore += currentBetValue;
+      }
       balance += piggyBankBefore;
       piggyBank = 0;
       deposit = 0;
