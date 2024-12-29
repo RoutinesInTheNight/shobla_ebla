@@ -261,25 +261,26 @@ let animationIsPlaying = false; // Активна ли анимация
 // let deposit;
 let userName;
 let syncTime;
+let throws = {};
 
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  userName = await getTGItem('user_name');
-  balance = Number(await getTGItem('balance'));
-  let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-  syncTime = telegramDartsData.sync_time;
-  piggyBank = telegramDartsData.piggy_bank;
-  deposit = telegramDartsData.deposit;
-  throws = telegramDartsData.throws;
-  if (
-    syncTime === undefined ||
-    piggyBank === undefined ||
-    deposit === undefined ||
-    throws === undefined
-  ) {
-    // window.location.href = '../../ban';
-  }
+  // userName = await getTGItem('user_name');
+  // balance = Number(await getTGItem('balance'));
+  // let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+  // syncTime = telegramDartsData.sync_time;
+  // piggyBank = telegramDartsData.piggy_bank;
+  // deposit = telegramDartsData.deposit;
+  // throws = telegramDartsData.throws;
+  // if (
+  //   syncTime === undefined ||
+  //   piggyBank === undefined ||
+  //   deposit === undefined ||
+  //   throws === undefined
+  // ) {
+  //   // window.location.href = '../../ban';
+  // }
 
 
 
@@ -508,6 +509,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     let balanceBefore = balance;
     let depositBefore = deposit;
     let piggyBankBefore = piggyBank;
+    let throwsNumBefore = Object.keys(throws).length;
+    
 
     const multipliers = {
       'darts-1': 1,
@@ -530,9 +533,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       deposit = 0;
     }
 
-    const withdrawNowElement = document.getElementById('withdraw-now');
-    let withdrawNow = deposit * 0.8
-    animateCounter(withdrawNowElement, 0, withdrawNow, 250);
+
+
+
 
 
     // Проверка 
@@ -549,11 +552,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
         };
         syncTime = Math.floor(Date.now() / 1000);
+        throws[Object.keys(throws).length + 1] = {};
         telegramDartsData = {
           'sync_time': syncTime,
           'piggy_bank': piggyBank,
           'deposit': deposit,
-          'throws': null
+          'throws': throws
         }
         if (['darts-1', 'darts-lose'].includes(animationName)) {
           telegramDartsData.throws = {}
@@ -585,11 +589,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
 
+    const throwsNumCoeffs = {
+      1: 33.31273313108317,
+      2: 22.211180086938057,
+      3: 14.831635367415712,
+      4: 9.88104358683638,
+      5: 6.577022270279356,
+      6: 4.399954077256761,
+      7: 2.9275298591627505,
+      8: 1.9506619080740242,
+      9: 1.3012814473099088,
+      10: 0.8696714134568471,
+      11: 0.5744998406667631,
+      12: 0.386600644894525,
+      13: 0.2602592900879123,
+      14: 0.1719058595623047,
+      15: 0.11441386673260043,
+      16: 0.07570579222825881,
+      17: 0.05159576287613596,
+      18: 0.03350198851480419,
+      19: 0.02238466944204561,
+      20: 0.014868101485969974
+    }
+    const withdrawNowElement = document.getElementById('withdraw-now');
+    const throwsNum = Object.keys(throws).length
+    if (throwsNum === 0 || throwsNum === 21) {
+      withdrawNowBefore = (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
+      animateCounter(withdrawNowElement, withdrawNowBefore, 0, 250);
+    } else if (throwsNum === 1) {
+      withdrawNow = (((piggyBank - deposit) / deposit) + 1) / 2;
+      animateCounter(withdrawNowElement, 0, withdrawNow, 250);
+    } else if (throwsNum < 21) {
+      withdrawNowBefore = (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
+      withdrawNow = (((piggyBank - deposit) / deposit) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNum]) / 100)) / 2;
+      animateCounter(withdrawNowElement, withdrawNowBefore, withdrawNow, 250);
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
     // Создаем массив промисов для всех запросов
     const keysToAdd = [
-      setTGItem('balance', balance),
-      setTGItem('darts', JSON.stringify(telegramDartsData))
-    ];
+        setTGItem('balance', balance),
+        setTGItem('darts', JSON.stringify(telegramDartsData))
+      ];
 
     // Ожидаем завершения всех запросов
     Promise.all(keysToAdd)
