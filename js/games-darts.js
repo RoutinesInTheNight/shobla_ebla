@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let depositBefore = deposit;
     let piggyBankBefore = piggyBank;
     let throwsNumBefore = Object.keys(throws).length;
-    
+
 
     const multipliers = {
       'darts-1': 1,
@@ -535,33 +535,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
+    // const telegramDartsDataBefore = telegramDartsData;
+    const syncTimeBefore = syncTime;
+    syncTime = Math.floor(Date.now() / 1000);
 
+    throws[Object.keys(throws).length + 1] = {};
+    telegramDartsData = {
+      'sync_time': syncTime,
+      'piggy_bank': piggyBank,
+      'deposit': deposit,
+      'throws': throws
+    }
+    if (['darts-1', 'darts-lose'].includes(animationName)) {
+      telegramDartsData.throws = {}
+    }
 
 
     // Проверка 
     await Promise.all([
       new Promise(async (resolve) => {
         balanceCheck = await getTGItem('balance')
-        telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-        syncTimeCheck = telegramDartsData.sync_time;
+        const telegramDartsDataCheck = JSON.parse(await getTGItem('darts') || '{}');
+        syncTimeCheck = telegramDartsDataCheck.sync_time;
         if (syncTimeCheck === undefined) {
           window.location.href = '../../error';
           return;
-        } else if (syncTime != syncTimeCheck || balanceCheck != balanceBefore + currentBetValue) {
+        } else if (syncTimeBefore != syncTimeCheck || balanceCheck != balanceBefore + currentBetValue) {
           location.reload(true);
           return;
         };
-        syncTime = Math.floor(Date.now() / 1000);
-        throws[Object.keys(throws).length + 1] = {};
-        telegramDartsData = {
-          'sync_time': syncTime,
-          'piggy_bank': piggyBank,
-          'deposit': deposit,
-          'throws': throws
-        }
-        if (['darts-1', 'darts-lose'].includes(animationName)) {
-          telegramDartsData.throws = {}
-        }
         resolve();
       }),
 
@@ -583,52 +585,60 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (balance < currentBetValue) {
           document.getElementById('throw-button').style.opacity = 0.25;
         }
+
+
+
+        const throwsNumCoeffs = {
+          1: 33.31273313108317,
+          2: 22.211180086938057,
+          3: 14.831635367415712,
+          4: 9.88104358683638,
+          5: 6.577022270279356,
+          6: 4.399954077256761,
+          7: 2.9275298591627505,
+          8: 1.9506619080740242,
+          9: 1.3012814473099088,
+          10: 0.8696714134568471,
+          11: 0.5744998406667631,
+          12: 0.386600644894525,
+          13: 0.2602592900879123,
+          14: 0.1719058595623047,
+          15: 0.11441386673260043,
+          16: 0.07570579222825881,
+          17: 0.05159576287613596,
+          18: 0.03350198851480419,
+          19: 0.02238466944204561,
+          20: 0.014868101485969974
+        }
+        const withdrawNowElement = document.getElementById('withdraw-now');
+        const throwsNum = Object.keys(throws).length
+        console.log('Ударов: ', throwsNum)
+        if (throwsNum === 0 || throwsNum === 21) {
+          console.log('0 ударов')
+          withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
+          animateCounter(withdrawNowElement, withdrawNowBefore, 0, 250);
+        } else if (throwsNum === 1) {
+          console.log('1 удар')
+          withdrawNow = deposit * (((piggyBank - deposit) / deposit) + 1) / 2;
+          animateCounter(withdrawNowElement, 0, withdrawNow, 250);
+        } else if (throwsNum < 21) {
+          console.log('Ударов от 2 до 20')
+          withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
+          withdrawNow = deposit * (((piggyBank - deposit) / deposit) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNum]) / 100)) / 2;
+          animateCounter(withdrawNowElement, withdrawNowBefore, withdrawNow, 250);
+        }
+
+
+
+
+
         resolve();
       }, 1000))
 
     ]);
 
 
-    const throwsNumCoeffs = {
-      1: 33.31273313108317,
-      2: 22.211180086938057,
-      3: 14.831635367415712,
-      4: 9.88104358683638,
-      5: 6.577022270279356,
-      6: 4.399954077256761,
-      7: 2.9275298591627505,
-      8: 1.9506619080740242,
-      9: 1.3012814473099088,
-      10: 0.8696714134568471,
-      11: 0.5744998406667631,
-      12: 0.386600644894525,
-      13: 0.2602592900879123,
-      14: 0.1719058595623047,
-      15: 0.11441386673260043,
-      16: 0.07570579222825881,
-      17: 0.05159576287613596,
-      18: 0.03350198851480419,
-      19: 0.02238466944204561,
-      20: 0.014868101485969974
-    }
-    const withdrawNowElement = document.getElementById('withdraw-now');
-    const throwsNum = Object.keys(throws).length
-    console.log('Ударов: ', throwsNum)
-    if (throwsNum === 0 || throwsNum === 21) {
-      console.log('0 ударов')
-      withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
-      animateCounter(withdrawNowElement, withdrawNowBefore, 0, 250);
-    } else if (throwsNum === 1) {
-      console.log('1 удар')
-      withdrawNow = deposit * (((piggyBank - deposit) / deposit) + 1) / 2;
-      animateCounter(withdrawNowElement, 0, withdrawNow, 250);
-    } else if (throwsNum < 21) {
-      console.log('Ударов от 2 до 20')
-      withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
-      withdrawNow = deposit * (((piggyBank - deposit) / deposit) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNum]) / 100)) / 2;
-      animateCounter(withdrawNowElement, withdrawNowBefore, withdrawNow, 250);
-    }
-    
+
 
 
 
@@ -643,9 +653,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Создаем массив промисов для всех запросов
     const keysToAdd = [
-        setTGItem('balance', balance),
-        setTGItem('darts', JSON.stringify(telegramDartsData))
-      ];
+      setTGItem('balance', balance),
+      setTGItem('darts', JSON.stringify(telegramDartsData))
+    ];
 
     // Ожидаем завершения всех запросов
     Promise.all(keysToAdd)
