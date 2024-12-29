@@ -13,29 +13,18 @@
     src: url('../fonts/SFPRODISPLAYBOLD.OTF') format('truetype')
 }
 
-/* Откл выделения */
+/* Откл выделения и клики */
 * {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
-}
-
-/* Откл клики */
-#preloader,
-.top-background-img,
-.user-name,
-.user-image-container,
-.balance-container,
-.miniapp-description,
-.league-container img {
     pointer-events: none;
 }
 
 
-html,
-body {
+html, body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -43,9 +32,11 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: none;
+}
+html {
+    overflow: hidden;
 }
 
 body {
@@ -404,11 +395,9 @@ body::-webkit-scrollbar {
 
 .fade-overlay {
     position: absolute;
-    top: 0;
+    top: calc(100 / 1284 * 50 * var(--dynamic-vw));
     bottom: 0;
     width: calc(100 / 1284 * 500 * var(--dynamic-vw));
-    pointer-events: none;
-    /* Чтобы градиенты не мешали скроллу */
     z-index: 10;
 }
 
@@ -460,12 +449,12 @@ body::-webkit-scrollbar {
     opacity: 1;
     transition: opacity 0.2s, transform 0.1s;
 
-    background: linear-gradient(270deg, #fbaa80, #f6b86b);
-    background-size: 400% 400%;
+    background: linear-gradient(270deg, #fba980, #fcc4a6, #fbaa80);
+    background-size: 600% 600%;
 
-    -webkit-animation: AnimationName 4s ease infinite;
-    -moz-animation: AnimationName 4s ease infinite;
-    animation: AnimationName 4s ease infinite;
+    -webkit-animation: AnimationName 5s ease infinite;
+    -moz-animation: AnimationName 5s ease infinite;
+    animation: AnimationName 5s ease infinite;
 }
 
 @-webkit-keyframes AnimationName {
