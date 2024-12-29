@@ -131,6 +131,7 @@ body {
     width: calc(100 / 1284 * 1184 * var(--dynamic-vw));
     gap: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 50 * var(--dynamic-vw)) 0 0 0;
+    color: white;
 }
 
 
@@ -143,22 +144,21 @@ body {
 }
 
 .game-container .info .name {
-    color: white;
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 25 * var(--dynamic-vw)) 0 calc(100 / 1284 * 12.5 * var(--dynamic-vw)) 0;
+    opacity: 0.75;
 }
 
 .game-container .info .coins {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--dynamic-vw);
+    gap: calc(100 / 1284 * 5 * var(--dynamic-vw));
     margin-bottom: calc(100 / 1284 * 25 * var(--dynamic-vw));
 }
 
 .game-container .info .coins p {
-    color: white;
     font-family: 'Sf Pro Display Bold', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     margin: 0;
@@ -428,7 +428,7 @@ body::-webkit-scrollbar {
 .fade-overlay {
     position: absolute;
     top: calc((100 / 1284 * 332.46 * var(--dynamic-vw)) + (65 * var(--dynamic-vw)));
-    height: calc(100 / 1284 * 4030 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 430 * var(--dynamic-vw));
     width: calc(100 / 1284 * 500 * var(--dynamic-vw));
     z-index: 10;
 }
@@ -491,7 +491,7 @@ body::-webkit-scrollbar {
     height: calc(100 / 1284 * 150 * var(--dynamic-vw));
     margin: calc(100 / 1284 * 75 * var(--dynamic-vw)) 0 100vw 0;
 
-    /* border-radius: calc(100 / 1284 * 100 * var(--dynamic-vw)); */
+    border-radius: calc(100 / 1284 * 75 * var(--dynamic-vw));
     font-family: 'Sf Pro Display Regular', Arial, sans-serif;
     font-size: calc(100 / 1284 * 50 * var(--dynamic-vw));
     /* color: #4c3636; */
