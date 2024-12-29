@@ -13,8 +13,10 @@ const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
+
+const backButtonCallback = createFeedbackHandler('soft', '../../home.html?centerElementId=darts');
+telegram.BackButton.onClick(backButtonCallback);
 telegram.BackButton.show()
-telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home.html?centerElementId=darts'));
 
 if (telegram.isVersionAtLeast("7.7")) {
   telegram.disableVerticalSwipes();
@@ -261,21 +263,21 @@ let syncTime;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  userName = await getTGItem('user_name');
-  balance = Number(await getTGItem('balance'));
-  let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-  syncTime = telegramDartsData.sync_time;
-  piggyBank = telegramDartsData.piggy_bank;
-  deposit = telegramDartsData.deposit;
-  throws = telegramDartsData.throws;
-  if (
-    syncTime === undefined ||
-    piggyBank === undefined ||
-    deposit === undefined ||
-    throws === undefined
-  ) {
-    // window.location.href = '../../ban';
-  }
+  // userName = await getTGItem('user_name');
+  // balance = Number(await getTGItem('balance'));
+  // let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+  // syncTime = telegramDartsData.sync_time;
+  // piggyBank = telegramDartsData.piggy_bank;
+  // deposit = telegramDartsData.deposit;
+  // throws = telegramDartsData.throws;
+  // if (
+  //   syncTime === undefined ||
+  //   piggyBank === undefined ||
+  //   deposit === undefined ||
+  //   throws === undefined
+  // ) {
+  //   // window.location.href = '../../ban';
+  // }
 
 
 
@@ -429,7 +431,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   throwButton.addEventListener('click', () => {
     if (animationIsPlaying) return;
 
-    telegram.BackButton.onClick(() => hapticFeedback('error'));
+    telegram.BackButton.offClick(backButtonCallback);
 
     document.getElementById('throw-button').style.transform = 'scale(0.95)';
     setTimeout(() => {
@@ -589,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const elapsedTime = Date.now() - startTime;
 
         if (elapsedTime >= 1500) {
-          telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home.html?centerElementId=darts'));
+          telegram.BackButton.onClick(backButtonCallback);
           animationIsPlaying = false;
           console.log('Анимация остановлена');
           if (balance >= currentBetValue) {
@@ -600,7 +602,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
           // Если 1.5 секунды еще не прошло, ждём завершения
           setTimeout(() => {
-            telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home.html?centerElementId=darts'));
+            telegram.BackButton.onClick(backButtonCallback);
             animationIsPlaying = false;
             console.log('Анимация остановлена');
             if (balance >= currentBetValue) {
