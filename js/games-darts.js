@@ -262,6 +262,7 @@ let animationIsPlaying = false; // Активна ли анимация
 let userName;
 let syncTime;
 let throws = {};
+let withdrawNow;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -614,24 +615,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         const withdrawNowElement = document.getElementById('withdraw-now');
         const throwsNum = Object.keys(throws).length
-        console.log('Ударов: ', throwsNum)
+        let withdrawNowBefore;
         if (throwsNum === 0 || throwsNum === 21) {
-          console.log('0 ударов')
-          withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
-          animateCounter(withdrawNowElement, withdrawNowBefore, 0, 250);
+          withdrawNowBefore = withdrawNow;
+          withdrawNow = 0;
         } else if (throwsNum === 1) {
-          console.log('1 удар')
+          withdrawNowBefore = 0;
           withdrawNow = deposit * (((piggyBank - deposit) / deposit) + 1) / 2;
-          animateCounter(withdrawNowElement, 0, withdrawNow, 250);
         } else if (throwsNum < 21) {
-          console.log('Ударов от 2 до 20')
-          withdrawNowBefore = depositBefore * (((piggyBankBefore - depositBefore) / depositBefore) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNumBefore]) / 100)) / 2;
+          withdrawNowBefore = withdrawNow;
           withdrawNow = deposit * (((piggyBank - deposit) / deposit) + ((100 / throwsNumCoeffs[1] * throwsNumCoeffs[throwsNum]) / 100)) / 2;
-          animateCounter(withdrawNowElement, withdrawNowBefore, withdrawNow, 250);
         }
-
-
-
+        animateCounter(withdrawNowElement, withdrawNowBefore, withdrawNow, 250);
 
 
         resolve();
