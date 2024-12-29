@@ -13,8 +13,10 @@ const DEVICE_TYPE = telegram.platform;
 
 telegram.expand();
 
-
-const backButtonCallback = hapticFeedback('soft', '../../home.html?centerElementId=darts');
+function createFeedbackHandler(type, url) {
+  return () => hapticFeedback(type, url);
+}
+const backButtonCallback = createFeedbackHandler('soft', '../../home.html?centerElementId=darts');
 telegram.BackButton.onClick(backButtonCallback);
 telegram.BackButton.show()
 
