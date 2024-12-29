@@ -265,21 +265,21 @@ let syncTime;
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  userName = await getTGItem('user_name');
-  balance = Number(await getTGItem('balance'));
-  let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
-  syncTime = telegramDartsData.sync_time;
-  piggyBank = telegramDartsData.piggy_bank;
-  deposit = telegramDartsData.deposit;
-  throws = telegramDartsData.throws;
-  if (
-    syncTime === undefined ||
-    piggyBank === undefined ||
-    deposit === undefined ||
-    throws === undefined
-  ) {
-    // window.location.href = '../../ban';
-  }
+  // userName = await getTGItem('user_name');
+  // balance = Number(await getTGItem('balance'));
+  // let telegramDartsData = JSON.parse(await getTGItem('darts') || '{}');
+  // syncTime = telegramDartsData.sync_time;
+  // piggyBank = telegramDartsData.piggy_bank;
+  // deposit = telegramDartsData.deposit;
+  // throws = telegramDartsData.throws;
+  // if (
+  //   syncTime === undefined ||
+  //   piggyBank === undefined ||
+  //   deposit === undefined ||
+  //   throws === undefined
+  // ) {
+  //   // window.location.href = '../../ban';
+  // }
 
 
 
@@ -529,6 +529,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       piggyBank = 0;
       deposit = 0;
     }
+
+    const withdrawNowElement = document.getElementById('withdraw-now');
+    let withdrawNow = deposit * 0.8
+    animateCounter(withdrawNowElement, 0, withdrawNow, 250);
 
 
     // Проверка 
