@@ -429,6 +429,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   throwButton.addEventListener('click', () => {
     if (animationIsPlaying) return;
 
+    telegram.BackButton.onClick(() => hapticFeedback('error'));
+
     document.getElementById('throw-button').style.transform = 'scale(0.95)';
     setTimeout(() => {
       document.getElementById('throw-button').style.transform = 'scale(1)';
@@ -587,7 +589,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const elapsedTime = Date.now() - startTime;
 
         if (elapsedTime >= 1500) {
-          // Если прошло больше или равно 1.5 секунд — останавливаем анимацию
+          telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home.html?centerElementId=darts'));
           animationIsPlaying = false;
           console.log('Анимация остановлена');
           if (balance >= currentBetValue) {
@@ -598,6 +600,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
           // Если 1.5 секунды еще не прошло, ждём завершения
           setTimeout(() => {
+            telegram.BackButton.onClick(() => hapticFeedback('soft', '../../home.html?centerElementId=darts'));
             animationIsPlaying = false;
             console.log('Анимация остановлена');
             if (balance >= currentBetValue) {

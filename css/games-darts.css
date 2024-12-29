@@ -428,7 +428,7 @@ body::-webkit-scrollbar {
 .fade-overlay {
     position: absolute;
     top: calc((100 / 1284 * 332.46 * var(--dynamic-vw)) + (65 * var(--dynamic-vw)));
-    height: calc(100 / 1284 * 430 * var(--dynamic-vw));
+    height: calc(100 / 1284 * 450 * var(--dynamic-vw));
     width: calc(100 / 1284 * 500 * var(--dynamic-vw));
     z-index: 10;
 }
