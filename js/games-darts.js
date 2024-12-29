@@ -539,16 +539,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const syncTimeBefore = syncTime;
     syncTime = Math.floor(Date.now() / 1000);
 
-    throws[Object.keys(throws).length + 1] = {};
+    if (['darts-1', 'darts-lose'].includes(animationName)) {
+      throws = {}
+    } else {
+      throws[Object.keys(throws).length + 1] = {};
+    }
     telegramDartsData = {
       'sync_time': syncTime,
       'piggy_bank': piggyBank,
       'deposit': deposit,
       'throws': throws
     }
-    if (['darts-1', 'darts-lose'].includes(animationName)) {
-      telegramDartsData.throws = {}
-    }
+
 
 
     // Проверка 
