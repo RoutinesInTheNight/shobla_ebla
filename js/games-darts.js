@@ -437,6 +437,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     telegram.BackButton.offClick(backButtonCallback);
 
+
+    document.getElementById('animation-container').style.width = '100%';
+
     document.getElementById('throw-button').style.transform = 'scale(0.95)';
     setTimeout(() => {
       document.getElementById('throw-button').style.transform = 'scale(1)';
@@ -589,8 +592,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           document.getElementById('throw-button').style.opacity = 0.25;
         }
 
-
-
         const throwsNumCoeffs = {
           1: 33.31273313108317,
           2: 22.211180086938057,
@@ -660,6 +661,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const elapsedTime = Date.now() - startTime;
 
         if (elapsedTime >= 1500) {
+          document.getElementById('animation-container').style.width = '100%';
           telegram.BackButton.onClick(backButtonCallback);
           animationIsPlaying = false;
           console.log('Анимация остановлена');
@@ -669,6 +671,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           document.getElementById('choice-bet').style.opacity = 1;
           document.getElementById('choice-bet').style.overflow = 'auto';
         } else {
+          document.getElementById('animation-container').style.width = '100%';
           // Если 1.5 секунды еще не прошло, ждём завершения
           setTimeout(() => {
             telegram.BackButton.onClick(backButtonCallback);
